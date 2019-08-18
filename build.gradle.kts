@@ -9,11 +9,12 @@ buildscript {
 
 plugins {
     base
-    kotlin("jvm") version (Versions.kotlin) apply false
-    id(Plugins.detekt) version (Versions.detekt)
-    id(Plugins.gradleVersions) version (Versions.versionsPlugin)
-    id(Plugins.ktlint) version (Versions.ktlintPlugin)
-    id(Plugins.ktlintIdea) version (Versions.ktlintPlugin)
+    kotlin("jvm") version Versions.kotlin apply false
+    id(Plugins.detekt) version Versions.detekt
+    id(Plugins.dokka) version Versions.dokka apply false
+    id(Plugins.gradleVersions) version Versions.versionsPlugin
+    id(Plugins.ktlint) version Versions.ktlintPlugin
+    id(Plugins.ktlintIdea) version Versions.ktlintPlugin
 }
 
 allprojects {
@@ -30,7 +31,7 @@ allprojects {
     tasks.withType<Test>().configureEach {
         reports {
             @Suppress("UnstableApiUsage")
-            html.setEnabled(true)
+            html.isEnabled = true
         }
         testLogging {
             events("passed", "skipped", "failed")
