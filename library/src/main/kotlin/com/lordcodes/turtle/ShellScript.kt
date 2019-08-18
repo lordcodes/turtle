@@ -22,22 +22,27 @@ class ShellScript(runLocation: File? = null) {
         val process = processBuilder
             .command(splitCommand)
             .start()
-        process.waitFor(60, TimeUnit.MINUTES)
+        process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
         process.retrieveOutput()
     } catch (exception: IOException) {
-        throw ShellRunException(exception)
+        throw ShellFailedException(exception)
     } catch (exception: InterruptedException) {
-        throw ShellRunException(exception)
+        throw ShellFailedException(exception)
     }
 
     private fun Process.retrieveOutput(): String {
         val outputText = inputStream.bufferedReader().use(BufferedReader::readText)
-        if (exitValue() != 0) {
+        val exitCode = exitValue()
+        if (exitCode != 0) {
             val errorText = errorStream.bufferedReader().use(BufferedReader::readText)
             if (errorText.isNotEmpty()) {
-                throw ShellRunException(errorText.trim())
+                throw ShellRunException(exitCode, errorText.trim())
             }
         }
         return outputText.trim()
+    }
+
+    companion object {
+        private const val COMMAND_TIMEOUT = 60L
     }
 }
