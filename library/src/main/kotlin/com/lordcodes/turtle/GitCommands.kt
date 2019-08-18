@@ -3,7 +3,7 @@ package com.lordcodes.turtle
 import java.io.File
 import java.net.URL
 
-class GitCommands(
+class GitCommands internal constructor(
     private val shell: ShellScript
 ) {
     fun init() = gitCommand(listOf("init"))
