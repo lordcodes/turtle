@@ -2,7 +2,7 @@ package com.lordcodes.turtle
 
 import java.io.File
 
-class FileCommands(
+class FileCommands internal constructor(
     private val shell: ShellScript
 ) {
     fun openFile(path: File) = openFile(path.absolutePath)

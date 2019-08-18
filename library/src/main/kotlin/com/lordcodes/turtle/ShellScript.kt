@@ -5,14 +5,20 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class ShellScript(runLocation: File? = null) {
+class ShellScript internal constructor(workingDirectory: File? = null) {
     private val processBuilder = ProcessBuilder(listOf())
-        .directory(runLocation)
+        .directory(workingDirectory)
         .redirectOutput(ProcessBuilder.Redirect.PIPE)
         .redirectError(ProcessBuilder.Redirect.PIPE)
 
     val files = FileCommands(this)
     val git = GitCommands(this)
+
+    fun changeWorkingDirectory(path: String) = changeWorkingDirectory(File(path))
+
+    fun changeWorkingDirectory(path: File) {
+        processBuilder.directory(path)
+    }
 
     fun command(
         command: String,
