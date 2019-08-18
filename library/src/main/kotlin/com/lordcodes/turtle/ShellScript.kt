@@ -17,9 +17,9 @@ class ShellScript(runLocation: File? = null) {
         command: String,
         arguments: List<String> = listOf()
     ): String = try {
-        val splitCommand = command.split(' ')
+        val splitCommand = command.split(' ') + arguments
         val process = processBuilder
-            .command(splitCommand + arguments)
+            .command(splitCommand)
             .start()
         process.waitFor(60, TimeUnit.MINUTES)
         process.retrieveOutput()
