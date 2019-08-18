@@ -1,11 +1,5 @@
 package com.lordcodes.turtle
 
-class ShellRunException : RuntimeException {
-    constructor() : super()
-
-    constructor(message: String) : super(message)
-
-    constructor(cause: Throwable) : super(cause)
-
-    constructor(message: String, cause: Throwable) : super(message, cause)
-}
+class ShellRunException(exitCode: Int, errorText: String) : RuntimeException(
+    "Running shell command failed with code $exitCode and message: $errorText"
+)
