@@ -4,6 +4,6 @@ import com.lordcodes.turtle.shellRun
 
 fun main() {
     shellRun {
-        command("mkdir", listOf("TestDir"))
+        files.openApplication("Some-inValid-one")
     }
 }

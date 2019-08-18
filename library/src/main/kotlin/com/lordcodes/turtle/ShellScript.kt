@@ -11,6 +11,7 @@ class ShellScript(runLocation: File? = null) {
         .redirectOutput(ProcessBuilder.Redirect.PIPE)
         .redirectError(ProcessBuilder.Redirect.PIPE)
 
+    val files = FileCommands(this)
     val git = GitCommands(this)
 
     fun command(
