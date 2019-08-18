@@ -1,5 +1,5 @@
-import com.lordcodes.templatekotlinjvmlibrary.hooks.InstallGitHooksTask
-import com.lordcodes.templatekotlinjvmlibrary.hooks.UninstallGitHooksTask
+import com.lordcodes.turtle.hooks.InstallGitHooksTask
+import com.lordcodes.turtle.hooks.UninstallGitHooksTask
 
 tasks {
     register<InstallGitHooksTask>("lcGitHooksInstall") {
