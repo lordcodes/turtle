@@ -1,3 +1,3 @@
-rootProject.name = "template-kotlin-jvm-library"
+rootProject.name = "turtle"
 
 include("library", "sample")
