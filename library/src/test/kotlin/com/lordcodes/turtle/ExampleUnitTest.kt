@@ -1,4 +1,4 @@
-package com.lordcodes.templatekotlinjvmlibrary.library
+package com.lordcodes.turtle
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -6,6 +6,6 @@ import org.junit.jupiter.api.Test
 class ExampleUnitTest {
     @Test
     fun example() {
-        assertThat(Library.run()).isTrue()
+        assertThat(true).isTrue()
     }
 }
