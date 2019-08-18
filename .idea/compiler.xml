@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="librarytemplate-jvm.buildSrc.main" target="1.8" />
+      <module name="librarytemplate-jvm.buildSrc.test" target="1.8" />
+      <module name="librarytemplate-jvm.library.main" target="1.8" />
+      <module name="librarytemplate-jvm.library.test" target="1.8" />
+      <module name="librarytemplate-jvm.sample.main" target="1.8" />
+      <module name="librarytemplate-jvm.sample.test" target="1.8" />
+      <module name="template-kotlin-jvm-library.buildSrc.main" target="1.8" />
+      <module name="template-kotlin-jvm-library.buildSrc.test" target="1.8" />
+      <module name="template-kotlin-jvm-library.library.main" target="1.8" />
+      <module name="template-kotlin-jvm-library.library.test" target="1.8" />
+      <module name="template-kotlin-jvm-library.sample.main" target="1.8" />
+      <module name="template-kotlin-jvm-library.sample.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
