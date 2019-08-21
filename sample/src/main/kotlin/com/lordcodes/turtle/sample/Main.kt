@@ -4,6 +4,9 @@ import com.lordcodes.turtle.shellRun
 
 fun main() {
     shellRun {
-        files.openApplication("Some-inValid-one")
+        command("mkdir Test")
+        command("mkdir Test2")
+        command("rm -rf BLAH")
+        command("rm -rf Test")
     }
 }

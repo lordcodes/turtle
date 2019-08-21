@@ -1,5 +1,14 @@
 package com.lordcodes.turtle
 
-class ShellRunException(exitCode: Int, errorText: String) : RuntimeException(
+/**
+ * A shell command completed with an error exit code and error output.
+ *
+ * @property [exitCode] The exit code of the process. By convention, the value {@code 0} indicates normal termination.
+ * @property [errorText] The error output produced by running a command or series of commands.
+ */
+data class ShellRunException(
+    val exitCode: Int,
+    val errorText: String
+) : RuntimeException(
     "Running shell command failed with code $exitCode and message: $errorText"
 )
