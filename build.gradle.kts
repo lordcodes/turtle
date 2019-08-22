@@ -51,6 +51,8 @@ subprojects {
             "src/test/kotlin"
         )
         parallel = true
+        config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+        buildUponDefaultConfig = true
     }
 
     ktlint {

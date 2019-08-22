@@ -2,6 +2,9 @@ package com.lordcodes.turtle.sample
 
 import com.lordcodes.turtle.shellRun
 
+/**
+ * Run the sample
+ */
 fun main() {
     shellRun {
         command("mkdir Test")

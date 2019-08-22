@@ -165,7 +165,6 @@ class GitCommands internal constructor(
      */
     fun pushTag(tagName: String) = gitCommand(listOf("push", "origin", tagName))
 
-
     /**
      * Get the current Git branch name.
      *
