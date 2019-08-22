@@ -1,0 +1,143 @@
+build:
+  maxIssues: 1
+
+comments:
+  UndocumentedPublicClass:
+    active: true
+  UndocumentedPublicFunction:
+    active: true
+
+complexity:
+  ComplexInterface:
+    active: true
+  ComplexMethod:
+    ignoreSingleWhenExpression: true
+  TooManyFunctions:
+    thresholdInFiles: 15
+    thresholdInClasses: 15
+    thresholdInInterfaces: 15
+    thresholdInObjects: 15
+    thresholdInEnums: 15
+    ignoreDeprecated: true
+    ignorePrivate: true
+    ignoreOverridden: true
+
+empty-blocks:
+  EmptyFunctionBlock:
+    ignoreOverriddenFunctions: true
+
+exceptions:
+  ExceptionRaisedInUnexpectedLocation:
+    active: true
+  InstanceOfCheckForException:
+    active: true
+  NotImplementedDeclaration:
+    active: true
+  PrintStackTrace:
+    active: true
+  RethrowCaughtException:
+    active: true
+  ReturnFromFinally:
+    active: true
+  SwallowedException:
+    active: true
+  ThrowingExceptionFromFinally:
+    active: true
+  ThrowingExceptionInMain:
+    active: true
+  ThrowingExceptionsWithoutMessageOrCause:
+    active: true
+  ThrowingNewInstanceOfSameException:
+    active: true
+
+naming:
+  InvalidPackageDeclaration:
+    active: true
+  MemberNameEqualsClassName:
+    active: true
+
+performance:
+  ArrayPrimitive:
+    active: true
+
+potential-bugs:
+  EqualsAlwaysReturnsTrueOrFalse:
+    active: true
+  InvalidRange:
+    active: true
+  IteratorHasNextCallsNextMethod:
+    active: true
+  IteratorNotThrowingNoSuchElementException:
+    active: true
+  MissingWhenCase:
+    active: true
+  RedundantElseInWhen:
+    active: true
+  UnconditionalJumpStatementInLoop:
+    active: true
+  UselessPostfixExpression:
+    active: true
+  WrongEqualsTypeParameter:
+    active: true
+
+style:
+  EqualsOnSignatureLine:
+    active: true
+  ExpressionBodySyntax:
+    active: true
+  ForbiddenVoid:
+    active: true
+  LibraryCodeMustSpecifyReturnType:
+    active: true
+  MagicNumber:
+    ignoreAnnotation: true
+  MandatoryBracesIfStatements:
+    active: true
+  MayBeConst:
+    active: true
+  NoTabs:
+    active: true
+  OptionalUnit:
+    active: true
+  OptionalWhenBraces:
+    active: true
+  PreferToOverPairSyntax:
+    active: true
+  ProtectedMemberInFinalClass:
+    active: true
+  RedundantVisibilityModifierRule:
+    active: true
+  SerialVersionUIDInSerializableClass:
+    active: true
+  SpacingBetweenPackageAndImports:
+    active: true
+  TrailingWhitespace:
+    active: true
+  UnderscoresInNumericLiterals:
+    active: true
+  UnnecessaryApply:
+    active: true
+  UnnecessaryInheritance:
+    active: true
+  UnnecessaryLet:
+    active: true
+  UnnecessaryParentheses:
+    active: true
+  UntilInsteadOfRangeTo:
+    active: true
+  UnusedImports:
+    active: true
+  UnusedPrivateClass:
+    active: true
+  UnusedPrivateMember:
+    active: true
+  UseCheckOrError:
+    active: true
+  UseRequire:
+    active: true
+  UselessCallOnNotNull:
+    active: true
+  UtilityClassWithPublicConstructor:
+    active: true
+  VarCouldBeVal:
+    active: true
