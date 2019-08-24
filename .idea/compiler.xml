@@ -4,10 +4,10 @@
     <bytecodeTargetLevel>
       <module name="turtle.buildSrc.main" target="1.8" />
       <module name="turtle.buildSrc.test" target="1.8" />
-      <module name="turtle.library.main" target="1.8" />
-      <module name="turtle.library.test" target="1.8" />
       <module name="turtle.sample.main" target="1.8" />
       <module name="turtle.sample.test" target="1.8" />
+      <module name="turtle.turtle.main" target="1.8" />
+      <module name="turtle.turtle.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
