@@ -18,6 +18,8 @@ val dokka by tasks.getting(DokkaTask::class) {
     outputDirectory = "$buildDir/docs/dokka"
     jdkVersion = 8
 
+    includes = listOf("module.md")
+
     linkMapping {
         dir = "./"
         url = "https://github.com/lordcodes/turtle/blob/master/"
