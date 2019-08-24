@@ -1,3 +1,3 @@
 rootProject.name = "turtle"
 
-include("library", "sample")
+include("turtle", "sample")

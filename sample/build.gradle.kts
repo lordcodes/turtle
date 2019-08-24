@@ -3,6 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":library"))
+    implementation(project(":turtle"))
     implementation(Libs.kotlinStdlib)
 }
