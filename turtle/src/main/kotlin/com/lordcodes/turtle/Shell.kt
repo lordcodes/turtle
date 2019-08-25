@@ -22,8 +22,7 @@ fun shellRun(workingDirectory: File? = null, script: ShellScript.() -> String) =
 /**
  * Run a shell command with the specified arguments.
  *
- * @param [command] A command to run. It will be split up by spaces, so arguments can be included within the command
- * itself.
+ * @param [command] A command to run.
  * @param [arguments] The arguments to pass to the command.
  * @param [workingDirectory] The location to run the command from. By default, the current working directory will
  * be used.
