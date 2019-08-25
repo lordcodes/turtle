@@ -25,22 +25,6 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
     val git = GitCommands(this)
 
     /**
-     * Change the working directory for subsequent shell commands.
-     *
-     * @param [path] The path to set the working directory to.
-     */
-    fun changeWorkingDirectory(path: String) = changeWorkingDirectory(File(path))
-
-    /**
-     * Change the working directory for subsequent shell commands.
-     *
-     * @param [path] The path to set the working directory to.
-     */
-    fun changeWorkingDirectory(path: File) {
-        processBuilder.directory(path)
-    }
-
-    /**
      * Run a shell command with the specified arguments.
      *
      * @param [command] A command to run.
@@ -77,6 +61,22 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
             }
         }
         return outputText.trim()
+    }
+
+    /**
+     * Change the working directory for subsequent shell commands.
+     *
+     * @param [path] The path to set the working directory to.
+     */
+    fun changeWorkingDirectory(path: String) = changeWorkingDirectory(File(path))
+
+    /**
+     * Change the working directory for subsequent shell commands.
+     *
+     * @param [path] The path to set the working directory to.
+     */
+    fun changeWorkingDirectory(path: File) {
+        processBuilder.directory(path)
     }
 
     companion object {
