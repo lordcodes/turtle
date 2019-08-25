@@ -119,7 +119,7 @@ class GitCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     fun clone(repositoryUrl: URL, destination: File? = null) =
-        clone(repositoryUrl.toString(), destination?.absolutePath)
+        clone(repositoryUrl.toString(), destination?.toString())
 
     /**
      * Clone a Git repository at a given URL.
