@@ -10,7 +10,7 @@ internal class FileCommandsTest {
     lateinit var temporaryFolder: File
 
     private val shell by lazy { ShellScript(temporaryFolder) }
-    private val files: FileCommands by lazy { FileCommands(shell) }
+    private val files by lazy { FileCommands(shell) }
 
     @Test
     fun createSymlink_fileArguments() {
