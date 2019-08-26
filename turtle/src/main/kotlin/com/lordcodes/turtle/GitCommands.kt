@@ -116,8 +116,15 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun checkout(branch: String) =
-        gitCommand(listOf("checkout", branch, "--quiet"))
+    fun checkout(branch: String, createIfNecessary: Boolean = true): String {
+        val arguments = mutableListOf("checkout")
+        if (createIfNecessary) {
+            arguments.add("-B")
+        }
+        arguments.add(branch)
+        arguments.add("--quiet")
+        return gitCommand(arguments)
+    }
 
     /**
      * Clone a Git repository at a given URL.
@@ -162,8 +169,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun addTag(tagName: String, message: String) =
-        gitCommand(listOf("tag", "-a", tagName, "-m", message))
+    fun addTag(tagName: String, message: String) = gitCommand(listOf("tag", "-a", tagName, "-m", message))
 
     /**
      * Push the given Git tag.
