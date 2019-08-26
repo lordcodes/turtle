@@ -17,7 +17,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun init() = gitCommand(listOf("init"))
+    fun gitInit() = gitCommand(listOf("init"))
 
     /**
      * Get the working tree status of a Git repository. The status can signify if there are any uncommitted changes.
