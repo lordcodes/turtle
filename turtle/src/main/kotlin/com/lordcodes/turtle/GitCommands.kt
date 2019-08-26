@@ -30,6 +30,16 @@ class GitCommands internal constructor(
     fun status() = gitCommand(listOf("status", "--porcelain"))
 
     /**
+     * Stage any new, modified or deleted files, to be included in the next commit.
+     *
+     * @return [String] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun addAll() = gitCommand(listOf("add", "--all"))
+
+    /**
      * Create a Git commit with the given commit message. Any modified or deleted files will also be staged and
      * included in the commit.
      *
@@ -53,8 +63,10 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun commitAllChanges(message: String) =
-        gitCommand(listOf("add", "--all", "&&", "git", "commit", "-a", "-m", message, "--quiet"))
+    fun commitAllChanges(message: String): String {
+        addAll()
+        return commit(message)
+    }
 
     /**
      * Push changes to a Git repository.
