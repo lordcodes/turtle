@@ -1,5 +1,6 @@
 object Versions {
     const val assertJCore = "3.13.2"
+    const val bintrayRelease = "0.9.1"
     const val detekt = "1.0.0"
     const val dokka = "0.9.18"
     const val junit5 = "5.5.1"

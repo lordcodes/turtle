@@ -5,6 +5,10 @@ buildscript {
     repositories {
         jcenter()
     }
+
+    dependencies {
+        classpath(Plugins.bintrayReleaseVersioned)
+    }
 }
 
 plugins {
