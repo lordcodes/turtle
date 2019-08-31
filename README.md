@@ -1,6 +1,7 @@
 # Turtle 🐢
 
 [![CircleCI](https://circleci.com/gh/lordcodes/turtle.svg?style=svg)](https://circleci.com/gh/lordcodes/turtle)
+[![Bintray](https://api.bintray.com/packages/lordcodes/maven/turtle/images/download.svg)](https://bintray.com/lordcodes/maven/turtle/_latestVersion)
 [![@lordcodes](https://img.shields.io/badge/contact-@lordcodes-blue.svg?style=flat)](https://twitter.com/lordcodes)
 [![Lord Codes Blog](https://img.shields.io/badge/blog-Lord%20Codes-yellow.svg?style=flat)](https://www.lordcodes.com)
 
