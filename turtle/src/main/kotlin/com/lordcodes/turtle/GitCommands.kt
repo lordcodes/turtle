@@ -17,7 +17,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun gitInit() = gitCommand(listOf("init"))
+    fun gitInit(): String = gitCommand(listOf("init"))
 
     /**
      * Get the working tree status of a Git repository. The status can signify if there are any uncommitted changes.
@@ -27,7 +27,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun status() = gitCommand(listOf("status", "--porcelain"))
+    fun status(): String = gitCommand(listOf("status", "--porcelain"))
 
     /**
      * Stage any new, modified or deleted files, to be included in the next commit.
@@ -37,7 +37,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun addAll() = gitCommand(listOf("add", "--all"))
+    fun addAll(): String = gitCommand(listOf("add", "--all"))
 
     /**
      * Create a Git commit with the given commit message. Any modified or deleted files will also be staged and
@@ -50,7 +50,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun commit(message: String) = gitCommand(listOf("commit", "-a", "-m", message, "--quiet"))
+    fun commit(message: String): String = gitCommand(listOf("commit", "-a", "-m", message, "--quiet"))
 
     /**
      * Create a Git commit with the given commit message. Any new, modified or deleted files will also be staged and
@@ -137,7 +137,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun clone(repositoryUrl: URL, destination: File? = null) =
+    fun clone(repositoryUrl: URL, destination: File? = null): String =
         clone(repositoryUrl.toString(), destination?.toString())
 
     /**
@@ -169,7 +169,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun addTag(tagName: String, message: String) = gitCommand(listOf("tag", "-a", tagName, "-m", message))
+    fun addTag(tagName: String, message: String): String = gitCommand(listOf("tag", "-a", tagName, "-m", message))
 
     /**
      * Push the given Git tag.
@@ -181,7 +181,7 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun pushTag(tagName: String) = gitCommand(listOf("push", "origin", tagName))
+    fun pushTag(tagName: String): String = gitCommand(listOf("push", "origin", tagName))
 
     /**
      * Get the current Git branch name.
@@ -191,8 +191,17 @@ class GitCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun currentBranch() = gitCommand(listOf("rev-parse", "--abbrev-ref", "HEAD"))
+    fun currentBranch(): String = gitCommand(listOf("rev-parse", "--abbrev-ref", "HEAD"))
 
-    private fun gitCommand(arguments: List<String>) =
-        shell.command("git", arguments)
+    /**
+     * Run a Git command with the specified arguments.
+     *
+     * @param [arguments] The arguments to pass to the Git command.
+     *
+     * @return [String] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun gitCommand(arguments: List<String>): String = shell.command("git", arguments)
 }

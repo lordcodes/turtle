@@ -19,7 +19,7 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("unused")
-    fun openFile(path: File) = openFile(path.toString())
+    fun openFile(path: File): String = openFile(path.toString())
 
     /**
      * Open a file using its default application.
@@ -32,7 +32,7 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("MemberVisibilityCanBePrivate")
-    fun openFile(path: String) = shell.command("open", listOf(path))
+    fun openFile(path: String): String = shell.command("open", listOf(path))
 
     /**
      * Open an application by name.
@@ -45,7 +45,7 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("unused")
-    fun openApplication(name: String) = shell.command("open", listOf("-a", name))
+    fun openApplication(name: String): String = shell.command("open", listOf("-a", name))
 
     /**
      * Create a symbolic link at a given path, that links back to a different location.
@@ -58,7 +58,7 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun createSymlink(targetPath: File, linkPath: File) =
+    fun createSymlink(targetPath: File, linkPath: File): String =
         createSymlink(targetPath.toString(), linkPath.toString())
 
     /**
@@ -72,7 +72,7 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun createSymlink(targetPath: String, linkPath: String) =
+    fun createSymlink(targetPath: String, linkPath: String): String =
         shell.command("ln", listOf("-s", targetPath, linkPath))
 
     /**
@@ -85,7 +85,7 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun readSymlink(linkPath: File) = readSymlink(linkPath.toString())
+    fun readSymlink(linkPath: File): String = readSymlink(linkPath.toString())
 
     /**
      * Read the target path of a symbolic link.
@@ -97,5 +97,5 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun readSymlink(linkPath: String) = shell.command("readlink", listOf(linkPath))
+    fun readSymlink(linkPath: String): String = shell.command("readlink", listOf(linkPath))
 }

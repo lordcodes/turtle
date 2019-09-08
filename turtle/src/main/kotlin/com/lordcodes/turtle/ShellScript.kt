@@ -68,7 +68,9 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
      *
      * @param [path] The path to set the working directory to.
      */
-    fun changeWorkingDirectory(path: String) = changeWorkingDirectory(File(path))
+    fun changeWorkingDirectory(path: String) {
+        changeWorkingDirectory(File(path))
+    }
 
     /**
      * Change the working directory for subsequent shell commands.
