@@ -3,9 +3,6 @@ package com.lordcodes.turtle.sample
 import com.lordcodes.turtle.GitCommands
 import com.lordcodes.turtle.shellRun
 
-/**
- * Run the sample
- */
 fun main() {
     shellRun {
         println(git.gitAuthorName())
