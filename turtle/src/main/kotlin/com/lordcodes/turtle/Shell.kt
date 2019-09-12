@@ -16,7 +16,7 @@ import java.io.File
  * @throws [ShellFailedException] There was an issue running one of the commands.
  * @throws [ShellRunException] Running one of the commands produced error output.
  */
-fun shellRun(workingDirectory: File? = null, script: ShellScript.() -> String) =
+fun shellRun(workingDirectory: File? = null, script: ShellScript.() -> String): String =
     ShellScript(workingDirectory).script()
 
 /**
@@ -32,5 +32,5 @@ fun shellRun(workingDirectory: File? = null, script: ShellScript.() -> String) =
  * @throws [ShellFailedException] There was an issue running the command.
  * @throws [ShellRunException] Running the command produced error output.
  */
-fun shellRun(command: String, arguments: List<String> = listOf(), workingDirectory: File? = null) =
+fun shellRun(command: String, arguments: List<String> = listOf(), workingDirectory: File? = null): String =
     shellRun(workingDirectory) { command(command, arguments) }

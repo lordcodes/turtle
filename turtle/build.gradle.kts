@@ -2,10 +2,14 @@
 
 import com.novoda.gradle.release.PublishExtension
 import org.jetbrains.dokka.gradle.DokkaTask
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     kotlin("jvm")
-    id(Plugins.dokka)
+    id(Plugins.detekt) version Versions.detekt
+    id(Plugins.dokka) version Versions.dokka
+    id(Plugins.ktlint) version Versions.ktlintPlugin
+    id(Plugins.ktlintIdea) version Versions.ktlintPlugin
 }
 
 dependencies {
@@ -27,6 +31,25 @@ val dokka by tasks.getting(DokkaTask::class) {
         dir = "./"
         url = "https://github.com/lordcodes/turtle/blob/master/"
         suffix = "#L"
+    }
+}
+
+detekt {
+    toolVersion = Versions.detekt
+    input = files(
+        "src/main/kotlin",
+        "src/test/kotlin"
+    )
+    parallel = true
+    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+    buildUponDefaultConfig = true
+}
+
+ktlint {
+    version.set(Versions.ktlint)
+    reporters.set(setOf(ReporterType.PLAIN, ReporterType.CHECKSTYLE))
+    filter {
+        include("**/src/**/kotlin/**")
     }
 }
 
