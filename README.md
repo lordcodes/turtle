@@ -41,7 +41,7 @@ Turtle is provided as a Gradle/Maven dependency, which will be available via Bin
 
 ```gradle
 dependencies {
-  implementation("com.lordcodes.turtle:turtle:0.1.0")
+  implementation("com.lordcodes.turtle:turtle:0.2.0")
 }
 ```
 
@@ -49,7 +49,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation 'com.lordcodes.turtle:turtle:0.1.0'
+  implementation 'com.lordcodes.turtle:turtle:0.2.0'
 }
 ```
 
