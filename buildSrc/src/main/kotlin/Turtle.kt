@@ -1,6 +1,6 @@
 object Turtle {
     private const val VERSION_MAJOR = 0
-    private const val VERSION_MINOR = 1
+    private const val VERSION_MINOR = 2
     private const val VERSION_PATCH = 0
 
     const val VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
