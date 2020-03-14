@@ -1,7 +1,4 @@
-# Turtle Code of Conduct
-
-Below is the Code of Conduct that all contributors and participants in the Turtle community are expected to adhere to.
-It's adopted from the [Contributor Covenant Code of Conduct][homepage].
+# Contributor Covenant Code of Conduct
 
 ## Our Pledge
 
@@ -26,13 +23,13 @@ include:
 Examples of unacceptable behavior by participants include:
 
 * The use of sexualized language or imagery and unwelcome sexual attention or
-  advances
+ advances
 * Trolling, insulting/derogatory comments, and personal or political attacks
 * Public or private harassment
 * Publishing others' private information, such as a physical or electronic
-  address, without explicit permission
+ address, without explicit permission
 * Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+ professional setting
 
 ## Our Responsibilities
 
@@ -58,7 +55,7 @@ further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project leader on Twitter at [@lordcodes](https://twitter.com/lordcodes). All
+reported by contacting the project team at andrew@lordcodes.com. All
 complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
 obligated to maintain confidentiality with regard to the reporter of an incident.
@@ -71,10 +68,9 @@ members of the project's leadership.
 ## Attribution
 
 This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-available at [https://www.contributor-covenant.org/version/1/4/code-of-conduct.html][version].
+available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
 
 [homepage]: https://www.contributor-covenant.org
-[version]: https://contributor-covenant.org/version/1/4/
 
 For answers to common questions about this code of conduct, see
 https://www.contributor-covenant.org/faq
