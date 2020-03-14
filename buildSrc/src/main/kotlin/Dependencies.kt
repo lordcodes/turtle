@@ -1,3 +1,5 @@
+@file:Suppress("InvalidPackageDeclaration")
+
 object Plugins {
     const val bintrayRelease = "com.novoda.bintray-release"
     const val bintrayReleaseVersioned = "com.novoda:bintray-release:${Versions.bintrayRelease}"

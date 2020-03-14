@@ -43,7 +43,5 @@ open class UninstallGitHooksTask : DefaultTask() {
         }
     }
 
-    private fun File.isProjectGeneratedHook(): Boolean {
-        return readText().indexOf(InstallGitHooksTask.UPDATEABLE_IDENTIFIER) > -1
-    }
+    private fun File.isProjectGeneratedHook() = readText().indexOf(InstallGitHooksTask.UPDATEABLE_IDENTIFIER) > -1
 }

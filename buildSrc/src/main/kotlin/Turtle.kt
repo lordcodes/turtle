@@ -1,10 +1,12 @@
+@file:Suppress("InvalidPackageDeclaration")
+
 object Turtle {
     private const val VERSION_MAJOR = 0
     private const val VERSION_MINOR = 2
     private const val VERSION_PATCH = 0
 
     const val VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
-    const val VERSION_CODE = VERSION_MAJOR * 100000 + VERSION_MINOR * 100 + VERSION_PATCH
+    const val VERSION_CODE = VERSION_MAJOR * 100_000 + VERSION_MINOR * 100 + VERSION_PATCH
 
     const val GROUP_ID = "com.lordcodes.turtle"
     const val ARTIFACT_ID = "turtle"
