@@ -1,3 +1,5 @@
+@file:Suppress("InvalidPackageDeclaration")
+
 import org.gradle.api.Project
 
 fun Project.propertyOrEmpty(name: String): String {

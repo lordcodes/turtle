@@ -4,8 +4,10 @@ build:
 comments:
   UndocumentedPublicClass:
     active: true
+    excludes: "**/buildSrc/**"
   UndocumentedPublicFunction:
     active: true
+    excludes: "**/buildSrc/**"
 
 complexity:
   ComplexInterface:
@@ -24,7 +26,7 @@ complexity:
 
 empty-blocks:
   EmptyFunctionBlock:
-    ignoreOverriddenFunctions: true
+    ignoreOverridden: true
 
 exceptions:
   ExceptionRaisedInUnexpectedLocation:
