@@ -23,6 +23,7 @@ plugins {
 
 allprojects {
     repositories {
+        mavenCentral()
         jcenter()
     }
 
@@ -73,5 +74,4 @@ detekt {
     buildUponDefaultConfig = true
 }
 
-apply(from = "scripts/project-setup.gradle.kts")
 apply(from = "scripts/build-verify.gradle.kts")

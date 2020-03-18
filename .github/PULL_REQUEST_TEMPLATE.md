@@ -3,8 +3,8 @@
 ### Checklist
 - [ ] I've read the [guide for contributing](https://github.com/lordcodes/turtle/blob/master/CONTRIBUTING.md).
 - [ ] I've checked there are no other [open pull requests](https://github.com/lordcodes/turtle/pulls) for the same change.
-- [ ] I've formatted all code changes with `./gradlew ktlintFormat`.
-- [ ] I've ran all checks with `./gradlew check`.
+- [ ] I've formatted all code changes with `./gradlew lcCodeFormat`.
+- [ ] I've ran all checks with `./gradlew lcChecks`.
 - [ ] I've updated documentation if needed.
 - [ ] I've added or updated tests for changes.
 
