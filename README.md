@@ -10,8 +10,8 @@
   <a href="https://github.com/lordcodes/turtle/releases/latest">
       <img src="https://img.shields.io/github/release/lordcodes/turtle.svg?style=flat" alt="Latest release" />
   </a>
-  <a href="https://circleci.com/gh/lordcodes/turtle">
-    <img src="https://circleci.com/gh/lordcodes/turtle.svg?style=shield" alt="Circle CI build status" />
+  <a href="https://github.com/lordcodes/turtle/workflows/Gradle">
+    <img src="https://github.com/lordcodes/turtle/workflows/Gradle/badge.svg" alt="Gradle build status" />
   </a>
   <a href="https://twitter.com/lordcodes">
     <img src="https://img.shields.io/badge/twitter-@lordcodes-00acee.svg?style=flat" alt="Twitter: @lordcodes" />
