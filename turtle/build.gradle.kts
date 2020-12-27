@@ -42,17 +42,17 @@ configure<PublishExtension> {
     bintrayUser = propertyOrEmpty("Turtle_Bintray_User")
     bintrayKey = propertyOrEmpty("Turtle_Bintray_ApiKey")
 
-    userOrg = Turtle.BINTRAY_USER
-    repoName = Turtle.BINTRAY_REPOSITORY
+    userOrg = "lordcodes"
+    repoName = "maven"
 
-    groupId = Turtle.GROUP_ID
-    artifactId = Turtle.ARTIFACT_ID
+    groupId = "com.lordcodes.turtle"
+    artifactId = "turtle"
     publishVersion = Turtle.VERSION_NAME
 
     desc = Turtle.DESCRIPTION
-    setLicences(Turtle.LICENSE)
+    setLicences("Apache-2.0")
     website = Turtle.WEBSITE
-    issueTracker = Turtle.ISSUE_TRACKER
+    issueTracker = "https://github.com/lordcodes/turtle/issues"
     repository = Turtle.SOURCE_CONTROL
 }
 
@@ -81,10 +81,23 @@ if (project.isPublishing()) {
 
             pom.developers {
                 developer {
-                    id.set(Turtle.DEVELOPER_USER)
-                    name.set(Turtle.DEVELOPER_NAME)
+                    id.set("lordcodes")
+                    name.set("Andrew Lord")
                 }
             }
         }
     }
+}
+
+object Turtle {
+    private const val VERSION_MAJOR = 0
+    private const val VERSION_MINOR = 2
+    private const val VERSION_PATCH = 0
+
+    const val VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+    const val VERSION_CODE = VERSION_MAJOR * 100_000 + VERSION_MINOR * 100 + VERSION_PATCH
+
+    const val DESCRIPTION = "Run shell commands from a Kotlin script or application with ease \uD83D\uDC22"
+    const val WEBSITE = "https://github.com/lordcodes/turtle"
+    const val SOURCE_CONTROL = "https://github.com/lordcodes/turtle.git"
 }
