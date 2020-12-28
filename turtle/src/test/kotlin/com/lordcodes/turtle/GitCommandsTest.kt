@@ -1,6 +1,6 @@
 package com.lordcodes.turtle
 
-import org.assertj.core.api.Assertions.assertThat
+import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
@@ -22,7 +22,7 @@ internal class GitCommandsTest {
     fun gitInit() {
         git.gitInit()
 
-        assertThat(File(temporaryFolder, ".git")).isDirectory()
+        assertThat(File(temporaryFolder, ".git").isDirectory).isTrue()
     }
 
     @Test
@@ -158,6 +158,45 @@ internal class GitCommandsTest {
 
         assertThat(currentBranch).isEqualTo("newBranch")
         assertThat(currentBranch).isEqualTo(shell.command("git", listOf("rev-parse", "--abbrev-ref", "HEAD")))
+    }
+
+    @Test
+    fun currentCommit() {
+        initUsableRepository()
+        val newFile = File(temporaryFolder, "testFile.txt")
+        newFile.createNewFile()
+        git.addAll()
+        git.commit("Add testFile")
+
+        val currentCommit = git.currentCommit()
+
+        assertThat(currentCommit).isEqualTo(shell.command("git", listOf("rev-parse", "--verify", "HEAD")))
+    }
+
+    @Test
+    fun currentCommitAuthorEmail() {
+        initUsableRepository()
+        val newFile = File(temporaryFolder, "testFile.txt")
+        newFile.createNewFile()
+        git.addAll()
+        git.commit("Add testFile")
+
+        val email = git.currentCommitAuthorEmail()
+
+        assertThat(email).isEqualTo(shell.command("git", listOf("--no-pager", "show", "-s", "--format=%ae")))
+    }
+
+    @Test
+    fun currentCommitAuthorName() {
+        initUsableRepository()
+        val newFile = File(temporaryFolder, "testFile.txt")
+        newFile.createNewFile()
+        git.addAll()
+        git.commit("Add testFile")
+
+        val email = git.currentCommitAuthorName()
+
+        assertThat(email).isEqualTo(shell.command("git", listOf("--no-pager", "show", "-s", "--format=%an")))
     }
 
     private fun initUsableRepository() {

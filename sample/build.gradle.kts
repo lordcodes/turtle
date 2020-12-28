@@ -4,5 +4,5 @@ plugins {
 
 dependencies {
     implementation(project(":turtle"))
-    implementation(Libs.kotlinStdlib)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }

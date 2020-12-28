@@ -88,6 +88,16 @@ class GitCommands internal constructor(
     }
 
     /**
+     * Push changes to the origin remote on a Git repository.
+     *
+     * @return [String] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun pushToOrigin(): String = push(remote = "origin", branch = "HEAD")
+
+    /**
      * Pull changes for a Git repository.
      *
      * @param [remote] The remote to pull from, optional.
@@ -192,6 +202,36 @@ class GitCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     fun currentBranch(): String = gitCommand(listOf("rev-parse", "--abbrev-ref", "HEAD"))
+
+    /**
+     * Get the current Git commit.
+     *
+     * @return [String] The current commit.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun currentCommit(): String = gitCommand(listOf("rev-parse", "--verify", "HEAD"))
+
+    /**
+     * Get the current Git commit author email.
+     *
+     * @return [String] The current commit author email.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun currentCommitAuthorEmail(): String = gitCommand(listOf("--no-pager", "show", "-s", "--format=%ae"))
+
+    /**
+     * Get the current Git commit author name.
+     *
+     * @return [String] The current commit author name.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun currentCommitAuthorName(): String = gitCommand(listOf("--no-pager", "show", "-s", "--format=%an"))
 
     /**
      * Run a Git command with the specified arguments.
