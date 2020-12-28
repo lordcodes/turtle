@@ -1,42 +1,47 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.novoda.gradle.release.PublishExtension
-import org.jetbrains.dokka.gradle.DokkaTask
+import java.net.URL
+import org.gradle.api.Project
 
 plugins {
     kotlin("jvm")
-    id(Plugins.dokka) version Versions.dokka
+    id("org.jetbrains.dokka") version "1.4.20"
 }
 
-apply(plugin = Plugins.ktlint)
-apply(plugin = Plugins.ktlintIdea)
+apply(plugin = "org.jlleitschuh.gradle.ktlint")
+apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
-    implementation(Libs.kotlinStdlib)
+    implementation(enforcedPlatform(project(":meta:dependencies")))
 
-    testImplementation(TestLibs.assertJCore)
-    testImplementation(TestLibs.junit5Api)
-    testRuntimeOnly(TestLibs.junit5Runtime)
-    testImplementation(TestLibs.mockk)
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
+    testImplementation("com.google.truth:truth")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("io.mockk:mockk")
 }
 
-val dokka by tasks.getting(DokkaTask::class) {
-    outputDirectory = "$buildDir/docs/dokka"
+tasks.dokkaHtml.configure {
+    outputDirectory.set(buildDir.resolve("docs/dokka"))
 
-    configuration {
-        jdkVersion = 8
+    dokkaSourceSets {
+        configureEach {
+            jdkVersion.set(8)
 
-        includes = listOf("module.md")
+            includes.from("module.md")
 
-        sourceLink {
-            path = "./"
-            url = "https://github.com/lordcodes/turtle/blob/master/"
-            lineSuffix = "#L"
+            sourceLink {
+                localDirectory.set(file("./"))
+                remoteUrl.set(URL("https://github.com/lordcodes/turtle/blob/master/"))
+                remoteLineSuffix.set("#L")
+            }
         }
     }
 }
 
-apply(plugin = Plugins.bintrayRelease)
+apply(plugin = "com.novoda.bintray-release")
 
 configure<PublishExtension> {
     bintrayUser = propertyOrEmpty("Turtle_Bintray_User")
@@ -94,10 +99,19 @@ object Turtle {
     private const val VERSION_MINOR = 2
     private const val VERSION_PATCH = 0
 
-    const val VERSION_NAME = "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
+    const val VERSION_NAME = "$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH"
     const val VERSION_CODE = VERSION_MAJOR * 100_000 + VERSION_MINOR * 100 + VERSION_PATCH
 
     const val DESCRIPTION = "Run shell commands from a Kotlin script or application with ease \uD83D\uDC22"
     const val WEBSITE = "https://github.com/lordcodes/turtle"
     const val SOURCE_CONTROL = "https://github.com/lordcodes/turtle.git"
 }
+
+fun Project.propertyOrEmpty(name: String): String {
+    val property = findProperty(name) as String?
+    return property ?: environmentVariable(name)
+}
+
+fun environmentVariable(name: String) = System.getenv(name) ?: ""
+
+fun Project.isPublishing() = gradle.startParameter.taskNames.any { it.contains("bintrayUpload") }

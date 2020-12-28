@@ -1,3 +1,7 @@
 rootProject.name = "turtle"
 
-include("turtle", "sample")
+include(
+    ":meta:dependencies",
+    "turtle",
+    "sample"
+)
