@@ -1,6 +1,6 @@
 package com.lordcodes.turtle
 
-import org.assertj.core.api.Assertions.assertThat
+import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
@@ -22,7 +22,7 @@ internal class GitCommandsTest {
     fun gitInit() {
         git.gitInit()
 
-        assertThat(File(temporaryFolder, ".git")).isDirectory()
+        assertThat(File(temporaryFolder, ".git").isDirectory).isTrue()
     }
 
     @Test
