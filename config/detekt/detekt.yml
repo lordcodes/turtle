@@ -15,11 +15,11 @@ complexity:
   ComplexMethod:
     ignoreSingleWhenExpression: true
   TooManyFunctions:
-    thresholdInFiles: 15
-    thresholdInClasses: 15
-    thresholdInInterfaces: 15
-    thresholdInObjects: 15
-    thresholdInEnums: 15
+    thresholdInFiles: 20
+    thresholdInClasses: 20
+    thresholdInInterfaces: 20
+    thresholdInObjects: 20
+    thresholdInEnums: 20
     ignoreDeprecated: true
     ignorePrivate: true
     ignoreOverridden: true
