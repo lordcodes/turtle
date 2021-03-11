@@ -7,7 +7,7 @@ import org.gradle.api.Project
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.4.20"
-    id("com.vanniktech.maven.publish") version "0.13.0"
+    id("com.vanniktech.maven.publish") version "0.14.2"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
@@ -42,13 +42,28 @@ tasks.dokkaHtml.configure {
     }
 }
 
-signing {
-    useInMemoryPgpKeys(propertyOrEmpty("Turtle_Signing_Key"), propertyOrEmpty("Turtle_Signing_Password"))
+publishing {
+    repositories {
+        withType<MavenArtifactRepository> {
+            if (name == "local") {
+                return@withType
+            }
+
+            url = if (version.toString().endsWith("SNAPSHOT")) {
+                uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            } else {
+                uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+            }
+            credentials {
+                username = propertyOrEmpty("Turtle_Sonatype_Nexus_Username")
+                password = propertyOrEmpty("Turtle_Sonatype_Nexus_Password")
+            }
+        }
+    }
 }
 
-afterEvaluate {
-    ext.set("SONATYPE_NEXUS_USERNAME", propertyOrEmpty("Turtle_Sonatype_Nexus_Username"))
-    ext.set("SONATYPE_NEXUS_PASSWORD", propertyOrEmpty("Turtle_Sonatype_Nexus_Password"))
+signing {
+    useInMemoryPgpKeys(propertyOrEmpty("Turtle_Signing_Key"), propertyOrEmpty("Turtle_Signing_Password"))
 }
 
 apply(plugin = "com.novoda.bintray-release")
