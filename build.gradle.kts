@@ -14,11 +14,11 @@ buildscript {
 
 plugins {
     base
-    kotlin("jvm") version "1.4.21" apply false
-    id("io.gitlab.arturbosch.detekt") version "1.15.0"
-    id("com.github.ben-manes.versions") version "0.36.0"
-    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
-    id("org.jlleitschuh.gradle.ktlint-idea") version "9.4.1"
+    kotlin("jvm") version "1.4.31" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.16.0"
+    id("com.github.ben-manes.versions") version "0.38.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "10.0.0"
 }
 
 allprojects {
