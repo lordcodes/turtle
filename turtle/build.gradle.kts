@@ -7,6 +7,7 @@ import org.gradle.api.Project
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.4.20"
+    id("com.vanniktech.maven.publish") version "0.13.0"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
@@ -39,6 +40,15 @@ tasks.dokkaHtml.configure {
             }
         }
     }
+}
+
+signing {
+    useInMemoryPgpKeys(propertyOrEmpty("Turtle_Signing_Key"), propertyOrEmpty("Turtle_Signing_Password"))
+}
+
+afterEvaluate {
+    ext.set("SONATYPE_NEXUS_USERNAME", propertyOrEmpty("Turtle_Sonatype_Nexus_Username"))
+    ext.set("SONATYPE_NEXUS_PASSWORD", propertyOrEmpty("Turtle_Sonatype_Nexus_Password"))
 }
 
 apply(plugin = "com.novoda.bintray-release")

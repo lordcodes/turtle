@@ -4,6 +4,7 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -23,6 +24,7 @@ plugins {
 allprojects {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     tasks.withType<KotlinCompile>().configureEach {
