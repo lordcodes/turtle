@@ -6,10 +6,6 @@ buildscript {
         mavenCentral()
         jcenter()
     }
-
-    dependencies {
-        classpath("com.novoda:bintray-release:0.9.2")
-    }
 }
 
 plugins {
