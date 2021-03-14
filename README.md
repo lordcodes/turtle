@@ -6,7 +6,7 @@
   <a href="https://kotlinlang.org/">
       <img src="https://img.shields.io/badge/100%25-kotlin-935dff.svg" alt="Pure Kotlin" />
   </a>
-  <img src="https://img.shields.io/badge/Kotlin-v1.3.41-orange.svg?style=flat" />
+  <img src="https://img.shields.io/badge/Kotlin-v1.4.31-orange.svg?style=flat" />
   <a href="https://github.com/lordcodes/turtle/releases/latest">
       <img src="https://img.shields.io/github/release/lordcodes/turtle.svg?style=flat" alt="Latest release" />
   </a>
@@ -50,13 +50,16 @@ When a command produces an error, the exit code and error output is thrown as an
 
 ## Install
 
-Turtle is provided as a Gradle/Maven dependency, which will be available via Bintray and Maven Central soon.
+Turtle is provided as a Gradle/Maven dependency.
+
+* v0.3.0 onwards are available via Maven Central.
+* Earlier releases were available via Bintray/JCenter.
 
 #### ▶︎ Gradle Kotlin DSL
 
 ```gradle
 dependencies {
-  implementation("com.lordcodes.turtle:turtle:0.2.0")
+  implementation("com.lordcodes.turtle:turtle:0.3.0")
 }
 ```
 
@@ -64,7 +67,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation 'com.lordcodes.turtle:turtle:0.2.0'
+  implementation 'com.lordcodes.turtle:turtle:0.3.0'
 }
 ```
 
