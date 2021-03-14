@@ -8,7 +8,7 @@ javaPlatform {
 }
 
 dependencies {
-    api(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.4.21"))
+    api(enforcedPlatform("org.jetbrains.kotlin:kotlin-bom:1.4.31"))
 
     constraints {
         junit5()
@@ -18,16 +18,16 @@ dependencies {
 }
 
 fun DependencyConstraintHandler.junit5() {
-    api("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    api("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    api("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    api("org.junit.jupiter:junit-jupiter-engine:5.7.1")
 }
 
 fun DependencyConstraintHandler.mockk() {
-    api("io.mockk:mockk:1.10.0")
+    api("io.mockk:mockk:1.10.6")
 }
 
 fun DependencyConstraintHandler.truth() {
-    api("com.google.truth:truth:1.1")
+    api("com.google.truth:truth:1.1.2")
 }
 
 publishing {

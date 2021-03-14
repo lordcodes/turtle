@@ -1,12 +1,12 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.novoda.gradle.release.PublishExtension
 import java.net.URL
 import org.gradle.api.Project
 
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.4.20"
+    id("com.vanniktech.maven.publish") version "0.14.2"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
@@ -41,70 +41,28 @@ tasks.dokkaHtml.configure {
     }
 }
 
-apply(plugin = "com.novoda.bintray-release")
-
-configure<PublishExtension> {
-    bintrayUser = propertyOrEmpty("Turtle_Bintray_User")
-    bintrayKey = propertyOrEmpty("Turtle_Bintray_ApiKey")
-
-    userOrg = "lordcodes"
-    repoName = "maven"
-
-    groupId = "com.lordcodes.turtle"
-    artifactId = "turtle"
-    publishVersion = Turtle.VERSION_NAME
-
-    desc = Turtle.DESCRIPTION
-    setLicences("Apache-2.0")
-    website = Turtle.WEBSITE
-    issueTracker = "https://github.com/lordcodes/turtle/issues"
-    repository = Turtle.SOURCE_CONTROL
-}
-
-if (project.isPublishing()) {
-    apply(plugin = "maven")
-
-    gradle.taskGraph.whenReady {
-        tasks.withType<GenerateMavenPom>().configureEach {
-            pom.description.set(Turtle.DESCRIPTION)
-            pom.packaging = "jar"
-            pom.url.set(Turtle.WEBSITE)
-
-            pom.scm {
-                url.set(Turtle.SOURCE_CONTROL)
-                connection.set(Turtle.SOURCE_CONTROL)
-                developerConnection.set(Turtle.SOURCE_CONTROL)
+publishing {
+    repositories {
+        withType<MavenArtifactRepository> {
+            if (name == "local") {
+                return@withType
             }
 
-            pom.licenses {
-                license {
-                    name.set("The Apache Software License, Version 2.0")
-                    url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    distribution.set("repo")
-                }
+            url = if (version.toString().endsWith("SNAPSHOT")) {
+                uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+            } else {
+                uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             }
-
-            pom.developers {
-                developer {
-                    id.set("lordcodes")
-                    name.set("Andrew Lord")
-                }
+            credentials {
+                username = propertyOrEmpty("Turtle_Sonatype_Nexus_Username")
+                password = propertyOrEmpty("Turtle_Sonatype_Nexus_Password")
             }
         }
     }
 }
 
-object Turtle {
-    private const val VERSION_MAJOR = 0
-    private const val VERSION_MINOR = 2
-    private const val VERSION_PATCH = 0
-
-    const val VERSION_NAME = "$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH"
-    const val VERSION_CODE = VERSION_MAJOR * 100_000 + VERSION_MINOR * 100 + VERSION_PATCH
-
-    const val DESCRIPTION = "Run shell commands from a Kotlin script or application with ease \uD83D\uDC22"
-    const val WEBSITE = "https://github.com/lordcodes/turtle"
-    const val SOURCE_CONTROL = "https://github.com/lordcodes/turtle.git"
+signing {
+    useInMemoryPgpKeys(propertyOrEmpty("Turtle_Signing_Key"), propertyOrEmpty("Turtle_Signing_Password"))
 }
 
 fun Project.propertyOrEmpty(name: String): String {
@@ -113,5 +71,3 @@ fun Project.propertyOrEmpty(name: String): String {
 }
 
 fun environmentVariable(name: String) = System.getenv(name) ?: ""
-
-fun Project.isPublishing() = gradle.startParameter.taskNames.any { it.contains("bintrayUpload") }
