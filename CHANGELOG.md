@@ -2,7 +2,13 @@
 
 ## Un-released changes (master)
 
+## v0.4.0
+
+Fixed the broken POM file from v0.3.0.
+
 ## v0.3.0
+
+:rotating_light: IMPORTANT: Broken release, please use v0.4.0
 
 * Maven Central publishing.
 * Updated dependencies to latest.

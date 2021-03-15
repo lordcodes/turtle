@@ -52,14 +52,15 @@ When a command produces an error, the exit code and error output is thrown as an
 
 Turtle is provided as a Gradle/Maven dependency.
 
-* v0.3.0 onwards are available via Maven Central.
+* v0.4.0 onwards are available via Maven Central.
+* v0.3.0 was broken, so please use v0.4.0 or later.
 * Earlier releases were available via Bintray/JCenter.
 
 #### ▶︎ Gradle Kotlin DSL
 
 ```gradle
 dependencies {
-  implementation("com.lordcodes.turtle:turtle:0.3.0")
+  implementation("com.lordcodes.turtle:turtle:0.4.0")
 }
 ```
 
@@ -67,7 +68,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation 'com.lordcodes.turtle:turtle:0.3.0'
+  implementation 'com.lordcodes.turtle:turtle:0.4.0'
 }
 ```
 
@@ -93,12 +94,12 @@ To run a series of commands or use the built-in commands, just call `shellRun {}
 ```kotlin
 shellRun {
   command("mkdir tortoise")
-  
+
   changeWorkingDirectory("tortoise")
-  
+
   git.commit("Initial commit")
   git.addTag("v1.2", "Release v1.2")
-  
+
   files.openApplication("Spotify")
 }
 ```
