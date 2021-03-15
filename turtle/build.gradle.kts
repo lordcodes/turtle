@@ -13,14 +13,12 @@ apply(plugin = "org.jlleitschuh.gradle.ktlint")
 apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
-    implementation(enforcedPlatform(project(":meta:dependencies")))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.31")
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-
-    testImplementation("com.google.truth:truth")
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
-    testImplementation("io.mockk:mockk")
+    testImplementation("com.google.truth:truth:1.1.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation("io.mockk:mockk:1.10.6")
 }
 
 tasks.dokkaHtml.configure {
