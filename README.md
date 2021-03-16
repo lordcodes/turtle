@@ -52,15 +52,15 @@ When a command produces an error, the exit code and error output is thrown as an
 
 Turtle is provided as a Gradle/Maven dependency.
 
-* v0.4.0 onwards are available via Maven Central.
-* v0.3.0 was broken, so please use v0.4.0 or later.
+* v0.5.0 onwards are available via Maven Central.
+* v0.3.0 and v0.4.0 had issues, so please use v0.5.0 or later.
 * Earlier releases were available via Bintray/JCenter.
 
 #### ▶︎ Gradle Kotlin DSL
 
 ```gradle
 dependencies {
-  implementation("com.lordcodes.turtle:turtle:0.4.0")
+  implementation("com.lordcodes.turtle:turtle:0.5.0")
 }
 ```
 
@@ -68,7 +68,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation 'com.lordcodes.turtle:turtle:0.4.0'
+  implementation 'com.lordcodes.turtle:turtle:0.5.0'
 }
 ```
 
