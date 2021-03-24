@@ -6,7 +6,6 @@
   <a href="https://kotlinlang.org/">
       <img src="https://img.shields.io/badge/100%25-kotlin-935dff.svg" alt="Pure Kotlin" />
   </a>
-  <img src="https://img.shields.io/badge/Kotlin-v1.4.31-orange.svg?style=flat" />
   <a href="https://github.com/lordcodes/turtle/releases/latest">
       <img src="https://img.shields.io/github/release/lordcodes/turtle.svg?style=flat" alt="Latest release" />
   </a>
