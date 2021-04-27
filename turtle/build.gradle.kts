@@ -13,7 +13,7 @@ apply(plugin = "org.jlleitschuh.gradle.ktlint")
 apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.32")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.0")
 
     testImplementation("com.google.truth:truth:1.1.2")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
