@@ -4,7 +4,6 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
-import java.util.Locale
 import java.util.UUID
 
 internal class ShellScriptTest {
@@ -13,7 +12,7 @@ internal class ShellScriptTest {
         val output = ShellScript().command("uuidgen")
 
         val uuid = UUID.fromString(output)
-        assertThat(uuid.toString()).isEqualTo(output.toLowerCase(Locale.US))
+        assertThat(uuid.toString()).isEqualTo(output.lowercase())
     }
 
     @Test
@@ -34,6 +33,7 @@ internal class ShellScriptTest {
 
         assertThat(output).isEqualTo("expectedValue")
     }
+
     @Test
     fun changeWorkingDirectory_stringPath(@TempDir temporaryFolder: File) {
         val testFile = File(temporaryFolder, "testFile")
@@ -46,6 +46,7 @@ internal class ShellScriptTest {
 
         assertThat(output).isEqualTo("expectedValue")
     }
+
     @Test
     fun changeWorkingDirectory_file(@TempDir temporaryFolder: File) {
         val testFile = File(temporaryFolder, "testFile")
