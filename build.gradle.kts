@@ -10,7 +10,7 @@ buildscript {
 
 plugins {
     base
-    kotlin("jvm") version "1.5.20" apply false
+    kotlin("jvm") version "1.5.21" apply false
     id("io.gitlab.arturbosch.detekt") version "1.16.0"
     id("com.github.ben-manes.versions") version "0.39.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
