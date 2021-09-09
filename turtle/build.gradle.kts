@@ -6,7 +6,7 @@ import org.gradle.api.Project
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.5.0"
-    id("com.vanniktech.maven.publish") version "0.14.2"
+    id("com.vanniktech.maven.publish") version "0.17.0"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
