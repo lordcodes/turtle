@@ -3,6 +3,11 @@
 import java.net.URL
 import org.gradle.api.Project
 
+project.ext.set("mavenCentralUsername", propertyOrEmpty("Turtle_Sonatype_Nexus_Username"))
+project.ext.set("mavenCentralPassword", propertyOrEmpty("Turtle_Sonatype_Nexus_Password"))
+project.ext.set("signingInMemoryKey", propertyOrEmpty("Turtle_Signing_Key"))
+project.ext.set("signingInMemoryKeyPassword", propertyOrEmpty("Turtle_Signing_Password"))
+
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.5.30"
@@ -13,11 +18,11 @@ apply(plugin = "org.jlleitschuh.gradle.ktlint")
 apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.30")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
 
     testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testImplementation("io.mockk:mockk:1.12.0")
 }
 
@@ -37,30 +42,6 @@ tasks.dokkaHtml.configure {
             }
         }
     }
-}
-
-publishing {
-    repositories {
-        withType<MavenArtifactRepository> {
-            if (name == "local") {
-                return@withType
-            }
-
-            url = if (version.toString().endsWith("SNAPSHOT")) {
-                uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-            } else {
-                uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
-            }
-            credentials {
-                username = propertyOrEmpty("Turtle_Sonatype_Nexus_Username")
-                password = propertyOrEmpty("Turtle_Sonatype_Nexus_Password")
-            }
-        }
-    }
-}
-
-signing {
-    useInMemoryPgpKeys(propertyOrEmpty("Turtle_Signing_Key"), propertyOrEmpty("Turtle_Signing_Password"))
 }
 
 fun Project.propertyOrEmpty(name: String): String {
