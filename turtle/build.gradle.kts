@@ -10,7 +10,7 @@ project.ext.set("signingInMemoryKeyPassword", propertyOrEmpty("Turtle_Signing_Pa
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.5.30"
+    id("org.jetbrains.dokka") version "1.5.31"
     id("com.vanniktech.maven.publish") version "0.18.0"
 }
 
