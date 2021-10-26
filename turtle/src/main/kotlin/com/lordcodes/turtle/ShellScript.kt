@@ -15,6 +15,11 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
         .redirectError(ProcessBuilder.Redirect.PIPE)
 
     /**
+     * Default callbacks into the process started for each command that is executed.
+     */
+    var defaultCallbacks: ProcessCallbacks = EmptyProcessCallbacks
+
+    /**
      * Access commands that deal with files or the filesystem.
      */
     val files = FileCommands(this)
@@ -45,7 +50,7 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
         val process = processBuilder
             .command(splitCommand)
             .start()
-        callbacks.onProcessStart(process)
+        onProcessStart(process, callbacks)
         process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
         process.retrieveOutput()
     } catch (exception: IOException) {
@@ -82,6 +87,11 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
      */
     fun changeWorkingDirectory(path: File) {
         processBuilder.directory(path)
+    }
+
+    private fun onProcessStart(process: Process, callbacks: ProcessCallbacks) {
+        defaultCallbacks.onProcessStart(process)
+        callbacks.onProcessStart(process)
     }
 
     private object EmptyProcessCallbacks : ProcessCallbacks

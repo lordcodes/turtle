@@ -36,6 +36,13 @@ internal class ShellScriptTest {
 
     @Test
     fun command_processCallback() {
+        var defaultCallbacksProcess: Process? = null
+        val script = ShellScript()
+        script.defaultCallbacks = object : ProcessCallbacks {
+            override fun onProcessStart(process: Process) {
+                defaultCallbacksProcess = process
+            }
+        }
         var commandProcess: Process? = null
         val callback = object : ProcessCallbacks {
             override fun onProcessStart(process: Process) {
@@ -43,9 +50,11 @@ internal class ShellScriptTest {
             }
         }
 
-        ShellScript().command("echo", listOf("Hello world!"), callback)
+        script.command("echo", listOf("Hello world!"), callback)
 
         assertThat(commandProcess).isNotNull()
+        assertThat(defaultCallbacksProcess).isNotNull()
+        assertThat(defaultCallbacksProcess).isEqualTo(commandProcess)
     }
 
     @Test
