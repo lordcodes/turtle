@@ -35,6 +35,20 @@ internal class ShellScriptTest {
     }
 
     @Test
+    fun command_processCallback() {
+        var commandProcess: Process? = null
+        val callback = object : ProcessCallbacks {
+            override fun onProcessStart(process: Process) {
+                commandProcess = process
+            }
+        }
+
+        ShellScript().command("echo", listOf("Hello world!"), callback)
+
+        assertThat(commandProcess).isNotNull()
+    }
+
+    @Test
     fun changeWorkingDirectory_stringPath(@TempDir temporaryFolder: File) {
         val testFile = File(temporaryFolder, "testFile")
         testFile.createNewFile()

@@ -29,6 +29,7 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
      *
      * @param [command] A command to run.
      * @param [arguments] The arguments to pass to the command.
+     * @param [callbacks] Callbacks into the process
      *
      * @return [String] The output of running the command.
      *
@@ -37,12 +38,14 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
      */
     fun command(
         command: String,
-        arguments: List<String> = listOf()
+        arguments: List<String> = listOf(),
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks
     ): String = try {
         val splitCommand = listOf(command) + arguments
         val process = processBuilder
             .command(splitCommand)
             .start()
+        callbacks.onProcessStart(process)
         process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
         process.retrieveOutput()
     } catch (exception: IOException) {
@@ -80,6 +83,8 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
     fun changeWorkingDirectory(path: File) {
         processBuilder.directory(path)
     }
+
+    private object EmptyProcessCallbacks : ProcessCallbacks
 
     companion object {
         private const val COMMAND_TIMEOUT = 60L
