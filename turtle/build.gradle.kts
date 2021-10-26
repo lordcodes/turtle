@@ -1,12 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 import java.net.URL
-import org.gradle.api.Project
-
-project.ext.set("mavenCentralUsername", propertyOrEmpty("Turtle_Sonatype_Nexus_Username"))
-project.ext.set("mavenCentralPassword", propertyOrEmpty("Turtle_Sonatype_Nexus_Password"))
-project.ext.set("signingInMemoryKey", propertyOrEmpty("Turtle_Signing_Key"))
-project.ext.set("signingInMemoryKeyPassword", propertyOrEmpty("Turtle_Signing_Password"))
 
 plugins {
     kotlin("jvm")
@@ -42,6 +36,10 @@ tasks.dokkaHtml.configure {
             }
         }
     }
+}
+
+signing {
+    useInMemoryPgpKeys(propertyOrEmpty("Turtle_Signing_Key"), propertyOrEmpty("Turtle_Signing_Password"))
 }
 
 fun Project.propertyOrEmpty(name: String): String {
