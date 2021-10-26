@@ -58,6 +58,13 @@ internal class ShellScriptTest {
     }
 
     @Test
+    fun commandStreaming() {
+        val output = ShellScript().commandStreaming("echo", listOf("Hello world!"))
+
+        assertThat(output.standardOutput.bufferedReader().readText().trim()).isEqualTo("Hello world!")
+    }
+
+    @Test
     fun changeWorkingDirectory_stringPath(@TempDir temporaryFolder: File) {
         val testFile = File(temporaryFolder, "testFile")
         testFile.createNewFile()
