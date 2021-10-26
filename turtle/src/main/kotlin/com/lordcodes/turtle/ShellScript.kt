@@ -30,7 +30,7 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
     val git = GitCommands(this)
 
     /**
-     * Run a shell command with the specified arguments.
+     * Run a shell command with the specified arguments, receiving the output as a String.
      *
      * @param [command] A command to run.
      * @param [arguments] The arguments to pass to the command.
@@ -45,14 +45,44 @@ class ShellScript internal constructor(workingDirectory: File? = null) {
         command: String,
         arguments: List<String> = listOf(),
         callbacks: ProcessCallbacks = EmptyProcessCallbacks
-    ): String = try {
+    ): String = runCommand(command, arguments, callbacks) { it.retrieveOutput() }
+
+    /**
+     * Run a shell command with the specified arguments, allowing standard output or error to be read as a stream.
+     *
+     * @param [command] A command to run.
+     * @param [arguments] The arguments to pass to the command.
+     *
+     * @return [ProcessOutput] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun commandStreaming(
+        command: String,
+        arguments: List<String> = listOf(),
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks
+    ): ProcessOutput = runCommand(command, arguments, callbacks) { process ->
+        ProcessOutput(
+            exitCode = process.exitValue(),
+            standardOutput = process.inputStream,
+            standardError = process.errorStream
+        )
+    }
+
+    private fun <OutputT> runCommand(
+        command: String,
+        arguments: List<String>,
+        callbacks: ProcessCallbacks,
+        prepareOutput: (Process) -> OutputT
+    ): OutputT = try {
         val splitCommand = listOf(command) + arguments
         val process = processBuilder
             .command(splitCommand)
             .start()
         onProcessStart(process, callbacks)
         process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
-        process.retrieveOutput()
+        prepareOutput(process)
     } catch (exception: IOException) {
         throw ShellFailedException(exception)
     } catch (exception: InterruptedException) {
