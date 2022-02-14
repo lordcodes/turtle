@@ -13,7 +13,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.18.1"
     id("com.github.ben-manes.versions") version "0.42.0"
     id("org.jlleitschuh.gradle.ktlint") version "10.2.0"
-    id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "10.2.1"
 }
 
 allprojects {
