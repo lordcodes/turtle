@@ -4,7 +4,7 @@ import java.net.URL
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.5.31"
+    id("org.jetbrains.dokka") version "1.6.10"
     id("com.vanniktech.maven.publish") version "0.19.0"
 }
 
