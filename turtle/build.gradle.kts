@@ -17,7 +17,7 @@ dependencies {
     testImplementation("com.google.truth:truth:1.1.3")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("io.mockk:mockk:1.12.3")
+    testImplementation("io.mockk:mockk:1.12.4")
 }
 
 tasks.dokkaHtml.configure {
