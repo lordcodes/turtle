@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Create and run either built-in or specified shell commands.
  */
-class ShellScript internal constructor(workingDirectory: File? = null) {
+open class ShellScript internal constructor(workingDirectory: File? = null) {
     private val processBuilder = ProcessBuilder(listOf())
         .directory(workingDirectory)
         .redirectOutput(ProcessBuilder.Redirect.PIPE)
