@@ -2,6 +2,11 @@
 
 ## Un-released changes (master)
 
+## v0.7.0
+
+* Make ShellScript constructor accessible, so that consumers can create their own instances, such as creating a wrapper class. [PR #99](https://github.com/lordcodes/turtle/pull/99)
+* Many dependency updates.
+
 ## v0.6.0
 
 * Specify a process callback for a single command or a default one to use for all commands. This can be used to access the underlying process to monitor it or customise behaviour such as implementing a timeout. [PR #66](https://github.com/lordcodes/turtle/pull/66).
