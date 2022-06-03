@@ -5,7 +5,7 @@ import java.net.URL
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.6.21"
-    id("com.vanniktech.maven.publish") version "0.19.0"
+    id("com.vanniktech.maven.publish") version "0.20.0"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
