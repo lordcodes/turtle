@@ -14,13 +14,11 @@ apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
 
-    testImplementation("com.google.truth:truth:1.1.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.7.10")
     testImplementation("io.mockk:mockk:1.12.5")
 }
 
-tasks.withType<Test>() {
+tasks.test {
     useJUnitPlatform()
     environment("LANG", "en_US.UTF8")
 }

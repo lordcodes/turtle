@@ -1,10 +1,11 @@
 package com.lordcodes.turtle
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import java.util.UUID
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 internal class ShellScriptTest {
     @Test
@@ -12,14 +13,14 @@ internal class ShellScriptTest {
         val output = ShellScript().command("uuidgen")
 
         val uuid = UUID.fromString(output)
-        assertThat(uuid.toString()).isEqualTo(output.lowercase())
+        assertEquals(uuid.toString(), output.lowercase())
     }
 
     @Test
     fun command_withArguments() {
         val output = ShellScript().command("echo", listOf("Hello world!"))
 
-        assertThat(output).isEqualTo("Hello world!")
+        assertEquals(output, "Hello world!")
     }
 
     @Test
@@ -31,7 +32,7 @@ internal class ShellScriptTest {
 
         val output = script.command("cat", listOf(testFile.name))
 
-        assertThat(output).isEqualTo("expectedValue")
+        assertEquals(output, "expectedValue")
     }
 
     @Test
@@ -52,16 +53,16 @@ internal class ShellScriptTest {
 
         script.command("echo", listOf("Hello world!"), callback)
 
-        assertThat(commandProcess).isNotNull()
-        assertThat(defaultCallbacksProcess).isNotNull()
-        assertThat(defaultCallbacksProcess).isEqualTo(commandProcess)
+        assertTrue(commandProcess != null)
+        assertTrue(defaultCallbacksProcess != null)
+        assertEquals(defaultCallbacksProcess, commandProcess)
     }
 
     @Test
     fun commandStreaming() {
         val output = ShellScript().commandStreaming("echo", listOf("Hello world!"))
 
-        assertThat(output.standardOutput.bufferedReader().readText().trim()).isEqualTo("Hello world!")
+        assertEquals(output.standardOutput.bufferedReader().readText().trim(), "Hello world!")
     }
 
     @Test
@@ -74,7 +75,7 @@ internal class ShellScriptTest {
         script.changeWorkingDirectory(temporaryFolder.absolutePath)
         val output = script.command("cat", listOf(testFile.name))
 
-        assertThat(output).isEqualTo("expectedValue")
+        assertEquals(output, "expectedValue")
     }
 
     @Test
@@ -87,6 +88,6 @@ internal class ShellScriptTest {
         script.changeWorkingDirectory(temporaryFolder)
         val output = script.command("cat", listOf(testFile.name))
 
-        assertThat(output).isEqualTo("expectedValue")
+        assertEquals(output, "expectedValue")
     }
 }

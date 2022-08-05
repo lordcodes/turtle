@@ -1,10 +1,13 @@
 package com.lordcodes.turtle
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import kotlin.test.Test
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 internal class GitCommandsTest {
     // push - create remote that is a local repo and push to it, check changes in other repo
@@ -22,7 +25,7 @@ internal class GitCommandsTest {
     fun gitInit() {
         git.gitInit()
 
-        assertThat(File(temporaryFolder, ".git").isDirectory).isTrue()
+        assertTrue(File(temporaryFolder, ".git").isDirectory)
     }
 
     @Test
@@ -33,7 +36,7 @@ internal class GitCommandsTest {
 
         val output = git.status()
 
-        assertThat(output).isEqualTo("?? ${newFile.name}")
+        assertEquals(output, "?? ${newFile.name}")
     }
 
     @Test
@@ -50,7 +53,8 @@ internal class GitCommandsTest {
         git.addAll()
 
         val status = git.status()
-        assertThat(status).isEqualTo(
+        assertEquals(
+            status,
             """
             A  ${newFile.name}
             M  ${modifiedFile.name}
@@ -68,7 +72,7 @@ internal class GitCommandsTest {
         git.commit("Add testFile")
 
         val message = shell.command("git", listOf("log", "-1", "--pretty=%B"))
-        assertThat(message).isEqualTo("Add testFile")
+        assertEquals(message, "Add testFile")
     }
 
     @Test
@@ -85,9 +89,9 @@ internal class GitCommandsTest {
         git.commit("Change testFile")
 
         val lastCommit = shell.command("git", listOf("show"))
-        assertThat(lastCommit).contains("Change testFile")
-        assertThat(lastCommit).contains("testFile.txt")
-        assertThat(lastCommit).doesNotContain("anotherFile.txt")
+        assertContains(lastCommit, "Change testFile")
+        assertContains(lastCommit, "testFile.txt")
+        assertFalse(lastCommit.contains("anotherFile.txt"))
     }
 
     @Test
@@ -104,9 +108,9 @@ internal class GitCommandsTest {
         git.commitAllChanges("Change testFile")
 
         val lastCommit = shell.command("git", listOf("show"))
-        assertThat(lastCommit).contains("Change testFile")
-        assertThat(lastCommit).contains("testFile.txt")
-        assertThat(lastCommit).contains("anotherFile.txt")
+        assertContains(lastCommit, "Change testFile")
+        assertContains(lastCommit, "testFile.txt")
+        assertContains(lastCommit, "anotherFile.txt")
     }
 
     @Test
@@ -115,7 +119,7 @@ internal class GitCommandsTest {
 
         git.checkout("newBranch")
 
-        assertThat(git.currentBranch()).isEqualTo("newBranch")
+        assertEquals(git.currentBranch(), "newBranch")
     }
 
     @Test
@@ -126,7 +130,8 @@ internal class GitCommandsTest {
             git.checkout("newBranch", createIfNecessary = false)
         }
 
-        assertThat(exception.message).contains("pathspec 'newBranch' did not match")
+        val message = exception.message ?: ""
+        assertContains(message, "pathspec 'newBranch' did not match")
     }
 
     @Test
@@ -136,7 +141,7 @@ internal class GitCommandsTest {
 
         git.checkout("newBranch", createIfNecessary = false)
 
-        assertThat(git.currentBranch()).isEqualTo("newBranch")
+        assertEquals(git.currentBranch(), "newBranch")
     }
 
     @Test
@@ -146,7 +151,7 @@ internal class GitCommandsTest {
         git.addTag(tagName = "v1.1.0", message = "Release v1.1.0")
 
         val lastTag = shell.command("git", listOf("describe", "--tags", "--abbrev=0"))
-        assertThat(lastTag).isEqualTo("v1.1.0")
+        assertEquals(lastTag, "v1.1.0")
     }
 
     @Test
@@ -156,8 +161,8 @@ internal class GitCommandsTest {
 
         val currentBranch = git.currentBranch()
 
-        assertThat(currentBranch).isEqualTo("newBranch")
-        assertThat(currentBranch).isEqualTo(shell.command("git", listOf("rev-parse", "--abbrev-ref", "HEAD")))
+        assertEquals(currentBranch, "newBranch")
+        assertEquals(currentBranch, shell.command("git", listOf("rev-parse", "--abbrev-ref", "HEAD")))
     }
 
     @Test
@@ -170,7 +175,7 @@ internal class GitCommandsTest {
 
         val currentCommit = git.currentCommit()
 
-        assertThat(currentCommit).isEqualTo(shell.command("git", listOf("rev-parse", "--verify", "HEAD")))
+        assertEquals(currentCommit, shell.command("git", listOf("rev-parse", "--verify", "HEAD")))
     }
 
     @Test
@@ -183,7 +188,7 @@ internal class GitCommandsTest {
 
         val email = git.currentCommitAuthorEmail()
 
-        assertThat(email).isEqualTo(shell.command("git", listOf("--no-pager", "show", "-s", "--format=%ae")))
+        assertEquals(email, shell.command("git", listOf("--no-pager", "show", "-s", "--format=%ae")))
     }
 
     @Test
@@ -196,7 +201,7 @@ internal class GitCommandsTest {
 
         val email = git.currentCommitAuthorName()
 
-        assertThat(email).isEqualTo(shell.command("git", listOf("--no-pager", "show", "-s", "--format=%an")))
+        assertEquals(email, shell.command("git", listOf("--no-pager", "show", "-s", "--format=%an")))
     }
 
     private fun initUsableRepository() {

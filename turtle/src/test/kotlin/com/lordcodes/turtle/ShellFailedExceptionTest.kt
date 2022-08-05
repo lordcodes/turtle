@@ -1,13 +1,13 @@
 package com.lordcodes.turtle
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class ShellFailedExceptionTest {
     @Test
     fun message() {
         val message = ShellFailedException(RuntimeException()).message
 
-        assertThat(message).isEqualTo("Running shell command failed")
+        assertEquals(message, "Running shell command failed")
     }
 }
