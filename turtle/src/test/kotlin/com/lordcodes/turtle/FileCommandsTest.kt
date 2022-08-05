@@ -4,6 +4,7 @@ import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 internal class FileCommandsTest {
     @TempDir
@@ -56,7 +57,7 @@ internal class FileCommandsTest {
 
     @Test
     fun which() {
-        assertThat(shell.files.which("ls")).isEqualTo("/bin/ls")
-        assertThat(shell.files.which("xrearsKJlsa")).isNull()
+        assertEquals(shell.files.which("ls"), "/bin/ls")
+        assertTrue(shell.files.which("xrearsKJlsa") == null)
     }
 }

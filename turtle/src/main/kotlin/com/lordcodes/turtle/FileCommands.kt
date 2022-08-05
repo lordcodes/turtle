@@ -100,18 +100,24 @@ class FileCommands internal constructor(
     fun readSymlink(linkPath: String): String = shell.command("readlink", listOf(linkPath))
 
     /**
-     * Call $ which [command]
+     * Retrieve the location of the provided command, can be used to determine if a command is available.
      *
      * ```kotlin
      * shellRun {
      *   which("git") ?: error("git is not installed")
      * }
      * ```
+     *
+     * @param [command] The command for which to get the location.
+     *
+     * @return [String] The location of the provided command or null if not found.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
      */
     @Suppress("SwallowedException")
     fun which(command: String): String? = try {
         shell.command("which", listOf(command))
-    } catch (e: ShellRunException) {
+    } catch (ex: ShellRunException) {
         null
     }
 }
