@@ -7,6 +7,7 @@ import java.io.File
  *
  * @param [workingDirectory] The location to run commands from. It can be changed between commands within the
  * [script] function. By default, the current working directory will be used.
+ * @param [dryRun] Use dry-run mode which prints executed commands instead of launching processes.
  * @param [script] A function that runs a series of shell commands.
  *
  * @return [String] The output of the [script] function. If the function just runs a series of shell commands, it
@@ -16,14 +17,18 @@ import java.io.File
  * @throws [ShellFailedException] There was an issue running one of the commands.
  * @throws [ShellRunException] Running one of the commands produced error output.
  */
-fun shellRun(workingDirectory: File? = null, script: ShellScript.() -> String): String =
-    ShellScript(workingDirectory).script()
+fun shellRun(
+    workingDirectory: File? = null,
+    dryRun: Boolean = false,
+    script: ShellScript.() -> String
+): String = ShellScript(workingDirectory, dryRun = dryRun).script()
 
 /**
  * Run a shell command with the specified arguments.
  *
  * @param [command] A command to run.
  * @param [arguments] The arguments to pass to the command.
+ * @param [dryRun] Use dry-run mode which prints executed commands instead of launching processes.
  * @param [workingDirectory] The location to run the command from. By default, the current working directory will
  * be used.
  *
@@ -32,5 +37,9 @@ fun shellRun(workingDirectory: File? = null, script: ShellScript.() -> String): 
  * @throws [ShellFailedException] There was an issue running the command.
  * @throws [ShellRunException] Running the command produced error output.
  */
-fun shellRun(command: String, arguments: List<String> = listOf(), workingDirectory: File? = null): String =
-    shellRun(workingDirectory) { command(command, arguments) }
+fun shellRun(
+    command: String,
+    arguments: List<String> = listOf(),
+    workingDirectory: File? = null,
+    dryRun: Boolean = false
+): String = shellRun(workingDirectory, dryRun = dryRun) { command(command, arguments) }

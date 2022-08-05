@@ -5,8 +5,8 @@ import com.lordcodes.turtle.shellRun
 
 fun main() {
     shellRun {
-        files.which("git") ?: error("git must be installed")
-        println("git: " + files.which("git"))
+        val gitLocation = files.which("git") ?: error("git must be installed")
+        println("git: $gitLocation")
 
         println(git.gitAuthorName())
 

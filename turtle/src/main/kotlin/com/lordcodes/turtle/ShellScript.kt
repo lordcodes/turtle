@@ -8,7 +8,10 @@ import java.util.concurrent.TimeUnit
 /**
  * Create and run either built-in or specified shell commands.
  */
-class ShellScript constructor(workingDirectory: File? = null) {
+class ShellScript constructor(
+    workingDirectory: File? = null,
+    private val dryRun: Boolean = false
+) {
     private val processBuilder = ProcessBuilder(listOf())
         .directory(workingDirectory)
         .redirectOutput(ProcessBuilder.Redirect.PIPE)
@@ -75,18 +78,31 @@ class ShellScript constructor(workingDirectory: File? = null) {
         arguments: List<String>,
         callbacks: ProcessCallbacks,
         prepareOutput: (Process) -> OutputT
-    ): OutputT = try {
-        val splitCommand = listOf(command) + arguments
-        val process = processBuilder
-            .command(splitCommand)
-            .start()
-        onProcessStart(process, callbacks)
-        process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
-        prepareOutput(process)
-    } catch (exception: IOException) {
-        throw ShellFailedException(exception)
-    } catch (exception: InterruptedException) {
-        throw ShellFailedException(exception)
+    ): OutputT = if (dryRun) {
+        dryRunCommand(command, arguments, prepareOutput)
+    } else {
+        try {
+            val splitCommand = listOf(command) + arguments
+            val process = processBuilder
+                .command(splitCommand)
+                .start()
+            onProcessStart(process, callbacks)
+            process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
+            prepareOutput(process)
+        } catch (exception: IOException) {
+            throw ShellFailedException(exception)
+        } catch (exception: InterruptedException) {
+            throw ShellFailedException(exception)
+        }
+    }
+
+    private fun <OutputT> dryRunCommand(
+        command: String,
+        arguments: List<String>,
+        prepareOutput: (Process) -> OutputT
+    ): OutputT {
+        println("$command ${arguments.joinToString(" ")}")
+        return prepareOutput(EmptyProcess())
     }
 
     private fun Process.retrieveOutput(): String {
