@@ -89,4 +89,11 @@ internal class ShellScriptTest {
 
         assertThat(output).isEqualTo("expectedValue")
     }
+
+    @Test
+    fun isCommandInstalled() {
+        val script = ShellScript()
+        assertThat(script.isCommandInstalled("ls")).isTrue()
+        assertThat(script.isCommandInstalled("xrearsKJlsa")).isFalse()
+    }
 }

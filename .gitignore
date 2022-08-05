@@ -6,16 +6,10 @@
 build/
 out/
 
+
 # Local configuration file (SDK path, etc)
 /local.properties
 
 # IntelliJ / Android Studio
 *.iml
-/.idea/kotlinc.xml
-/.idea/assetWizardSettings.xml
-/.idea/gradle.xml
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/dictionaries
+/.idea

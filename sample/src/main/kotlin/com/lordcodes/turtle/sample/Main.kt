@@ -5,6 +5,7 @@ import com.lordcodes.turtle.shellRun
 
 fun main() {
     shellRun {
+        require(isCommandInstalled("git")) { "error: git is not installed" }
         println(git.gitAuthorName())
 
         command("mkdir", listOf("Test"))

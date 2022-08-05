@@ -94,9 +94,7 @@ class ShellScript constructor(workingDirectory: File? = null) {
         val exitCode = exitValue()
         if (exitCode != 0) {
             val errorText = errorStream.bufferedReader().use(BufferedReader::readText)
-            if (errorText.isNotEmpty()) {
-                throw ShellRunException(exitCode, errorText.trim())
-            }
+            throw ShellRunException(exitCode, errorText.trim())
         }
         return outputText.trim()
     }
@@ -117,6 +115,23 @@ class ShellScript constructor(workingDirectory: File? = null) {
      */
     fun changeWorkingDirectory(path: File) {
         processBuilder.directory(path)
+    }
+
+    /**
+     * Check whether the CLI tool [command] is already installed
+     *
+     * ```kotlin
+     * shellRun {
+     *   require(isCommandInstalled("git")) { "error: git is not installed" }
+     * }
+     * ```
+     */
+    @Suppress("SwallowedException")
+    fun isCommandInstalled(command: String): Boolean = try {
+        command("which", listOf(command))
+        true
+    } catch (e: ShellRunException) {
+        false
     }
 
     private fun onProcessStart(process: Process, callbacks: ProcessCallbacks) {

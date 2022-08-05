@@ -20,6 +20,10 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.5")
 }
 
+tasks.withType<Test>() {
+    useJUnitPlatform()
+}
+
 tasks.dokkaHtml.configure {
     outputDirectory.set(buildDir.resolve("docs/dokka"))
 
