@@ -98,4 +98,20 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     fun readSymlink(linkPath: String): String = shell.command("readlink", listOf(linkPath))
+
+    /**
+     * Call $ which [command]
+     *
+     * ```kotlin
+     * shellRun {
+     *   which("git") ?: error("git is not installed")
+     * }
+     * ```
+     */
+    @Suppress("SwallowedException")
+    fun which(command: String): String? = try {
+        shell.command("which", listOf(command))
+    } catch (e: ShellRunException) {
+        null
+    }
 }

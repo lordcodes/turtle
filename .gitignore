@@ -6,6 +6,7 @@
 build/
 out/
 
+
 # Local configuration file (SDK path, etc)
 /local.properties
 

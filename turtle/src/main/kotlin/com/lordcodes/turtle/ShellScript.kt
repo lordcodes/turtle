@@ -94,9 +94,7 @@ class ShellScript constructor(workingDirectory: File? = null) {
         val exitCode = exitValue()
         if (exitCode != 0) {
             val errorText = errorStream.bufferedReader().use(BufferedReader::readText)
-            if (errorText.isNotEmpty()) {
-                throw ShellRunException(exitCode, errorText.trim())
-            }
+            throw ShellRunException(exitCode, errorText.trim())
         }
         return outputText.trim()
     }

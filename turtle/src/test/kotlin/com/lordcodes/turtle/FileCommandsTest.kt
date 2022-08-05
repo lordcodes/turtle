@@ -53,4 +53,10 @@ internal class FileCommandsTest {
 
         assertEquals(output, "targetFolder")
     }
+
+    @Test
+    fun which() {
+        assertThat(shell.files.which("ls")).isEqualTo("/bin/ls")
+        assertThat(shell.files.which("xrearsKJlsa")).isNull()
+    }
 }

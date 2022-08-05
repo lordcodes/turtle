@@ -5,12 +5,15 @@ import com.lordcodes.turtle.shellRun
 
 fun main() {
     shellRun {
+        files.which("git") ?: error("git must be installed")
+        println("git: " + files.which("git"))
+
         println(git.gitAuthorName())
 
         command("mkdir", listOf("Test"))
         command("mkdir", listOf("Test2"))
         command("rm", listOf("-rf", "BLAH"))
-        command("rm", listOf("-rf", "Test"))
+        command("rm", listOf("-rf", "Test", "Test2"))
     }
 }
 
