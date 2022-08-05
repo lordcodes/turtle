@@ -1,16 +1,16 @@
 package com.lordcodes.turtle
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 internal class ShellLocationTest {
     @Test
     fun home() {
-        assertThat(ShellLocation.HOME.absolutePath).isNotEmpty()
+        assertTrue(ShellLocation.HOME.absolutePath.isNotEmpty())
     }
 
     @Test
     fun currentWorking() {
-        assertThat(ShellLocation.CURRENT_WORKING.absolutePath).isNotEmpty()
+        assertTrue(ShellLocation.CURRENT_WORKING.absolutePath.isNotEmpty())
     }
 }

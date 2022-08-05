@@ -1,9 +1,9 @@
 package com.lordcodes.turtle
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class FileCommandsTest {
     @TempDir
@@ -19,7 +19,7 @@ internal class FileCommandsTest {
 
         files.createSymlink(File("targetFolder"), File("linkedFrom"))
 
-        assertThat(shell.command("readlink", listOf("linkedFrom"))).isEqualTo("targetFolder")
+        assertEquals(shell.command("readlink", listOf("linkedFrom")), "targetFolder")
     }
 
     @Test
@@ -29,7 +29,7 @@ internal class FileCommandsTest {
 
         files.createSymlink("targetFolder", "linkedFrom")
 
-        assertThat(shell.command("readlink", listOf("linkedFrom"))).isEqualTo("targetFolder")
+        assertEquals(shell.command("readlink", listOf("linkedFrom")), "targetFolder")
     }
 
     @Test
@@ -40,7 +40,7 @@ internal class FileCommandsTest {
 
         val output = files.readSymlink(File("linkedFrom"))
 
-        assertThat(output).isEqualTo("targetFolder")
+        assertEquals(output, "targetFolder")
     }
 
     @Test
@@ -51,6 +51,6 @@ internal class FileCommandsTest {
 
         val output = files.readSymlink("linkedFrom")
 
-        assertThat(output).isEqualTo("targetFolder")
+        assertEquals(output, "targetFolder")
     }
 }

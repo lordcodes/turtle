@@ -1,10 +1,10 @@
 package com.lordcodes.turtle
 
-import com.google.common.truth.Truth.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
 import java.util.UUID
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class ShellTest {
     @Test
@@ -12,7 +12,7 @@ internal class ShellTest {
         val output = shellRun { command("uuidgen") }
 
         val uuid = UUID.fromString(output)
-        assertThat(uuid.toString()).isEqualTo(output.lowercase())
+        assertEquals(uuid.toString(), output.lowercase())
     }
 
     @Test
@@ -22,7 +22,7 @@ internal class ShellTest {
             command("echo", listOf("Hello world!"))
         }
 
-        assertThat(output).isEqualTo("Hello world!")
+        assertEquals(output, "Hello world!")
     }
 
     @Test
@@ -35,7 +35,7 @@ internal class ShellTest {
             command("cat", listOf(testFile.name))
         }
 
-        assertThat(output).isEqualTo("expectedValue")
+        assertEquals(output, "expectedValue")
     }
 
     @Test
@@ -49,7 +49,7 @@ internal class ShellTest {
             command("cat", listOf(testFile.name))
         }
 
-        assertThat(output).isEqualTo("expectedValue")
+        assertEquals(output, "expectedValue")
     }
 
     @Test
@@ -57,14 +57,14 @@ internal class ShellTest {
         val output = shellRun("uuidgen")
 
         val uuid = UUID.fromString(output)
-        assertThat(uuid.toString()).isEqualTo(output.lowercase())
+        assertEquals(uuid.toString(), output.lowercase())
     }
 
     @Test
     fun shellRun_singleCommandWithArguments() {
         val output = shellRun("echo", listOf("Hello world!"))
 
-        assertThat(output).isEqualTo("Hello world!")
+        assertEquals(output, "Hello world!")
     }
 
     @Test
@@ -75,6 +75,6 @@ internal class ShellTest {
 
         val output = shellRun("cat", listOf(testFile.name), temporaryFolder)
 
-        assertThat(output).isEqualTo("expectedValue")
+        assertEquals(output, "expectedValue")
     }
 }
