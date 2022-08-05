@@ -117,23 +117,6 @@ class ShellScript constructor(workingDirectory: File? = null) {
         processBuilder.directory(path)
     }
 
-    /**
-     * Check whether the CLI tool [command] is already installed
-     *
-     * ```kotlin
-     * shellRun {
-     *   require(isCommandInstalled("git")) { "error: git is not installed" }
-     * }
-     * ```
-     */
-    @Suppress("SwallowedException")
-    fun isCommandInstalled(command: String): Boolean = try {
-        command("which", listOf(command))
-        true
-    } catch (e: ShellRunException) {
-        false
-    }
-
     private fun onProcessStart(process: Process, callbacks: ProcessCallbacks) {
         defaultCallbacks.onProcessStart(process)
         callbacks.onProcessStart(process)

@@ -22,6 +22,7 @@ dependencies {
 
 tasks.withType<Test>() {
     useJUnitPlatform()
+    environment("LANG", "en_US.UTF8")
 }
 
 tasks.dokkaHtml.configure {
