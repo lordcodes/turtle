@@ -77,4 +77,14 @@ internal class ShellTest {
 
         assertEquals(output, "expectedValue")
     }
+
+    @Test
+    fun shellRun_dryRun() = withCapturedSystemOut { systemOutStream ->
+        val output = shellRun(dryRun = true) {
+            git.currentBranch()
+        }
+
+        assertEquals(output, "")
+        assertEquals(systemOutStream.toString().trim(), "git rev-parse --abbrev-ref HEAD")
+    }
 }
