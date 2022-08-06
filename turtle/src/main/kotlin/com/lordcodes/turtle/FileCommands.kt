@@ -9,6 +9,23 @@ class FileCommands internal constructor(
     private val shell: ShellScript,
 ) {
     /**
+     * Open a [url] using its default application. This URL can be a file path or web URL.
+     *
+     * @param [url] The URL to open, file path or web URL.
+     *
+     * @return [String] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    @Suppress("unused", "MemberVisibilityCanBePrivate")
+    fun open(url: String): String = shell.multiplatform(
+        mac = { command("open", listOf(url)) },
+        linux = { command("xdg-open", listOf(url)) },
+        windows = { command("cmd.exe", listOf("/c", "start", url)) }
+    )
+
+    /**
      * Open a file at [path] using its default application, returning any output as a [String].
      *
      * @param [path] The file to open.
@@ -18,8 +35,8 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    @Suppress("unused")
-    fun openFile(path: File): String = openFile(path.toString())
+    @Suppress("unused", "MemberVisibilityCanBePrivate")
+    fun openFile(path: File): String = open(path.toString())
 
     /**
      * Open a file at [path] using its default application, returning any output as a [String].
@@ -31,8 +48,8 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun openFile(path: String): String = shell.command("open", listOf(path))
+    @Suppress("unused")
+    fun openFile(path: String): String = open(path)
 
     /**
      * Open an application by [name], returning any output as a [String].
