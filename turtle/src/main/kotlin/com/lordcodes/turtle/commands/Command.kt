@@ -43,7 +43,7 @@ data class LongOption(val key: String, val value: Any? = null) : HasCommandArgum
     }
 }
 
-private fun Any?.toArgument(): Result<String?> = when {
+internal fun Any?.toArgument(): Result<String?> = when {
     this == null -> Result.success(null)
     this is HasCommandArgument -> Result.success(arg)
     this is String -> Result.success(this)

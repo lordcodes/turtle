@@ -11,14 +11,14 @@ abstract class CommandSpec {
         fun generateCommand(
             executable: String,
             argsBeforeOptions: List<Any> = emptyList(),
-            shortOptions: List<Char> = emptyList(),
-            longOptions: List<LongOption> = emptyList(),
+            shortOptionChars: List<Char> = emptyList(),
+            longArgs: List<LongOption> = emptyList(),
             argsAfterOptions: List<Any> = emptyList(),
         ): Command {
-            val shortArgs = shortOptions.map { ShortOption(it, null) }
+            val shortArgs = shortOptionChars.map { ShortOption(it, null) }
 
             val shortWarnings = shortArgs.map { it.key }.filter { it !in LsCommandSpec.shortOptions }
-            val longWarnings = longOptions.map { it.key }.filter { it !in LsCommandSpec.longOptionsMap.keys }
+            val longWarnings = longArgs.map { it.key }.filter { it !in LsCommandSpec.longOptionsMap.keys }
             if (shortWarnings.isNotEmpty()) {
                 println("w: $executable() called with unknown short arguments: $shortWarnings")
             }
@@ -27,9 +27,9 @@ abstract class CommandSpec {
             }
 
             val args = listOf(executable) + argsBeforeOptions +
-                shortOptions + longOptions +
+                shortArgs + longArgs +
                 argsAfterOptions
-            return Command(args)
+            return Command(*args.toTypedArray())
         }
     }
 }

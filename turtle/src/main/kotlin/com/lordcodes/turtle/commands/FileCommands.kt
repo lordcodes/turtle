@@ -16,8 +16,8 @@ object FileCommands {
         longOptions: LsCommandSpec.() -> List<LongOption> = { emptyList() }
     ): Command = CommandSpec.generateCommand(
         executable = "ls",
-        shortOptions = shortOptions,
-        longOptions = LsCommandSpec.longOptions(),
+        shortOptionChars = shortOptions,
+        longArgs = LsCommandSpec.longOptions(),
         argsAfterOptions = files,
     )
 }
