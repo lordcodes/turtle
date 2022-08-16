@@ -1,3 +1,4 @@
+@file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 package com.lordcodes.turtle.commands
 
 import org.junit.jupiter.api.Assertions.*
