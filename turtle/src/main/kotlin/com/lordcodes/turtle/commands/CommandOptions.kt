@@ -5,3 +5,5 @@ abstract class CommandOptions {
     val optionsMap: Map<String, LongOption> =
         emptyMap<String, LongOption>().withDefault { key -> LongOption("--$key", null) }
 }
+
+val NoOptions: CommandOptions.() -> List<LongOption> = { emptyList() }

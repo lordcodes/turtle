@@ -33,11 +33,15 @@ interface HasCommandArgument {
 }
 
 data class LongOption(val key: String, val value: Any? = null) : HasCommandArgument {
-    fun withValue(value: Any): LongOption = copy(value = value)
+    fun withValue(value: Any): LongOption =
+        copy(value = value)
+
+    private val result = value.toArgument()
 
     override val arg: String = when {
-        value == null -> key
-        else -> "$key=$value"
+        result.isFailure -> error("Invalid argument $this")
+        result == Result.success(null) -> key
+        else -> "$key=${result.getOrNull()!!}"
     }
 }
 
