@@ -2,7 +2,7 @@
 package com.lordcodes.turtle.commands
 
 @Suppress("ObjectPropertyNaming")
-object LsCommandSpec : CommandSpec() {
+object LsSpec : CommandSpec() {
     /* Names of the options were found by unsing zsh auto-completion:
      * $ ls --<TAB>
     ...

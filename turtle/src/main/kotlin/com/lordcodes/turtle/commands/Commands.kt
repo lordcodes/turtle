@@ -5,7 +5,7 @@ import java.io.File
 /**
  * Typesafe file commands
  */
-object FileCommands {
+object Commands {
 
     /**
      * Typesafe ls command
@@ -13,11 +13,11 @@ object FileCommands {
     fun ls(
         files: List<File> = listOf(File(".")),
         args: List<Any> = emptyList(),
-        longOptions: LsCommandSpec.() -> List<LongOption> = { emptyList() }
+        longOptions: LsSpec.() -> List<LongOption> = { emptyList() }
     ): Command = CommandSpec.generateCommand(
         executable = "ls",
         argsBeforeOptions = args,
-        longArgs = LsCommandSpec.longOptions(),
+        longArgs = LsSpec.longOptions(),
         argsAfterOptions = files,
     )
 }

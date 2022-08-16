@@ -13,7 +13,7 @@ abstract class CommandSpec {
             argsAfterOptions: List<Any> = emptyList(),
         ): Command {
 
-            val longWarnings = longArgs.map { it.key }.filter { it !in LsCommandSpec.longOptionsMap.keys }
+            val longWarnings = longArgs.map { it.key }.filter { it !in LsSpec.longOptionsMap.keys }
             if (longWarnings.isNotEmpty()) {
                 println("w: $executable() called with unknown long arguments: $longWarnings")
             }
