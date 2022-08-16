@@ -7,7 +7,7 @@ import java.net.URL
 data class Command(
     val list: List<String>
 ) {
-    val command = list.firstOrNull()?.takeIf { it.isNotBlank() }
+    val executable = list.firstOrNull()?.takeIf { it.isNotBlank() }
         ?: error("Command.command is empty")
 
     val args: List<String> = list.drop(1)

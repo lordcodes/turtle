@@ -18,16 +18,15 @@ abstract class CommandSpec {
 
             val shortWarnings = shortArgs.map { it.key }.filter { it !in LsCommandSpec.shortOptions }
             val longWarnings = longOptions.map { it.key }.filter { it !in LsCommandSpec.longOptionsMap.keys }
-            if (shortWarnings.isNotEmpty()) println("w: $executable() called with unknown short arguments: $shortWarnings")
-            if (longWarnings.isNotEmpty()) println("w: $executable() called with unknown long arguments: $longWarnings")
+            if (shortWarnings.isNotEmpty()) {
+                println("w: $executable() called with unknown short arguments: $shortWarnings")
+            }
+            if (longWarnings.isNotEmpty()) {
+                println("w: $executable() called with unknown long arguments: $longWarnings")
+            }
 
-            return Command(
-                executable,
-                *argsBeforeOptions.toTypedArray(),
-                *shortArgs.toTypedArray(),
-                *longOptions.toTypedArray(),
-                *argsAfterOptions.toTypedArray()
-            )
+            val args = listOf(executable) + argsBeforeOptions + argsAfterOptions + shortOptions +longOptions + argsAfterOptions
+            return Command(args)
         }
     }
 }

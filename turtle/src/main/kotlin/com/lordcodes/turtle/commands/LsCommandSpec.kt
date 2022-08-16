@@ -1,5 +1,6 @@
 package com.lordcodes.turtle.commands
 
+@Suppress("ObjectPropertyNaming")
 object LsCommandSpec : CommandSpec() {
     override val documentationUrl = "https://www.tutorialspoint.com/unix_commands/ls.htm"
 
