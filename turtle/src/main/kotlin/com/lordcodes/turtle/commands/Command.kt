@@ -17,7 +17,7 @@ data class Command(
 fun Command(vararg args: Any?): Command {
     val mappedList = args.map { it.toArgument() }
     val errors = mappedList.mapNotNull { it.exceptionOrNull() }
-    require(errors.isEmpty()) { "Command received invalid arguments: ${errors.map { it.message }}"}
+    require(errors.isEmpty()) { "Command received invalid arguments: ${errors.map { it.message }}" }
     val goodArguments = mappedList.mapNotNull { it.getOrNull() }
     return Command(goodArguments)
 }
@@ -26,7 +26,7 @@ interface HasCommandArgument {
     val arg: String
 }
 
-data class ShortOption(val key: Char, val value: Any? = null): HasCommandArgument {
+data class ShortOption(val key: Char, val value: Any? = null) : HasCommandArgument {
     override val arg: String = when {
         value == null -> "-$key"
         value is String && value.isBlank() -> "-$key"
@@ -34,7 +34,7 @@ data class ShortOption(val key: Char, val value: Any? = null): HasCommandArgumen
     }
 }
 
-data class LongOption(val key: String, val value: Any? = null): HasCommandArgument {
+data class LongOption(val key: String, val value: Any? = null) : HasCommandArgument {
     fun withValue(value: Any): LongOption = copy(value = value)
 
     override val arg: String = when {
@@ -49,7 +49,6 @@ private fun Any?.toArgument(): Result<String?> = when {
     this is String -> Result.success(this)
     this is File -> Result.success(path)
     this is Boolean || this is Int -> Result.success(toString())
-    this is URI || this is URL  -> Result.success(toString())
+    this is URI || this is URL -> Result.success(toString())
     else -> Result.failure(IllegalArgumentException(this.toString()))
 }
-

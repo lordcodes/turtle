@@ -1,7 +1,7 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 package com.lordcodes.turtle.commands
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -26,7 +26,7 @@ class LsCommandTest {
 
     @Test
     fun `ls with long arguments`() {
-        val expected = Command(listOf("ls", "--all", "--colour", "--blocks=420",  "/etc"))
+        val expected = Command(listOf("ls", "--all", "--colour", "--blocks=420", "/etc"))
         val actual = FileCommands.ls(
             files = listOf(File("/etc")),
         ) {
@@ -39,7 +39,7 @@ class LsCommandTest {
     fun `ls with warnings`() {
         FileCommands.ls(
             shortOptions = listOf('Y', '$'),
-            ) {
+        ) {
             listOf(LongOption("--whatever"), LongOption("--invalid"))
         }
         /*

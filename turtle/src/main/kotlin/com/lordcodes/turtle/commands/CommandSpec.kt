@@ -13,7 +13,7 @@ abstract class CommandSpec {
             argsBeforeOptions: List<Any> = emptyList(),
             shortOptions: List<Char> = emptyList(),
             longOptions: List<LongOption> = emptyList(),
-            argsAfterOptions : List<Any> = emptyList(),
+            argsAfterOptions: List<Any> = emptyList(),
         ): Command {
             val shortArgs = shortOptions.map { ShortOption(it, null) }
 
@@ -26,7 +26,9 @@ abstract class CommandSpec {
                 println("w: $executable() called with unknown long arguments: $longWarnings")
             }
 
-            val args = listOf(executable) + argsBeforeOptions + argsAfterOptions + shortOptions +longOptions + argsAfterOptions
+            val args = listOf(executable) + argsBeforeOptions +
+                shortOptions + longOptions +
+                argsAfterOptions
             return Command(args)
         }
     }

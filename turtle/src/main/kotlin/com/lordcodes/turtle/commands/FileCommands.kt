@@ -21,4 +21,3 @@ object FileCommands {
         argsAfterOptions = files,
     )
 }
-

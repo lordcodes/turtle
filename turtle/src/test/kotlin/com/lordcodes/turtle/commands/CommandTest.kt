@@ -1,7 +1,8 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 package com.lordcodes.turtle.commands
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertIterableEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.File
@@ -13,13 +14,15 @@ class CommandTest {
     @Test
     fun `Command works with Ints, Booleans, File, etc`() {
         val dir = File(".")
-        val command = Command("command",
+        val command = Command(
+            "command",
             "--force", true,
             "--directory", dir,
             "--max-length", 1,
             "--url", URL("http://example.com"),
         )
-        val expected: List<String> = listOf("command",
+        val expected: List<String> = listOf(
+            "command",
             "--force", "true", "--directory", ".",
             "--max-length", "1", "--url", "http://example.com",
         )
@@ -29,13 +32,15 @@ class CommandTest {
     @Test
     fun `command support short and long options`() {
         val dir = File(".")
-        val command = Command("command",
+        val command = Command(
+            "command",
             LongOption("--force", true),
             LongOption("--directory", dir),
             ShortOption('f'),
             ShortOption('o', "output.txt"),
         )
-        val expected: List<String> = listOf("command",
+        val expected: List<String> = listOf(
+            "command",
             "--force=true",
             "--directory=.",
             "-f",
