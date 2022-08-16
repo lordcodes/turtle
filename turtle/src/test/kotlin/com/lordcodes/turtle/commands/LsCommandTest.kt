@@ -1,4 +1,5 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
+
 package com.lordcodes.turtle.commands
 
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -9,24 +10,24 @@ class LsCommandTest {
 
     @Test
     fun `ls without arguments`() {
-        val expected = Command(listOf("ls", "."))
+        val expected = command("ls", ".")
         val actual = FileCommands.ls()
         assertEquals(expected, actual)
     }
 
     @Test
     fun `ls with short arguments`() {
-        val expected = Command(listOf("ls", "-a", "-b", "-c", "/etc"))
+        val expected = command("ls", "-a", "-b", "-c", "/etc")
         val actual = FileCommands.ls(
             files = listOf(File("/etc")),
-            shortOptions = listOf('a', 'b', 'c'),
+            args = listOf("-a", "-b", "-c"),
         )
         assertEquals(expected, actual)
     }
 
     @Test
     fun `ls with long arguments`() {
-        val expected = Command(listOf("ls", "--all", "--colour", "--blocks=420", "/etc"))
+        val expected = command("ls", "--all", "--colour", "--blocks=420", "/etc")
         val actual = FileCommands.ls(
             files = listOf(File("/etc")),
         ) {
@@ -37,14 +38,11 @@ class LsCommandTest {
 
     @Test
     fun `ls with warnings`() {
-        FileCommands.ls(
-            shortOptions = listOf('Y', '$'),
-        ) {
+        FileCommands.ls() {
             listOf(LongOption("--whatever"), LongOption("--invalid"))
         }
         /*
          * Print to console the following warnings:
-         * w: ls() called with unknown short arguments: [Y, $]
          * w: ls() called with unknown long arguments: [--whatever, --invalid]
          */
     }

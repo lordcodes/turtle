@@ -14,7 +14,7 @@ class CommandTest {
     @Test
     fun `Command works with Ints, Booleans, File, etc`() {
         val dir = File(".")
-        val command = Command(
+        val command = command(
             "command",
             "--force", true,
             "--directory", dir,
@@ -32,12 +32,12 @@ class CommandTest {
     @Test
     fun `command support short and long options`() {
         val dir = File(".")
-        val command = Command(
+        val command = command(
             "command",
             LongOption("--force", true),
             LongOption("--directory", dir),
-            ShortOption('f'),
-            ShortOption('o', "output.txt"),
+            "-f",
+            "-o=output.txt",
         )
         val expected: List<String> = listOf(
             "command",
@@ -53,8 +53,8 @@ class CommandTest {
     fun `Test for invalid arguments`() {
         val invalidArgument = Random(42)
         val e = assertThrows<IllegalArgumentException> {
-            Command("command", invalidArgument)
+            command("command", invalidArgument)
         }
-        assertEquals("Command received invalid arguments: [$invalidArgument]", e.message)
+        assertEquals("Command received invalid arguments: [XorWowRandom]", e.message)
     }
 }

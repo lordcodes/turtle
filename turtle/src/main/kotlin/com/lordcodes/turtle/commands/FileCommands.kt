@@ -12,11 +12,11 @@ object FileCommands {
      */
     fun ls(
         files: List<File> = listOf(File(".")),
-        shortOptions: List<Char> = emptyList(),
+        args: List<Any> = emptyList(),
         longOptions: LsCommandSpec.() -> List<LongOption> = { emptyList() }
     ): Command = CommandSpec.generateCommand(
         executable = "ls",
-        shortOptionChars = shortOptions,
+        argsBeforeOptions = args,
         longArgs = LsCommandSpec.longOptions(),
         argsAfterOptions = files,
     )

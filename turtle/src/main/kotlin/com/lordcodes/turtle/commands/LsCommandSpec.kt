@@ -3,13 +3,6 @@ package com.lordcodes.turtle.commands
 
 @Suppress("ObjectPropertyNaming")
 object LsCommandSpec : CommandSpec() {
-    override val documentationUrl = "https://www.tutorialspoint.com/unix_commands/ls.htm"
-
-    /* Names of the options were found by unsing zsh auto-completion:
-     * $ ls -<TAB>
-     */
-    override val shortOptions = "1@AaBbCcdeFfGgHhikLlmnOoPpqRrSsTtUuWwx"
-
     /* Names of the options were found by unsing zsh auto-completion:
      * $ ls --<TAB>
     ...

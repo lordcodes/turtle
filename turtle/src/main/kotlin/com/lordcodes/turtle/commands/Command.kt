@@ -9,12 +9,13 @@ data class Command(
     val list: List<String>
 ) {
     val executable = list.firstOrNull()?.takeIf { it.isNotBlank() }
-        ?: error("Command.command is empty")
+        ?: error("Command has no executable")
 
     val args: List<String> = list.drop(1)
 }
 
-fun Command(vararg args: Any?): Command {
+fun command(vararg args: Any?): Command {
+    require(args.firstOrNull() is String) { "command() expect at least a first String argument for the executable\nGot: $args" }
     val mappedList = args.map { it.toArgument() }
     val errors = mappedList.mapNotNull { it.exceptionOrNull() }
     require(errors.isEmpty()) { "Command received invalid arguments: ${errors.map { it.message }}" }
@@ -24,14 +25,6 @@ fun Command(vararg args: Any?): Command {
 
 interface HasCommandArgument {
     val arg: String
-}
-
-data class ShortOption(val key: Char, val value: Any? = null) : HasCommandArgument {
-    override val arg: String = when {
-        value == null -> "-$key"
-        value is String && value.isBlank() -> "-$key"
-        else -> "-$key=$value"
-    }
 }
 
 data class LongOption(val key: String, val value: Any? = null) : HasCommandArgument {
@@ -50,5 +43,5 @@ internal fun Any?.toArgument(): Result<String?> = when {
     this is File -> Result.success(path)
     this is Boolean || this is Int -> Result.success(toString())
     this is URI || this is URL -> Result.success(toString())
-    else -> Result.failure(IllegalArgumentException(this.toString()))
+    else -> Result.failure(IllegalArgumentException(this::class.simpleName))
 }

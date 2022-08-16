@@ -2,8 +2,6 @@
 package com.lordcodes.turtle.commands
 
 abstract class CommandSpec {
-    abstract val documentationUrl: String
-    abstract val shortOptions: String
     val longOptionsMap: Map<String, LongOption> =
         emptyMap<String, LongOption>().withDefault { key -> LongOption("--$key", null) }
 
@@ -11,25 +9,17 @@ abstract class CommandSpec {
         fun generateCommand(
             executable: String,
             argsBeforeOptions: List<Any> = emptyList(),
-            shortOptionChars: List<Char> = emptyList(),
             longArgs: List<LongOption> = emptyList(),
             argsAfterOptions: List<Any> = emptyList(),
         ): Command {
-            val shortArgs = shortOptionChars.map { ShortOption(it, null) }
 
-            val shortWarnings = shortArgs.map { it.key }.filter { it !in LsCommandSpec.shortOptions }
             val longWarnings = longArgs.map { it.key }.filter { it !in LsCommandSpec.longOptionsMap.keys }
-            if (shortWarnings.isNotEmpty()) {
-                println("w: $executable() called with unknown short arguments: $shortWarnings")
-            }
             if (longWarnings.isNotEmpty()) {
                 println("w: $executable() called with unknown long arguments: $longWarnings")
             }
 
-            val args = listOf(executable) + argsBeforeOptions +
-                shortArgs + longArgs +
-                argsAfterOptions
-            return Command(*args.toTypedArray())
+            val args = listOf(executable) + argsBeforeOptions + longArgs + argsAfterOptions
+            return command(*args.toTypedArray())
         }
     }
 }
