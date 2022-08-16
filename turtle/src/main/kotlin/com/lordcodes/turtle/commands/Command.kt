@@ -19,6 +19,16 @@ data class Command(
     )
 }
 
+fun createCommand(
+    executable: String,
+    argsBeforeOptions: List<Any> = emptyList(),
+    longArgs: List<LongOption> = emptyList(),
+    argsAfterOptions: List<Any> = emptyList(),
+): Command {
+    val args = listOf(executable) + argsBeforeOptions + longArgs + argsAfterOptions
+    return command(*args.toTypedArray())
+}
+
 fun command(vararg args: Any?): Command {
     require(args.firstOrNull() is String) { "command() expect at least a first String argument for the executable\nGot: $args" }
     val mappedList = args.map { it.toArgument() }

@@ -1,33 +1,32 @@
 package com.lordcodes.turtle.commands
 
-import com.lordcodes.turtle.commands.GitOptions.branch
 import java.io.File
 import java.net.URL
 
 typealias GitOptionsLambda = GitOptions.() -> List<LongOption>
 
-object GitCommands : Commands() {
+object GitCommands {
     const val git = "git"
 
     val currentFolder = File(".")
 
     fun init(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(git, listOf("init"), GitOptions.longOptions())
+    ): Command = createCommand(git, listOf("init"), GitOptions.longOptions())
 
     fun status(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(git, listOf("status", "--porcelain"), GitOptions.longOptions())
+    ): Command = createCommand(git, listOf("status", "--porcelain"), GitOptions.longOptions())
 
     fun add(
         files: List<File> = emptyList(),
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(git, listOf("add"), GitOptions.longOptions(), files)
+    ): Command = createCommand(git, listOf("add"), GitOptions.longOptions(), files)
 
     fun commit(
         message: String,
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(
+    ): Command = createCommand(
         executable = git,
         argsBeforeOptions = listOf("commit"),
         longArgs = listOf(GitOptions.message.withValue(message)) + GitOptions.longOptions()
@@ -35,7 +34,7 @@ object GitCommands : Commands() {
 
     fun log(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(
+    ): Command = createCommand(
         executable = git,
         argsBeforeOptions = listOf("log"),
         longArgs = GitOptions.longOptions()
@@ -43,7 +42,7 @@ object GitCommands : Commands() {
 
     fun show(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(
+    ): Command = createCommand(
         executable = git,
         argsBeforeOptions = listOf("show"),
         longArgs = GitOptions.longOptions()
@@ -53,7 +52,7 @@ object GitCommands : Commands() {
         branch: GitBranch,
         createIfNecessary: Boolean = true,
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(
+    ): Command = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "checkout",
@@ -73,7 +72,7 @@ object GitCommands : Commands() {
         branch: GitBranch,
         startPoint: GitTreeIsh? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = buildCommand(
+    ) = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "branch",
@@ -86,7 +85,7 @@ object GitCommands : Commands() {
     fun addTag(
         tag: GitTag,
         longOptions: GitOptionsLambda = NoOptions
-    ) = buildCommand(
+    ) = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "tag",
@@ -100,7 +99,7 @@ object GitCommands : Commands() {
         url: URL,
         destination: File? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = buildCommand(
+    ): Command = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "clone",
@@ -115,7 +114,7 @@ object GitCommands : Commands() {
         localBranch: GitBranch? = null,
         remoteBranch: GitBranch? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = buildCommand(
+    ) = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "push",
@@ -134,8 +133,7 @@ object GitCommands : Commands() {
         remote: GitRemote? = null,
         remoteBranch: GitBranch? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = buildCommand(
-        executable = git,
+    ) = createCommand(executable = git,
         argsBeforeOptions = listOfNotNull(
             "pull",
             remote,
@@ -148,7 +146,7 @@ object GitCommands : Commands() {
         key: String,
         value: String,
         longOptions: GitOptionsLambda = NoOptions
-    ) = buildCommand(
+    ) = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "config",
@@ -164,13 +162,12 @@ object GitCommands : Commands() {
     fun addRemote(
         remote: GitRemote,
         longOptions: GitOptionsLambda = NoOptions
-    ) = buildCommand(
-        executable = git,
+    ) = createCommand(executable = git,
         argsBeforeOptions = listOfNotNull(
             "remote",
             "add",
             remote.arg,
-            requireNotNull(remote.url) { "URL required in git.addRemote()"}
+            requireNotNull(remote.url) { "URL required in git.addRemote()" }
         ),
         longArgs = GitOptions.longOptions()
     )
@@ -178,7 +175,7 @@ object GitCommands : Commands() {
     fun fetch(
         remote: GitRemote? = null,
         longOptions: GitOptionsLambda = NoOptions,
-    )= buildCommand(
+    ) = createCommand(
         executable = git,
         argsBeforeOptions = listOfNotNull(
             "fetch",
