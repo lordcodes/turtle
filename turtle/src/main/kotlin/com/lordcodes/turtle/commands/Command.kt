@@ -34,7 +34,12 @@ data class ShortOption(val key: Char, val value: Any? = null): HasCommandArgumen
 }
 
 data class LongOption(val key: String, val value: Any? = null): HasCommandArgument {
-    override val arg: String = "$key=$value"
+    fun withValue(value: Any): LongOption = copy(value = value)
+
+    override val arg: String = when {
+        value == null -> key
+        else -> "$key=$value"
+    }
 }
 
 private fun Any?.toArgument(): Result<String?> = when {
