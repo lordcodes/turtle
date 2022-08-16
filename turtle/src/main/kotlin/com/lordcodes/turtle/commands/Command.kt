@@ -12,6 +12,11 @@ data class Command(
         ?: error("Command has no executable")
 
     val args: List<String> = list.drop(1)
+
+    override fun toString() = list.joinToString(
+        separator = " ",
+        transform = { arg -> quoteCommandArgument(arg) }
+    )
 }
 
 fun command(vararg args: Any?): Command {
@@ -44,4 +49,11 @@ internal fun Any?.toArgument(): Result<String?> = when {
     this is Boolean || this is Int -> Result.success(toString())
     this is URI || this is URL -> Result.success(toString())
     else -> Result.failure(IllegalArgumentException(this::class.simpleName))
+}
+
+// TODO: tests
+internal fun quoteCommandArgument(arg: String) = when {
+    arg.contains("'") -> arg.replace("'", "\\'").let { "'$it'" }
+    arg.isBlank() || arg.contains(" ") || arg.contains("\"") -> "'$arg'"
+    else -> arg
 }
