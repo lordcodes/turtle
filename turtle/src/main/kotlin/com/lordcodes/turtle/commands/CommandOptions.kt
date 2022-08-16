@@ -1,8 +1,8 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 package com.lordcodes.turtle.commands
 
-abstract class CommandSpec {
-    val longOptionsMap: Map<String, LongOption> =
+abstract class CommandOptions {
+    val optionsMap: Map<String, LongOption> =
         emptyMap<String, LongOption>().withDefault { key -> LongOption("--$key", null) }
 
     companion object {
@@ -13,7 +13,7 @@ abstract class CommandSpec {
             argsAfterOptions: List<Any> = emptyList(),
         ): Command {
 
-            val longWarnings = longArgs.map { it.key }.filter { it !in LsSpec.longOptionsMap.keys }
+            val longWarnings = longArgs.map { it.key }.filter { it !in LsOptions.optionsMap.keys }
             if (longWarnings.isNotEmpty()) {
                 println("w: $executable() called with unknown long arguments: $longWarnings")
             }
