@@ -6,17 +6,13 @@ import java.net.URI
 import java.net.URL
 
 data class Command(
-    val list: List<String>
+    val executable: String,
+    val arguments: List<String> = emptyList(),
 ) {
-    val executable = list.firstOrNull()?.takeIf { it.isNotBlank() }
-        ?: error("Command has no executable")
-
-    val args: List<String> = list.drop(1)
-
-    override fun toString() = list.joinToString(
-        separator = " ",
-        transform = { arg -> quoteCommandArgument(arg) }
-    )
+    override fun toString(): String {
+        val quotedArguments = arguments.joinToString(" ") { arg -> quoteCommandArgument(arg) }
+        return "$executable $quotedArguments"
+    }
 }
 
 fun createCommand(
@@ -25,17 +21,16 @@ fun createCommand(
     longArgs: List<LongOption> = emptyList(),
     argsAfterOptions: List<Any> = emptyList(),
 ): Command {
-    val args = listOf(executable) + argsBeforeOptions + longArgs + argsAfterOptions
-    return command(*args.toTypedArray())
+    val args = argsBeforeOptions + longArgs + argsAfterOptions
+    return command(executable, *args.toTypedArray())
 }
 
-fun command(vararg args: Any?): Command {
-    require(args.firstOrNull() is String) { "command() expect at least a first String argument for the executable\nGot: $args" }
+fun command(executable: String, vararg args: Any?): Command {
     val mappedList = args.map { it.toArgument() }
     val errors = mappedList.mapNotNull { it.exceptionOrNull() }
     require(errors.isEmpty()) { "Command received invalid arguments: ${errors.map { it.message }}" }
     val goodArguments = mappedList.mapNotNull { it.getOrNull() }
-    return Command(goodArguments)
+    return Command(executable, goodArguments)
 }
 
 interface HasCommandArgument {
