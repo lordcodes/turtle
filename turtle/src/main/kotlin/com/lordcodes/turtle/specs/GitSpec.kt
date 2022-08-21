@@ -12,61 +12,60 @@ object GitSpec {
 
     fun init(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(git, listOf("init"), GitOptions.longOptions())
+    ): Command = command(git, listOf("init") + GitOptions.longOptions())
 
     fun status(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(git, listOf("status", "--porcelain"), GitOptions.longOptions())
+    ): Command = command(git, listOf("status", "--porcelain") + GitOptions.longOptions())
 
     fun add(
         files: List<File> = emptyList(),
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(git, listOf("add"), GitOptions.longOptions(), files)
+    ): Command = command(git, listOf("add") + GitOptions.longOptions() + files)
 
     fun commit(
         message: String,
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(
+    ): Command = command(
         executable = git,
-        argsBeforeOptions = listOf("commit"),
-        longArgs = listOf(GitOptions.message.withValue(message)) + GitOptions.longOptions()
+        typeUnsafeArgs = listOf("commit") + (listOf(GitOptions.message.withValue(message)) + GitOptions.longOptions())
     )
 
     fun log(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(
+    ): Command = command(
         executable = git,
-        argsBeforeOptions = listOf("log"),
-        longArgs = GitOptions.longOptions()
+        typeUnsafeArgs = listOf("log") + GitOptions.longOptions()
+
     )
 
     fun show(
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(
+    ): Command = command(
         executable = git,
-        argsBeforeOptions = listOf("show"),
-        longArgs = GitOptions.longOptions()
+        typeUnsafeArgs = listOf("show") + GitOptions.longOptions()
+
     )
 
     fun checkout(
         branch: GitBranch,
         createIfNecessary: Boolean = true,
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(
+    ): Command = command(
         executable = git,
-        argsBeforeOptions = listOfNotNull(
+        typeUnsafeArgs = listOfNotNull(
             "checkout",
             "-B".takeIf { createIfNecessary },
             branch
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
+
     )
 
     fun currentBranch(): Command =
-        command(git, "rev-parse", "--abbrev-ref", "HEAD")
+        command(git, listOf("rev-parse", "--abbrev-ref", "HEAD"))
 
     fun currentCommit(): Command =
-        command(git, "rev-parse", "--verify", "HEAD")
+        command(git, listOf("rev-parse", "--verify", "HEAD"))
 
     fun createBranch(
         branch: GitBranch,
@@ -84,28 +83,28 @@ object GitSpec {
     fun addTag(
         tag: GitTag,
         longOptions: GitOptionsLambda = NoOptions
-    ) = createCommand(
+    ) = command(
         executable = git,
-        argsBeforeOptions = listOfNotNull(
+        typeUnsafeArgs = listOfNotNull(
             "tag",
             "-a", tag,
             "-m", tag.message
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
+
     )
 
     fun clone(
         url: URL,
         destination: File? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ): Command = createCommand(
+    ): Command = command(
         executable = git,
-        argsBeforeOptions = listOfNotNull(
+        typeUnsafeArgs = listOfNotNull(
             "clone",
             url,
             destination
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
+
     )
 
     fun push(
@@ -113,9 +112,9 @@ object GitSpec {
         localBranch: GitBranch? = null,
         remoteBranch: GitBranch? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = createCommand(
+    ) = command(
         executable = git,
-        argsBeforeOptions = listOfNotNull(
+        typeUnsafeArgs = listOfNotNull(
             "push",
             remote,
             when {
@@ -124,68 +123,65 @@ object GitSpec {
                 remoteBranch == null -> localBranch
                 else -> "${localBranch.name}:${remoteBranch.name}"
             }
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
+
     )
 
     fun pull(
         remote: GitRemote? = null,
         remoteBranch: GitBranch? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = createCommand(executable = git,
-        argsBeforeOptions = listOfNotNull(
+    ) = command(executable = git,
+        typeUnsafeArgs = listOfNotNull(
             "pull",
             remote,
             remoteBranch.takeIf { remote != null }
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
     )
 
     fun configSet(
         key: String,
         value: String,
         longOptions: GitOptionsLambda = NoOptions
-    ) = createCommand(
+    ) = command(
         executable = git,
-        argsBeforeOptions = listOfNotNull(
+        typeUnsafeArgs = listOfNotNull(
             "config",
             key,
             value,
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
+
     )
 
     fun getRemotes(): Command =
-        command(git, "remote", "-v")
+        command(git, listOf("remote", "-v"))
 
     fun addRemote(
         remote: GitRemote,
         longOptions: GitOptionsLambda = NoOptions
     ) = command(git,
-        listOfNotNull(
+        listOf(
             "remote",
             "add",
             remote.also { requireNotNull(remote.url) }
-        ),
-        GitOptions.longOptions()
+        ) + GitOptions.longOptions()
     )
 
     fun fetch(
         remote: GitRemote? = null,
         longOptions: GitOptionsLambda = NoOptions,
-    ) = createCommand(
+    ) = command(
         executable = git,
-        argsBeforeOptions = listOfNotNull(
+        typeUnsafeArgs = listOf(
             "fetch",
             remote,
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
     )
 }
 
 data class GitRemote(val name: String, val url: URL? = null) : HasSingleCommandArgument(name)
 
-interface GitTreeIsh: HasCommandArguments
+interface GitTreeIsh : HasCommandArguments
 
 data class GitBranch(val name: String) : GitTreeIsh, HasSingleCommandArgument(name)
 

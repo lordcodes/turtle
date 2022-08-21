@@ -14,10 +14,5 @@ object FileSpec {
         files: List<File> = listOf(File(".")),
         args: List<Any> = emptyList(),
         commandOptions: LsOptions.() -> List<CommandOption> = { emptyList() }
-    ): Command = createCommand(
-        executable = "ls",
-        argsBeforeOptions = args,
-        longArgs = LsOptions.commandOptions(),
-        argsAfterOptions = files
-    )
+    ): Command = command("ls", args + LsOptions.commandOptions() + files)
 }

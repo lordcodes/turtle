@@ -21,7 +21,7 @@ class CommandTest {
     fun `Command works with Ints, Booleans, File, Pair, Triple, List, HasCommandArguments`() {
         val dir = File("src")
         val command = command(
-            executable,
+            executable, listOf(
             "-a",
             Pair("b", "c"),
             Triple("d", "e", "f"),
@@ -38,7 +38,7 @@ class CommandTest {
             CommandOption("--force", true),
             CommandOption("--directory", dir),
             CommandOption("hola", null)
-        )
+        ))
         val expected = Command(
             executable, listOf(
                 "-a", "b", "c", "d", "e", "f", "g", "h", "i",
@@ -57,15 +57,14 @@ class CommandTest {
 
     @Test
     fun `Test for invalid arguments`() {
-        val invalidArgument = Random(42)
         val e = assertThrows<IllegalArgumentException> {
-            command(executable, invalidArgument, ProcessBuilder())
+            command(executable, listOf("invalid", Random(42), ProcessBuilder()))
         }
         assertEquals(
             """
             Command received invalid arguments:
-            #0 has type XorWowRandom
-            #1 has type ProcessBuilder
+            #1 has type XorWowRandom
+            #2 has type ProcessBuilder
             """.trimIndent(), e.message
         )
     }

@@ -6,6 +6,8 @@ import java.io.File
 import java.net.URI
 import java.net.URL
 
+
+/** In memory representation of a CLI command with its [executable] and [arguments] **/
 data class Command(
     val executable: String,
     val arguments: List<String> = emptyList(),
@@ -16,16 +18,7 @@ data class Command(
     }
 }
 
-fun createCommand(
-    executable: String,
-    argsBeforeOptions: List<Any> = emptyList(),
-    longArgs: List<CommandOption> = emptyList(),
-    argsAfterOptions: List<Any> = emptyList(),
-): Command {
-    val args = argsBeforeOptions + longArgs + argsAfterOptions
-    return command(executable, *args.toTypedArray())
-}
-
+/** Any class you own that can be converted to command-line arguments **/
 interface HasCommandArguments {
     val args: List<Any?>
 }
@@ -36,8 +29,9 @@ abstract class HasSingleCommandArgument(
     override val args = listOf(arg)
 }
 
-fun command(executable: String, vararg typeUsafeArgs: Any?): Command {
-    val args: List<Any?> = typeUsafeArgs.toList().flattenArguments().flattenArguments()
+/** Type-unsafe Command builder that enables building type-safe functions on top of it **/
+fun command(executable: String, typeUnsafeArgs: List<Any?>): Command {
+    val args: List<Any?> = typeUnsafeArgs.toList().flattenArguments().flattenArguments().flattenArguments()
 
     val goodArguments = mutableListOf<String>()
     val invalidArguments = mutableListOf<String>()
