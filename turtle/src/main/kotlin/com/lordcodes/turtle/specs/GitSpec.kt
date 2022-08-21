@@ -163,7 +163,8 @@ object GitSpec {
         listOf(
             "remote",
             "add",
-            remote.also { requireNotNull(remote.url) }
+            remote,
+            requireNotNull(remote.url),
         ) + GitOptions.longOptions()
     )
 
