@@ -1,5 +1,6 @@
 package com.lordcodes.turtle
 
+import com.lordcodes.turtle.specs.Command
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -49,6 +50,23 @@ class ShellScript constructor(
         arguments: List<String> = listOf(),
         callbacks: ProcessCallbacks = EmptyProcessCallbacks
     ): String = runCommand(command, arguments, callbacks) { it.retrieveOutput() }
+
+    /**
+     * Run a [command] with the specified arguments, receiving the output as a String.
+     *
+     * @param [command] A command to run.
+     * @param [arguments] The arguments to pass to the command.
+     * @param [callbacks] Callbacks into the process
+     *
+     * @return [String] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun execute(
+        command: Command,
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks
+    ) = command(command.command, command.arguments, callbacks)
 
     /**
      * Run a shell command with the specified arguments, allowing standard output or error to be read as a stream.

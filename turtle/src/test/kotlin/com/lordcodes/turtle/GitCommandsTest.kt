@@ -1,5 +1,6 @@
 package com.lordcodes.turtle
 
+import com.lordcodes.turtle.specs.GitSpec
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.io.TempDir
 import java.io.File
@@ -73,6 +74,36 @@ internal class GitCommandsTest {
 
         val message = shell.command("git", listOf("log", "-1", "--pretty=%B"))
         assertEquals(message, "Add testFile")
+    }
+
+    @Test
+    fun commit_with_commands() {
+        // Functional core
+        val git = GitSpec
+        val gitAdd = git.add() { listOf(all) }
+        val gitCommit = git.commit("Add testFile")
+        val gitLog = git.log() { listOf(`max-count`.withEquals(1), pretty.withEquals("%B")) }
+        val commands = listOf(gitAdd, gitCommit, gitLog)
+        assertEquals(
+            """
+            git add --all
+            git commit --message 'Add testFile'
+            git log --max-count=1 --pretty=%B
+            """.trimIndent(),
+            commands.joinToString("\n")
+        )
+
+        // Imperative shell
+        initUsableRepository()
+        val newFile = File(temporaryFolder, "testFile.txt")
+        newFile.createNewFile()
+        shell.execute(gitAdd)
+        shell.execute(gitCommit)
+        val message = shell.execute(gitLog)
+        assertEquals(message, "Add testFile")
+
+        val sameMessage = gitLog.execute(temporaryFolder)
+        assertEquals(sameMessage, "Add testFile")
     }
 
     @Test

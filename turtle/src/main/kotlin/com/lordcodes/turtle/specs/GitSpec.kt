@@ -35,10 +35,11 @@ object GitSpec {
     )
 
     fun log(
+        vararg arguments: String,
         longOptions: GitOptionsLambda = NoOptions
     ): Command = command(
         executable = git,
-        typeUnsafeArgs = listOf("log") + GitOptions.longOptions()
+        typeUnsafeArgs = listOf("log") + arguments + GitOptions.longOptions()
 
     )
 
@@ -229,4 +230,5 @@ object GitOptions : CommandOptions() {
     val recursive by optionsMap
     val summary by optionsMap
     val tags by optionsMap
+    val `max-count` by optionsMap
 }

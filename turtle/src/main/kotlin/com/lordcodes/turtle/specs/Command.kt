@@ -2,19 +2,40 @@
 
 package com.lordcodes.turtle.specs
 
+import com.lordcodes.turtle.ShellFailedException
+import com.lordcodes.turtle.ShellRunException
+import com.lordcodes.turtle.shellRun
 import java.io.File
 import java.net.URI
 import java.net.URL
 
-/** In memory representation of a CLI command with its [executable] and [arguments] **/
+/** In memory representation of a CLI command with its [command] and [arguments] **/
 data class Command(
-    val executable: String,
+    val command: String,
     val arguments: List<String> = emptyList(),
 ) {
     override fun toString(): String {
         val quotedArguments = arguments.joinToString(" ") { arg -> quoteCommandArgument(arg) }
-        return "$executable $quotedArguments"
+        return "$command $quotedArguments"
     }
+
+    /**
+     * Run a shell command with the specified arguments.
+     *
+     * @param [dryRun] Use dry-run mode which prints executed commands instead of launching processes.
+     * @param [workingDirectory] The location to run the command from. By default, the current working directory will
+     * be used.
+     *
+     * @return [String] The output of running the command.
+     *
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun execute(
+        workingDirectory: File? = null,
+        dryRun: Boolean = false
+    ): String =
+        shellRun(command, arguments, workingDirectory, dryRun)
 }
 
 /** Any class you own that can be converted to command-line arguments **/
