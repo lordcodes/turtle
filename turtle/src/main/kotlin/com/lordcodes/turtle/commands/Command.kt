@@ -60,9 +60,22 @@ internal fun Any?.toArgument(): Result<String?> = when {
     else -> Result.failure(IllegalArgumentException(this::class.simpleName))
 }
 
-// TODO: tests
-internal fun quoteCommandArgument(arg: String) = when {
-    arg.contains("'") -> arg.replace("'", "\\'").let { "'$it'" }
-    arg.isBlank() || arg.contains(" ") || arg.contains("\"") -> "'$arg'"
-    else -> arg
+internal fun quoteCommandArgument(arg: String): String {
+    val doublequote = "\""
+    val simplequote = "\'"
+    val slash = "\\"
+    val unquoted = arg
+        .removePrefix(simplequote).removeSuffix(simplequote)
+        .removePrefix(doublequote).removeSuffix(doublequote)
+        .removePrefix(simplequote).removeSuffix(simplequote)
+
+    val unescaped = unquoted
+        .replace("$slash$simplequote", simplequote)
+        .replace("$slash$doublequote", doublequote)
+    val needsQuote = unquoted.any { it in " '\"" } || unquoted.isBlank()
+
+    return when {
+        needsQuote -> "'$unescaped'"
+        else -> unquoted
+    }
 }

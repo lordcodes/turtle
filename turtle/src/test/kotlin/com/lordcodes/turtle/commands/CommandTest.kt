@@ -59,4 +59,14 @@ class CommandTest {
         }
         assertEquals("Command received invalid arguments: [XorWowRandom]", e.message)
     }
+
+    @Test
+    fun `quoting arguments`() {
+        val command = Command(executable,
+            listOf("ab", "a b", "a\"b", "a\'b", "'ab'", "\"ab\"", "", "''", "\"''\""))
+        val quotedCommand = """
+            $executable ab 'a b' 'a"b' 'a'b' ab ab '' '' ''
+        """.trim()
+        assertEquals(quotedCommand, command.toString())
+    }
 }
