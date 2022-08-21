@@ -1,6 +1,6 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
 
-package com.lordcodes.turtle.commands
+package com.lordcodes.turtle.specs
 
 import java.io.File
 import java.net.URI

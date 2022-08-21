@@ -1,11 +1,11 @@
-package com.lordcodes.turtle.commands
+package com.lordcodes.turtle.specs
 
 import java.io.File
 
 /**
  * Typesafe file commands
  */
-object FileCommands {
+object FileSpec {
 
     /**
      * Typesafe ls command

@@ -2,6 +2,9 @@
 
 package com.lordcodes.turtle.commands
 
+import com.lordcodes.turtle.specs.Command
+import com.lordcodes.turtle.specs.CommandOption
+import com.lordcodes.turtle.specs.command
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

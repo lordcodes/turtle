@@ -1,11 +1,11 @@
-package com.lordcodes.turtle.commands
+package com.lordcodes.turtle.specs
 
 import java.io.File
 import java.net.URL
 
 typealias GitOptionsLambda = GitOptions.() -> List<CommandOption>
 
-object GitCommands {
+object GitSpec {
     const val git = "git"
 
     val currentFolder = File(".")

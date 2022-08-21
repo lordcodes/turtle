@@ -1,5 +1,5 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
-package com.lordcodes.turtle.commands
+package com.lordcodes.turtle.specs
 
 @Suppress("ObjectPropertyNaming")
 object LsOptions : CommandOptions() {

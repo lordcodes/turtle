@@ -1,5 +1,6 @@
 package com.lordcodes.turtle.commands
 
+import com.lordcodes.turtle.specs.*
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.net.URL
@@ -7,7 +8,7 @@ import kotlin.test.assertEquals
 
 @Suppress("LocalVariableName")
 class GitSpecTest {
-    val git = GitCommands
+    val git = GitSpec
     infix fun List<Command>.shouldBe(message: String) =
         assertEquals(message, joinToString("\n"))
 
