@@ -6,7 +6,6 @@ import java.io.File
 import java.net.URI
 import java.net.URL
 
-
 /** In memory representation of a CLI command with its [executable] and [arguments] **/
 data class Command(
     val executable: String,

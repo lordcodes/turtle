@@ -3,8 +3,11 @@ package com.lordcodes.turtle.specs
 import java.io.File
 import java.net.URL
 
+/** Type-safe lambda for adding git command options like --message **/
 typealias GitOptionsLambda = GitOptions.() -> List<CommandOption>
 
+/** Type-safe wrapper for building git commands **/
+@Suppress("UndocumentedPublicFunction")
 object GitSpec {
     const val git = "git"
 
@@ -131,7 +134,8 @@ object GitSpec {
         remote: GitRemote? = null,
         remoteBranch: GitBranch? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = command(executable = git,
+    ) = command(
+        executable = git,
         typeUnsafeArgs = listOfNotNull(
             "pull",
             remote,
@@ -159,7 +163,8 @@ object GitSpec {
     fun addRemote(
         remote: GitRemote,
         longOptions: GitOptionsLambda = NoOptions
-    ) = command(git,
+    ) = command(
+        git,
         listOf(
             "remote",
             "add",
@@ -180,16 +185,30 @@ object GitSpec {
     )
 }
 
+/** A git remote with its URL **/
 data class GitRemote(val name: String, val url: URL? = null) : HasSingleCommandArgument(name)
 
+/** Either a [GitBranch] or a [GitTag] or a [GitHash] */
 interface GitTreeIsh : HasCommandArguments
 
+/** A git branch */
 data class GitBranch(val name: String) : GitTreeIsh, HasSingleCommandArgument(name)
 
+/** A git tag */
 data class GitTag(val name: String, val message: String) : GitTreeIsh, HasSingleCommandArgument(name)
 
+/** A git hash */
 data class GitHash(val name: String) : GitTreeIsh, HasSingleCommandArgument(name)
 
+/**
+ * /**
+ * Names of the options were found by unsing zsh auto-completion:
+ * $ git clone --<TAB>
+ * $ git branch --<TAB>
+ * ...
+*/
+ */
+@Suppress("ObjectPropertyNaming")
 object GitOptions : CommandOptions() {
 
     val `set-upstream` by optionsMap

@@ -13,34 +13,36 @@ import java.net.URI
 import java.net.URL
 import kotlin.random.Random
 
-
 class CommandTest {
     val executable = "executable"
 
     @Test
-    fun `Command works with Ints, Booleans, File, Pair, Triple, List, HasCommandArguments`() {
+    fun `the command builder works with Ints, Booleans, File, Pair, Triple, List, HasCommandArguments`() {
         val dir = File("src")
         val command = command(
-            executable, listOf(
-            "-a",
-            Pair("b", "c"),
-            Triple("d", "e", "f"),
-            listOf("g", "h"),
-            'i',
-            true,
-            1,
-            1.0,
-            null,
-            dir,
-            URL("http://example.com"),
-            URI("http://example.com"),
-            CommandOption("--url", URL("http://example.com")),
-            CommandOption("--force", true),
-            CommandOption("--directory", dir),
-            CommandOption("hola", null)
-        ))
+            executable,
+            listOf(
+                "-a",
+                Pair("b", "c"),
+                Triple("d", "e", "f"),
+                listOf("g", "h"),
+                'i',
+                true,
+                1,
+                1.0,
+                null,
+                dir,
+                URL("http://example.com"),
+                URI("http://example.com"),
+                CommandOption("--url", URL("http://example.com")),
+                CommandOption("--force", true),
+                CommandOption("--directory", dir),
+                CommandOption("hola", null)
+            )
+        )
         val expected = Command(
-            executable, listOf(
+            executable,
+            listOf(
                 "-a", "b", "c", "d", "e", "f", "g", "h", "i",
                 "true", "1", "1.0",
                 "src",
@@ -65,7 +67,8 @@ class CommandTest {
             Command received invalid arguments:
             #1 has type XorWowRandom
             #2 has type ProcessBuilder
-            """.trimIndent(), e.message
+            """.trimIndent(),
+            e.message
         )
     }
 

@@ -1,15 +1,19 @@
 package com.lordcodes.turtle.commands
 
-import com.lordcodes.turtle.specs.*
+import com.lordcodes.turtle.specs.Command
+import com.lordcodes.turtle.specs.GitBranch
+import com.lordcodes.turtle.specs.GitRemote
+import com.lordcodes.turtle.specs.GitSpec
+import com.lordcodes.turtle.specs.GitTag
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.net.URL
 import kotlin.test.assertEquals
 
 @Suppress("LocalVariableName")
-class GitSpecTest {
+internal class GitSpecTest {
     val git = GitSpec
-    infix fun List<Command>.shouldBe(message: String) =
+    private infix fun List<Command>.shouldBe(message: String) =
         assertEquals(message, joinToString("\n"))
 
     val expectedGitCommands = """
@@ -40,8 +44,8 @@ git fetch remote_name --prune --tags --all
     @Test
     fun testGitCommands() {
         val newBranch = GitBranch("newBranch")
-        val local_branch = GitBranch("local_branch")
-        val remote_branch = GitBranch("remote_branch")
+        val localBranch = GitBranch("local_branch")
+        val remoteBranch = GitBranch("remote_branch")
         val newTag = GitTag(name = "v1.1.0", message = "Release v1.1.0")
         val remoteGitUrl = URL("https://github.com/jmfayard/refreshVersions.git")
         val remote = GitRemote("remote_name", remoteGitUrl)
@@ -71,8 +75,8 @@ git fetch remote_name --prune --tags --all
             },
             git.push(),
             git.pull { listOf(rebase) },
-            git.push(remote, local_branch, remote_branch),
-            git.pull(remote, remote_branch),
+            git.push(remote, localBranch, remoteBranch),
+            git.pull(remote, remoteBranch),
             git.configSet("user.name", "John Doe") {
                 listOf(global)
             },
@@ -88,5 +92,4 @@ git fetch remote_name --prune --tags --all
         )
         commands shouldBe expectedGitCommands.trimIndent()
     }
-
 }
