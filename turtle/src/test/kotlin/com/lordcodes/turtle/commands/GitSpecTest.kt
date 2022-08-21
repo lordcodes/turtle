@@ -16,14 +16,14 @@ git init
 git add .
 git add --all
 git status --porcelain
-git commit '--message=Add testFile' --all --quiet
-git log --oneline --pretty=%B
+git commit --message 'Add testFile' --all --quiet
+git log --oneline --pretty %B
 git show --oneline --summary
 git checkout -B newBranch --quiet
 git rev-parse --abbrev-ref HEAD
 git rev-parse --verify HEAD
 git tag -a v1.1.0 -m 'Release v1.1.0'
-git clone https://github.com/jmfayard/refreshVersions.git destination --recursive --branch=newBranch
+git clone https://github.com/jmfayard/refreshVersions.git destination --recursive --branch newBranch
 git push
 git pull --rebase
 git push remote_name local_branch:remote_branch
@@ -41,7 +41,7 @@ git fetch remote_name --prune --tags --all
         val newBranch = GitBranch("newBranch")
         val local_branch = GitBranch("local_branch")
         val remote_branch = GitBranch("remote_branch")
-        val newTag = GitTag(arg = "v1.1.0", message = "Release v1.1.0")
+        val newTag = GitTag(name = "v1.1.0", message = "Release v1.1.0")
         val remoteGitUrl = URL("https://github.com/jmfayard/refreshVersions.git")
         val remote = GitRemote("remote_name", remoteGitUrl)
 

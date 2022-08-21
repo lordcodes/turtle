@@ -27,7 +27,7 @@ class LsCommandTest {
 
     @Test
     fun `ls with long arguments`() {
-        val expected = command("ls", "--all", "--colour", "--blocks=420", "/etc")
+        val expected = command("ls", "--all", "--colour", "--blocks", "420", "/etc")
         val actual = FileCommands.ls(
             files = listOf(File("/etc")),
         ) {
@@ -39,7 +39,7 @@ class LsCommandTest {
     @Test
     fun `ls with warnings`() {
         FileCommands.ls() {
-            listOf(LongOption("--whatever"), LongOption("--invalid"))
+            listOf(CommandOption("--whatever"), CommandOption("--invalid"))
         }
         /*
          * Print to console the following warnings:

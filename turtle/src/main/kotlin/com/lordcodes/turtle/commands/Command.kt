@@ -1,4 +1,5 @@
 @file:Suppress("UndocumentedPublicClass", "UndocumentedPublicFunction")
+
 package com.lordcodes.turtle.commands
 
 import java.io.File
@@ -18,49 +19,59 @@ data class Command(
 fun createCommand(
     executable: String,
     argsBeforeOptions: List<Any> = emptyList(),
-    longArgs: List<LongOption> = emptyList(),
+    longArgs: List<CommandOption> = emptyList(),
     argsAfterOptions: List<Any> = emptyList(),
 ): Command {
     val args = argsBeforeOptions + longArgs + argsAfterOptions
     return command(executable, *args.toTypedArray())
 }
 
-fun command(executable: String, vararg args: Any?): Command {
-    val mappedList = args.map { it.toArgument() }
-    val errors = mappedList.mapNotNull { it.exceptionOrNull() }
-    require(errors.isEmpty()) { "Command received invalid arguments: ${errors.map { it.message }}" }
-    val goodArguments = mappedList.mapNotNull { it.getOrNull() }
+interface HasCommandArguments {
+    val args: List<Any?>
+}
+
+abstract class HasSingleCommandArgument(
+    arg: String
+) : HasCommandArguments {
+    override val args = listOf(arg)
+}
+
+fun command(executable: String, vararg typeUsafeArgs: Any?): Command {
+    val args: List<Any?> = typeUsafeArgs.toList().flattenArguments().flattenArguments()
+
+    val goodArguments = mutableListOf<String>()
+    val invalidArguments = mutableListOf<String>()
+    for ((index, arg) in args.withIndex()) {
+        when {
+            arg == null -> {} // ignore
+            arg is String || arg is Boolean || arg is Number || arg is Char ->
+                goodArguments += arg.toString()
+            arg is URL || arg is URI ->
+                goodArguments += arg.toString()
+
+            arg is File -> goodArguments += arg.path
+            else -> invalidArguments += "#$index has type ${arg::class.simpleName}"
+        }
+    }
+    require(invalidArguments.isEmpty()) {
+        "Command received invalid arguments:\n${invalidArguments.joinToString("\n")}"
+    }
     return Command(executable, goodArguments)
 }
 
-interface HasCommandArgument {
-    val arg: String
-}
-
-data class LongOption(val key: String, val value: Any? = null) : HasCommandArgument {
-    fun withValue(value: Any): LongOption =
-        copy(value = value)
-
-    private val result = value.toArgument()
-
-    override val arg: String = when {
-        result.isFailure -> error("Invalid argument $this")
-        result == Result.success(null) -> key
-        else -> "$key=${result.getOrNull()!!}"
+private fun List<Any?>.flattenArguments(): List<Any?> =
+    flatMap { arg ->
+        when (arg) {
+            null -> emptyList()
+            is List<*> -> arg
+            is Pair<*, *> -> arg.toList()
+            is Triple<*, *, *> -> arg.toList()
+            is HasCommandArguments -> arg.args
+            else -> listOf(arg)
+        }
     }
-}
 
-internal fun Any?.toArgument(): Result<String?> = when {
-    this == null -> Result.success(null)
-    this is HasCommandArgument -> Result.success(arg)
-    this is String -> Result.success(this)
-    this is File -> Result.success(path)
-    this is Boolean || this is Int -> Result.success(toString())
-    this is URI || this is URL -> Result.success(toString())
-    else -> Result.failure(IllegalArgumentException(this::class.simpleName))
-}
-
-internal fun quoteCommandArgument(arg: String): String {
+private fun quoteCommandArgument(arg: String): String {
     val doublequote = "\""
     val simplequote = "\'"
     val slash = "\\"

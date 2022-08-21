@@ -13,11 +13,11 @@ object FileCommands {
     fun ls(
         files: List<File> = listOf(File(".")),
         args: List<Any> = emptyList(),
-        longOptions: LsOptions.() -> List<LongOption> = { emptyList() }
+        commandOptions: LsOptions.() -> List<CommandOption> = { emptyList() }
     ): Command = createCommand(
         executable = "ls",
         argsBeforeOptions = args,
-        longArgs = LsOptions.longOptions(),
+        longArgs = LsOptions.commandOptions(),
         argsAfterOptions = files
     )
 }

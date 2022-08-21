@@ -3,7 +3,7 @@ package com.lordcodes.turtle.commands
 import java.io.File
 import java.net.URL
 
-typealias GitOptionsLambda = GitOptions.() -> List<LongOption>
+typealias GitOptionsLambda = GitOptions.() -> List<CommandOption>
 
 object GitCommands {
     const val git = "git"
@@ -72,14 +72,13 @@ object GitCommands {
         branch: GitBranch,
         startPoint: GitTreeIsh? = null,
         longOptions: GitOptionsLambda = NoOptions
-    ) = createCommand(
-        executable = git,
-        argsBeforeOptions = listOfNotNull(
+    ) = command(
+        git,
+        listOf(
             "branch",
             branch,
             startPoint,
-        ),
-        longArgs = GitOptions.longOptions()
+        ) + GitOptions.longOptions()
     )
 
     fun addTag(
@@ -123,7 +122,7 @@ object GitCommands {
                 remote == null -> null
                 localBranch == null -> null
                 remoteBranch == null -> localBranch
-                else -> "${localBranch.arg}:${remoteBranch.arg}"
+                else -> "${localBranch.name}:${remoteBranch.name}"
             }
         ),
         longArgs = GitOptions.longOptions()
@@ -162,14 +161,13 @@ object GitCommands {
     fun addRemote(
         remote: GitRemote,
         longOptions: GitOptionsLambda = NoOptions
-    ) = createCommand(executable = git,
-        argsBeforeOptions = listOfNotNull(
+    ) = command(git,
+        listOfNotNull(
             "remote",
             "add",
-            remote.arg,
-            requireNotNull(remote.url) { "URL required in git.addRemote()" }
+            remote.also { requireNotNull(remote.url) }
         ),
-        longArgs = GitOptions.longOptions()
+        GitOptions.longOptions()
     )
 
     fun fetch(
@@ -185,16 +183,15 @@ object GitCommands {
     )
 }
 
-data class GitRemote(override val arg: String, val url: URL? = null) :
-    HasCommandArgument
+data class GitRemote(val name: String, val url: URL? = null) : HasSingleCommandArgument(name)
 
-interface GitTreeIsh: HasCommandArgument
+interface GitTreeIsh: HasCommandArguments
 
-data class GitBranch(override val arg: String) : GitTreeIsh
+data class GitBranch(val name: String) : GitTreeIsh, HasSingleCommandArgument(name)
 
-data class GitTag(override val arg: String, val message: String) : GitTreeIsh
+data class GitTag(val name: String, val message: String) : GitTreeIsh, HasSingleCommandArgument(name)
 
-data class GitHash(override val arg: String) : GitTreeIsh
+data class GitHash(val name: String) : GitTreeIsh, HasSingleCommandArgument(name)
 
 object GitOptions : CommandOptions() {
 
