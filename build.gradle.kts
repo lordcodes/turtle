@@ -12,7 +12,7 @@ plugins {
     kotlin("jvm") version "1.7.10" apply false
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
     id("com.github.ben-manes.versions") version "0.42.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("org.jlleitschuh.gradle.ktlint-idea") version "10.3.0"
 }
 
