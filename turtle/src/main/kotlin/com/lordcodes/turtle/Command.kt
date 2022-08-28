@@ -59,7 +59,7 @@ data class Command(
     ): String = try {
         shellScript.command(executable.name, args)
     } catch (e: ShellFailedException) {
-        check(e.couldRunProgram()) { "Command ${executable.name} not found. See ${executable.howToInstall}" }
+        check(e.couldRunProgram()) { "Command ${executable.name} not found. See ${executable.url}" }
         throw e
     }
 
@@ -75,7 +75,7 @@ data class Command(
         return try {
             shellScript.command(executable.name, args)
         } catch (e: ShellFailedException) {
-            check(e.couldRunProgram()) { "Command ${executable.name} not found. See ${executable.howToInstall}" }
+            check(e.couldRunProgram()) { "Command ${executable.name} not found. See ${executable.url}" }
             onError(e)
         } catch (e: ShellRunException) {
             onError(e)

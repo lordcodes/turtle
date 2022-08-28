@@ -4,7 +4,7 @@ import com.lordcodes.turtle.internal.buildArgsFromAnyType
 
 /** Convert any number of strings, ints, booleans, lists, pair, File, URI, URL, any supported types
  * to an [Args] of command-line arguments **/
-fun Args(vararg args: Any): Args =
+fun Args(vararg args: Any?): Args =
     buildArgsFromAnyType(args.toList())
 
 /** Represent a list of command-line arguments **/

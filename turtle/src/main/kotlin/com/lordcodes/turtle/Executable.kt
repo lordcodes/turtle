@@ -3,11 +3,11 @@ package com.lordcodes.turtle
 import java.net.URL
 
 /** First argument of [Command] **/
-data class Executable(
+open class Executable(
     /** Executable name **/
     val name: String,
-    /** Forces you to explain how to install your dependencies instead of letting it as an exercise to the user */
-    val howToInstall: URL
+    /** nudge you to link to a documentation website or an installation url */
+    val url: URL
 ) {
     /** `ls + Args("-l", "-a)` is `Command(ls, Args("-l", "-a)` **/
     operator fun plus(args: Args): Command = Command(this, args)
@@ -17,4 +17,12 @@ data class Executable(
 
     /** `ls + withArgs` is `Command(ls, Args(withArgs)` **/
     operator fun plus(withArgs: Iterable<WithArg>): Command = Command(this, Args(withArgs))
+
+    override fun toString() =
+        "Executable($name) // see $url"
+
+    override fun equals(other: Any?) =
+        name == (other as? Executable)?.name
+
+    override fun hashCode() = name.hashCode()
 }
