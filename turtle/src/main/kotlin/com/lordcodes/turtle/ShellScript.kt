@@ -41,6 +41,7 @@ class ShellScript constructor(
      *
      * @return [String] The output of running the command.
      *
+     * @throws [ShellCommandNotFoundException] The command wasn't found.
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
@@ -58,6 +59,7 @@ class ShellScript constructor(
      *
      * @return [ProcessOutput] The output of running the command.
      *
+     * @throws [ShellCommandNotFoundException] The command wasn't found.
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
@@ -90,6 +92,9 @@ class ShellScript constructor(
             process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
             prepareOutput(process)
         } catch (exception: IOException) {
+            if (exception.message?.contains("Cannot run program") == true) {
+                throw ShellCommandNotFoundException(command, exception)
+            }
             throw ShellFailedException(exception)
         } catch (exception: InterruptedException) {
             throw ShellFailedException(exception)

@@ -1,84 +1,209 @@
 package com.lordcodes.turtle
 
-import com.lordcodes.turtle.internal.quoteCommandArgument
-
-/** In memory representation of a CLI command with its [executable] and [Args] **/
+/**
+ * Representation of a shell command with its [executable] and [arguments].
+ *
+ * @property [executable] The command executable, e.g. 'cd'.
+ * @property [arguments] The arguments to be passed to the executable.
+ */
 data class Command(
     val executable: Executable,
-    val args: Args = Args(emptyList()),
+    val arguments: Arguments = Arguments(emptyList()),
 ) {
-
-    /** Command formatted like for a Bash command-line **/
-    override fun toString(): String = "${executable.name} " +
-        args.joinToString(separator = " ", transform = ::quoteCommandArgument)
-
-    /** `command + args` is `Command(command.executable, command.args + args)` */
-    operator fun plus(other: Args): Command =
-        copy(args = args + other)
-
-    /** `command + withArg` is `Command(command.executable, command.args + withArg)` */
-    operator fun plus(other: WithArg): Command =
-        copy(args = args + other)
-
-    /** `command + withArgs` is `Command(command.executable, command.args + withArgs)` */
-    operator fun plus(other: Iterable<WithArg>): Command =
-        copy(args = args + other)
-
-    /** `command - args` is shortcut for `Command(command.executable, command.args - args)` */
-    operator fun minus(other: Args): Command =
-        copy(args = args - other)
-
-    /** `command - args` is shortcut for `Command(command.executable, command.args - args)` */
-    operator fun minus(other: WithArg): Command =
-        copy(args = Args(args - other.arg))
-
-    /** `command + withArgs` is `Command(command.executable, command.args + withArgs)` */
-    operator fun minus(other: Iterable<WithArg>): Command =
-        copy(args = args - Args(other))
-
-    /** `Args("-l", "-a") in command` */
-    operator fun contains(other: Args) = args.containsAll(other.args)
-
-    /** `"--verbose" in command` */
-    operator fun contains(arg: String) = Args(arg) in this
-
-    /** `withArg in command` */
-    operator fun contains(arg: WithArg) = Args(arg) in this
-
-    /** `withArgs in command` */
-    operator fun contains(other: Iterable<WithArg>) = Args(other) in this
+    /**
+     * Returns a copy of this command with the provided arguments added.
+     *
+     * ```
+     * command + Arguments("-l", "-a")
+     * ```
+     *
+     * @return [Command] A command copy with the provided arguments added.
+     *
+     * @param [arguments] The arguments to add to this command.
+     */
+    operator fun plus(arguments: Arguments): Command = copy(arguments = this.arguments + arguments)
 
     /**
-     * Run a shell command with the specified arguments, receiving the output as a String.
+     * Returns a copy of this command with the provided arguments added.
      *
-     * @throws [ShellFailedException] There was an issue running the command.
-     * @throws [ShellRunException] Running the command produced error output.
+     * ```
+     * command + withArguments
+     * ```
+     *
+     * @return [Command] A command copy with the provided arguments added.
+     *
+     * @param [withArguments] The arguments to add to this command.
      */
-    fun executeOrThrow(
-        shellScript: ShellScript = ShellScript(null),
-    ): String = try {
-        shellScript.command(executable.name, args)
-    } catch (e: ShellFailedException) {
-        check(e.couldRunProgram()) { "Command ${executable.name} not found. See ${executable.url}" }
-        throw e
+    operator fun plus(withArguments: Iterable<WithArgument>): Command = copy(arguments = arguments + withArguments)
+
+    /**
+     * Returns a copy of this command with the provided argument added.
+     *
+     * ```
+     * command + withArgument
+     * ```
+     *
+     * @return [Command] A command copy with the provided argument added.
+     *
+     * @param [withArgument] The argument to add to this command.
+     */
+    operator fun plus(withArgument: WithArgument): Command = copy(arguments = arguments + withArgument)
+
+    /**
+     * Returns a copy of this command with the provided arguments removed.
+     *
+     * ```
+     * command - Arguments("-l", "-a")
+     * ```
+     *
+     * @return [Command] A command copy with the provided arguments removed.
+     *
+     * @param [arguments] The arguments to remove from this command.
+     */
+    operator fun minus(arguments: Arguments): Command = copy(arguments = this.arguments - arguments)
+
+    /**
+     * Returns a copy of this command with the provided arguments removed.
+     *
+     * ```
+     * command - withArguments
+     * ```
+     *
+     * @return [Command] A command copy with the provided arguments removed.
+     *
+     * @param [withArguments] The arguments to remove from this command.
+     */
+    operator fun minus(withArguments: Iterable<WithArgument>): Command =
+        copy(arguments = arguments - withArguments.toSet())
+
+    /**
+     * Returns a copy of this command with the provided argument removed.
+     *
+     * ```
+     * command - withArgument
+     * ```
+     *
+     * @return [Command] A command copy with the provided argument removed.
+     *
+     * @param [withArgument] The argument to remove from this command.
+     */
+    operator fun minus(withArgument: WithArgument): Command = copy(arguments = arguments - withArgument)
+
+    /**
+     * Returns whether this command's arguments contain the provided arguments.
+     *
+     * ```
+     * Arguments("-l", "-a") in command
+     * ```
+     *
+     * @return [Boolean] Whether the command's arguments contain the provided arguments.
+     *
+     * @param [arguments] The arguments to check for.
+     */
+    operator fun contains(arguments: Arguments): Boolean = this.arguments.containsAll(arguments)
+
+    /**
+     * Returns whether this command's arguments contain the provided arguments.
+     *
+     * ```
+     * withArguments in command
+     * ```
+     *
+     * @return [Boolean] Whether the command's arguments contain the provided arguments.
+     *
+     * @param [withArguments] The arguments to check for.
+     */
+    operator fun contains(withArguments: Iterable<WithArgument>) = Arguments(withArguments) in this
+
+    /**
+     * Returns whether this command's arguments contain the provided argument.
+     *
+     * ```
+     * "--verbose" in command
+     * ```
+     *
+     * @return [Boolean] Whether the command's arguments contain the provided argument.
+     *
+     * @param [argument] The argument to check for.
+     */
+    operator fun contains(argument: String) = Arguments(listOf(argument)) in this
+
+    /**
+     * Returns whether this command's arguments contain the provided argument.
+     *
+     * ```
+     * withArgument in command
+     * ```
+     *
+     * @return [Boolean] Whether the command's arguments contain the provided argument.
+     *
+     * @param [withArgument] The argument to check for.
+     */
+    operator fun contains(withArgument: WithArgument) = Arguments(withArgument) in this
+
+    /**
+     * Command with its executable and arguments formatted similarly as a shell command-line.
+     *
+     * @return [String] The command formatted as a string.
+     */
+    override fun toString(): String =
+        "${executable.name} " + arguments.joinToString(separator = " ", transform = ::quoteCommandArgument)
+
+    private fun quoteCommandArgument(argument: String): String {
+        val doubleQuote = "\""
+        val singleQuote = "\'"
+        val unquoted = argument
+            .removePrefix(singleQuote)
+            .removeSuffix(singleQuote)
+            .removePrefix(doubleQuote)
+            .removeSuffix(doubleQuote)
+            .removePrefix(singleQuote)
+            .removeSuffix(singleQuote)
+
+        val slash = "\\"
+        val unescaped = unquoted
+            .replace("$slash$singleQuote", singleQuote)
+            .replace("$slash$doubleQuote", doubleQuote)
+
+        val needsQuote = unquoted.any { it in " '\"" } || unquoted.isBlank()
+        return when {
+            needsQuote -> "'$unescaped'"
+            else -> unquoted
+        }
     }
 
     /**
-     * Run a shell command with the specified arguments, receiving the output as a String.
+     * Run the command, receiving the output as a String.
      *
-     * [onError] is called if there was an issue running the command
+     * @throws [ShellExecutableNotFoundException] The command executable wasn't found.
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     *
+     * @returns [String] Command output.
      */
-    inline fun executeOrElse(
-        shellScript: ShellScript = ShellScript(null),
-        onError: (Exception) -> String
-    ): String {
-        return try {
-            shellScript.command(executable.name, args)
-        } catch (e: ShellFailedException) {
-            check(e.couldRunProgram()) { "Command ${executable.name} not found. See ${executable.url}" }
-            onError(e)
-        } catch (e: ShellRunException) {
-            onError(e)
-        }
+    fun executeOrThrow(
+        shellScript: ShellScript = ShellScript()
+    ): String = try {
+        shellScript.command(executable.name, arguments)
+    } catch (ex: ShellCommandNotFoundException) {
+        throw ShellExecutableNotFoundException(executable, ex.cause)
+    }
+
+    /**
+     * Run the command, receiving the output as a String.
+     *
+     * @param [onError] Handle errors that occur when running the command.
+     *
+     * @returns [String] Command output or output of [onError].
+     */
+    fun executeOrElse(
+        shellScript: ShellScript = ShellScript(),
+        onError: (Throwable) -> String
+    ): String = try {
+        shellScript.command(executable.name, arguments)
+    } catch (ex: ShellCommandNotFoundException) {
+        onError(ShellExecutableNotFoundException(executable, ex.cause))
+    } catch (error: Throwable) {
+        onError(error)
     }
 }
