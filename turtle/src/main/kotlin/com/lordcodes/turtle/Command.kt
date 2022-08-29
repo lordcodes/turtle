@@ -178,7 +178,7 @@ data class Command(
     ): String = try {
         shellScript.command(executable.name, arguments)
     } catch (ex: ShellCommandNotFoundException) {
-        throw ShellExecutableNotFoundException(executable, ex.cause)
+        throw ShellExecutableNotFoundException(executable, ex)
     }
 
     /**
