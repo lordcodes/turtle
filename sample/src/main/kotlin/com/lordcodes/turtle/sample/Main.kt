@@ -1,6 +1,10 @@
 package com.lordcodes.turtle.sample
 
-import com.lordcodes.turtle.*
+import com.lordcodes.turtle.Arguments
+import com.lordcodes.turtle.Command
+import com.lordcodes.turtle.Executable
+import com.lordcodes.turtle.GitCommands
+import com.lordcodes.turtle.shellRun
 import java.io.File
 import java.net.URL
 

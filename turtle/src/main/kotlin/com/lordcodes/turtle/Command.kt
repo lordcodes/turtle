@@ -203,7 +203,9 @@ data class Command(
         shellScript.command(executable.name, arguments)
     } catch (ex: ShellCommandNotFoundException) {
         onError(ShellExecutableNotFoundException(executable, ex.cause))
-    } catch (error: Throwable) {
-        onError(error)
+    } catch (ex: ShellFailedException) {
+        onError(ex)
+    } catch (ex: ShellRunException) {
+        onError(ex)
     }
 }
