@@ -147,28 +147,20 @@ data class Command(
      * @return [String] The command formatted as a string.
      */
     override fun toString(): String =
-        "${executable.name} " + arguments.joinToString(separator = " ", transform = ::quoteCommandArgument)
+        "${executable.name} " + arguments.joinToString(separator = " ", transform = ::quoteArgumentIfNecessary)
 
-    private fun quoteCommandArgument(argument: String): String {
-        val doubleQuote = "\""
-        val singleQuote = "\'"
+    private fun quoteArgumentIfNecessary(argument: String): String {
         val unquoted = argument
-            .removePrefix(singleQuote)
-            .removeSuffix(singleQuote)
-            .removePrefix(doubleQuote)
-            .removeSuffix(doubleQuote)
-            .removePrefix(singleQuote)
-            .removeSuffix(singleQuote)
-
-        val slash = "\\"
+            .trim('\'')
+            .trim('\"')
+            .trim('\'')
         val unescaped = unquoted
-            .replace("$slash$singleQuote", singleQuote)
-            .replace("$slash$doubleQuote", doubleQuote)
-
-        val needsQuote = unquoted.any { it in " '\"" } || unquoted.isBlank()
-        return when {
-            needsQuote -> "'$unescaped'"
-            else -> unquoted
+            .replace("\\\'", "\'")
+            .replace("\\\"", "\"")
+        return if (unquoted.isBlank() || unquoted.any { it in " '\"" }) {
+            "'$unescaped'"
+        } else {
+            unescaped
         }
     }
 
