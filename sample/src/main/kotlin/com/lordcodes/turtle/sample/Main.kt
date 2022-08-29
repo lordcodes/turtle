@@ -11,7 +11,8 @@ fun main() {
 
         println(git.gitAuthorName())
 
-        command("mkdir", listOf("Test"))
+        Command(Executable("mkdir"), Arguments("Test")).executeOrElse { it.message ?: "Failed" }
+
         command("mkdir", listOf("Test2"))
         command("rm", listOf("-rf", "BLAH"))
         command("rm", listOf("-rf", "Test", "Test2"))
