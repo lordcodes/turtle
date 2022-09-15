@@ -2,6 +2,13 @@
 
 ## Un-released changes (master)
 
+## v0.8.0
+
+* Add which command. [PR #117](https://github.com/lordcodes/turtle/pull/117)
+* Add dry run command. [PR #118](https://github.com/lordcodes/turtle/pull/118)
+* Command and Arguments abstraction. [PR 127](https://github.com/lordcodes/turtle/pull/127)
+* Many dependency updates.
+
 ## v0.7.0
 
 * Make ShellScript constructor accessible, so that consumers can create their own instances, such as creating a wrapper class. [PR #99](https://github.com/lordcodes/turtle/pull/99)

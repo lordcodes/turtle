@@ -59,7 +59,7 @@ Turtle is provided as a Gradle/Maven dependency.
 
 ```gradle
 dependencies {
-  implementation("com.lordcodes.turtle:turtle:0.7.0")
+  implementation("com.lordcodes.turtle:turtle:0.8.0")
 }
 ```
 
@@ -67,7 +67,7 @@ dependencies {
 
 ```gradle
 dependencies {
-  implementation 'com.lordcodes.turtle:turtle:0.7.0'
+  implementation 'com.lordcodes.turtle:turtle:0.8.0'
 }
 ```
 
