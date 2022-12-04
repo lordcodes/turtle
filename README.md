@@ -73,6 +73,8 @@ dependencies {
 
 ## Usage
 
+Note: Turtle is developed with MacOS in mind and so some commands or features may not exist or work as expected on Linux or Windows. There is an open issue to consider multiplatform support more carefully.
+
 To run a single custom command, just call `shellRun()` and provide the command and arguments.
 
 ```kotlin
