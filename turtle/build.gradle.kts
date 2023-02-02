@@ -15,7 +15,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.7.21")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.7.21")
-    testImplementation("io.mockk:mockk:1.13.2")
+    testImplementation("io.mockk:mockk:1.13.4")
 }
 
 tasks.test {
