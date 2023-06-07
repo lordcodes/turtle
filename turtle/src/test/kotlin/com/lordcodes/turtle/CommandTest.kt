@@ -10,7 +10,7 @@ import kotlin.test.assertEquals
 
 internal class CommandTest {
     private val builtinUnixCommands = URL(
-        "https://www.cyberciti.biz/faq/linux-unix-bash-shell-list-all-builtin-commands/"
+        "https://www.cyberciti.biz/faq/linux-unix-bash-shell-list-all-builtin-commands/",
     )
     private val echo = Executable("echo", builtinUnixCommands)
     private val ls = Executable("ls", builtinUnixCommands)
@@ -86,7 +86,7 @@ internal class CommandTest {
     fun `toString without escaping or quotes`() {
         val command = Command(
             ls,
-            Arguments("-a", "-l", "--color=when", "src", "build")
+            Arguments("-a", "-l", "--color=when", "src", "build"),
         )
 
         assertEquals("ls -a -l --color=when src build", command.toString())
@@ -96,7 +96,7 @@ internal class CommandTest {
     fun `toString with escaping and quotes`() {
         val command = Command(
             ls,
-            Arguments("ab", "a b", "a\"b", "a\'b", "'ab'", "\"ab\"", "", "''", "\"''\"")
+            Arguments("ab", "a b", "a\"b", "a\'b", "'ab'", "\"ab\"", "", "''", "\"''\""),
         )
         val expected = """
             ls ab 'a b' 'a"b' 'a'b' ab ab '' '' ''
@@ -131,7 +131,7 @@ internal class CommandTest {
     fun `executeOrThrow when command not found`() {
         val notInstalled = Executable(
             name = "sdlpop",
-            helpUrl = URL("https://github.com/NagyD/SDLPoP")
+            helpUrl = URL("https://github.com/NagyD/SDLPoP"),
         )
         val command = Command(notInstalled, Arguments("--version"))
         val expectedError = "Command ${notInstalled.name} not found. See ${notInstalled.helpUrl}."
@@ -166,7 +166,7 @@ internal class CommandTest {
     fun `executeOrElse when command not found`() {
         val notInstalled = Executable(
             name = "sdlpop",
-            helpUrl = URL("https://github.com/NagyD/SDLPoP")
+            helpUrl = URL("https://github.com/NagyD/SDLPoP"),
         )
         val command = Command(notInstalled, Arguments("--version"))
         val expectedError = "Command ${notInstalled.name} not found. See ${notInstalled.helpUrl}."

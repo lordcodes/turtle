@@ -10,7 +10,7 @@ import java.net.URL
  * @property [arguments] The arguments.
  */
 data class Arguments(
-    val arguments: List<String>
+    val arguments: List<String>,
 ) : List<String> by arguments {
     /**
      * Returns a copy of these arguments with the provided arguments added.
@@ -155,7 +155,7 @@ private fun Iterable<Any?>.recursivelyFlatten(): List<Any> {
             is Map<*, *> -> result.addAll(
                 element.entries
                     .flatMap { listOf(it.key, it.value) }
-                    .recursivelyFlatten()
+                    .recursivelyFlatten(),
             )
             is Pair<*, *> -> result.addAll(element.toList().recursivelyFlatten())
             is Triple<*, *, *> -> result.addAll(element.toList().recursivelyFlatten())

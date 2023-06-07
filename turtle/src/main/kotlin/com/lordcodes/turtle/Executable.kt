@@ -10,7 +10,7 @@ import java.net.URL
  */
 data class Executable(
     val name: String,
-    val helpUrl: URL? = null
+    val helpUrl: URL? = null,
 ) {
     /**
      * Creates a Command using this executable with the provided [arguments].

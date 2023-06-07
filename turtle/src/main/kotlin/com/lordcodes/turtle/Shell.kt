@@ -20,7 +20,7 @@ import java.io.File
 fun shellRun(
     workingDirectory: File? = null,
     dryRun: Boolean = false,
-    script: ShellScript.() -> String
+    script: ShellScript.() -> String,
 ): String = ShellScript(workingDirectory, dryRun = dryRun).script()
 
 /**
@@ -41,5 +41,5 @@ fun shellRun(
     command: String,
     arguments: List<String> = listOf(),
     workingDirectory: File? = null,
-    dryRun: Boolean = false
+    dryRun: Boolean = false,
 ): String = shellRun(workingDirectory, dryRun = dryRun) { command(command, arguments) }

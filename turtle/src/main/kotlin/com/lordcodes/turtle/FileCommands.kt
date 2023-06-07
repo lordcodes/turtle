@@ -6,7 +6,7 @@ import java.io.File
  * Commands that deal with files and operate on the file system.
  */
 class FileCommands internal constructor(
-    private val shell: ShellScript
+    private val shell: ShellScript,
 ) {
     /**
      * Open a file using its default application.

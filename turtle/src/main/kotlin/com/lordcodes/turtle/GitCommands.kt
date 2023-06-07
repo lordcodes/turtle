@@ -7,7 +7,7 @@ import java.net.URL
  * Commands that deal with Git.
  */
 class GitCommands internal constructor(
-    private val shell: ShellScript
+    private val shell: ShellScript,
 ) {
     /**
      * Initialize a Git repository.

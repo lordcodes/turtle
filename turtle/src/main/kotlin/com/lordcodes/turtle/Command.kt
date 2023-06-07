@@ -174,7 +174,7 @@ data class Command(
      * @returns [String] Command output.
      */
     fun executeOrThrow(
-        shellScript: ShellScript = ShellScript()
+        shellScript: ShellScript = ShellScript(),
     ): String = try {
         shellScript.command(executable.name, arguments)
     } catch (ex: ShellCommandNotFoundException) {
@@ -190,7 +190,7 @@ data class Command(
      */
     fun executeOrElse(
         shellScript: ShellScript = ShellScript(),
-        onError: (Throwable) -> String
+        onError: (Throwable) -> String,
     ): String = try {
         shellScript.command(executable.name, arguments)
     } catch (ex: ShellCommandNotFoundException) {

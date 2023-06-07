@@ -105,8 +105,8 @@ internal class ArgumentsTest {
                 "--color",
                 "blue",
                 "--max",
-                "42"
-            )
+                "42",
+            ),
         )
 
         val actual = Arguments(
@@ -118,8 +118,8 @@ internal class ArgumentsTest {
             listOf(listOf("l", "m"), setOf("n")),
             mapOf(
                 "--color" to "blue",
-                "--max" to 42
-            )
+                "--max" to 42,
+            ),
         )
 
         assertEquals(expected, actual)
@@ -133,7 +133,7 @@ internal class ArgumentsTest {
 
         assertEquals(
             "Classes couldn't be converted to Arguments: [XorWowRandom, ProcessBuilder]",
-            exception.message
+            exception.message,
         )
     }
 
