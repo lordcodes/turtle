@@ -12,8 +12,8 @@ plugins {
     kotlin("jvm") version "1.8.21" apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.0"
     id("com.github.ben-manes.versions") version "0.47.0"
-    id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
-    id("org.jlleitschuh.gradle.ktlint-idea") version "11.3.2"
+    id("org.jlleitschuh.gradle.ktlint") version "11.4.0"
+    id("org.jlleitschuh.gradle.ktlint-idea") version "11.4.0"
 }
 
 allprojects {
@@ -34,8 +34,7 @@ allprojects {
 
     tasks.withType<Test>().configureEach {
         reports {
-            @Suppress("UnstableApiUsage")
-            html.isEnabled = true
+            html.required.set(true)
         }
         testLogging {
             events("passed", "skipped", "failed")
@@ -47,7 +46,7 @@ subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     ktlint {
-        version.set("0.40.0")
+        version.set("0.49.1")
         reporters {
             reporter(ReporterType.CHECKSTYLE)
             reporter(ReporterType.HTML)
@@ -62,13 +61,13 @@ subprojects {
 }
 
 detekt {
-    input = files(
+    source.from(
         "$projectDir/turtle/src/main/kotlin",
         "$projectDir/turtle/src/test/kotlin",
         "$projectDir/buildSrc/src/main/kotlin"
     )
     parallel = true
-    config = files("${rootProject.projectDir}/config/detekt/detekt.yml")
+    config.from("${rootProject.projectDir}/config/detekt/detekt.yml")
     buildUponDefaultConfig = true
 }
 
