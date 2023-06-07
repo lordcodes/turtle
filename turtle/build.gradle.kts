@@ -4,8 +4,8 @@ import java.net.URL
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.8.10"
-    id("com.vanniktech.maven.publish") version "0.20.0"
+    id("org.jetbrains.dokka") version "1.8.20"
+    id("com.vanniktech.maven.publish") version "0.25.2"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
