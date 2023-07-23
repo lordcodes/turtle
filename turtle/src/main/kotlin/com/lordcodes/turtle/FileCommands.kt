@@ -9,7 +9,7 @@ class FileCommands internal constructor(
     private val shell: ShellScript,
 ) {
     /**
-     * Open a file using its default application.
+     * Open a file at [path] using its default application, returning any output as a [String].
      *
      * @param [path] The file to open.
      *
@@ -22,7 +22,7 @@ class FileCommands internal constructor(
     fun openFile(path: File): String = openFile(path.toString())
 
     /**
-     * Open a file using its default application.
+     * Open a file at [path] using its default application, returning any output as a [String].
      *
      * @param [path] The full file path to open.
      *
@@ -35,7 +35,7 @@ class FileCommands internal constructor(
     fun openFile(path: String): String = shell.command("open", listOf(path))
 
     /**
-     * Open an application by name.
+     * Open an application by [name], returning any output as a [String].
      *
      * @param [name] The name of the application to open.
      *
@@ -48,7 +48,8 @@ class FileCommands internal constructor(
     fun openApplication(name: String): String = shell.command("open", listOf("-a", name))
 
     /**
-     * Create a symbolic link at a given path, that links back to a different location.
+     * Create a symbolic link at a given [linkPath], that links back to [targetPath] at a different location. Any
+     * output will be returned as a [String].
      *
      * @param [targetPath] The target to link to.
      * @param [linkPath] The location for the symlink.
@@ -62,7 +63,8 @@ class FileCommands internal constructor(
         createSymlink(targetPath.toString(), linkPath.toString())
 
     /**
-     * Create a symbolic link at a given path, that links back to a different location.
+     * Create a symbolic link at a given [linkPath], that links back to [targetPath] at a different location. Any
+     * otuput will be returned as a [String].
      *
      * @param [targetPath] The full file path of the target to link to.
      * @param [linkPath] The full file path for the symlink.
@@ -76,7 +78,7 @@ class FileCommands internal constructor(
         shell.command("ln", listOf("-s", targetPath, linkPath))
 
     /**
-     * Read the target path of a symbolic link.
+     * Read the target path as a [String] of a symbolic link located at [linkPath].
      *
      * @param [linkPath] The location for the symlink.
      *

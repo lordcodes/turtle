@@ -124,13 +124,9 @@ style:
         active: true
     MultilineLambdaItParameter:
         active: true
-    MultilineRawStringIndentation:
-        active: true
     NoTabs:
         active: true
     OptionalUnit:
-        active: true
-    OptionalWhenBraces:
         active: true
     PreferToOverPairSyntax:
         active: true

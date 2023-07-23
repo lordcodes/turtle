@@ -5,15 +5,15 @@ import java.net.URI
 import java.net.URL
 
 /**
- * A list of command-line arguments, implements List<String> by delegating to the provided arguments list.
+ * A list of command-line [arguments]. Implements List<String> by delegating to the provided arguments list.
  *
- * @property [arguments] The arguments.
+ * @property [arguments] The list of arguments.
  */
 data class Arguments(
     val arguments: List<String>,
 ) : List<String> by arguments {
     /**
-     * Returns a copy of these arguments with the provided arguments added.
+     * Returns an [Arguments] copy of these arguments with the provided [arguments] added.
      *
      * ```
      * Arguments("src", "dest") + Arguments("--verbose")
@@ -26,7 +26,7 @@ data class Arguments(
     operator fun plus(arguments: Arguments): Arguments = Arguments(this.arguments + arguments)
 
     /**
-     * Returns a copy of these arguments with the provided arguments added.
+     * Returns an [Arguments] copy of these arguments with the provided [arguments] added.
      *
      * ```
      * Arguments("src", "dest") + withArguments
@@ -40,7 +40,7 @@ data class Arguments(
         Arguments(arguments + withArguments.map { it.argument })
 
     /**
-     * Returns a copy of these arguments with the provided argument added.
+     * Returns an [Arguments] copy of these arguments with the provided [withArgument] added.
      *
      * ```
      * Arguments("src", "dest") + withArgument
@@ -54,7 +54,7 @@ data class Arguments(
         Arguments(arguments + withArgument.argument)
 
     /**
-     * Returns a copy of these arguments with the provided arguments removed.
+     * Returns an [Arguments] copy of these arguments with the provided [arguments] removed.
      *
      * ```
      * Arguments("src", "dest") - Arguments("dest")
@@ -68,7 +68,7 @@ data class Arguments(
         Arguments(this.arguments - arguments.toSet())
 
     /**
-     * Returns a copy of these arguments with the provided arguments removed.
+     * Returns an [Arguments] copy of these arguments with the provided [withArguments] removed.
      *
      * ```
      * Arguments("src", "dest") - withArguments
@@ -82,7 +82,7 @@ data class Arguments(
         Arguments(arguments - withArguments.map { it.argument }.toSet())
 
     /**
-     * Returns a copy of these arguments with the provided argument removed.
+     * Returns an [Arguments] copy of these arguments with the provided [withArgument] removed.
      *
      * ```
      * Arguments("src", "dest") - withArgument
@@ -97,7 +97,7 @@ data class Arguments(
 }
 
 /**
- * Create `Arguments` from any number of supported types, converting them to strings.
+ * Create [Arguments] from any number of supported types, converting them to strings.
  *
  * - Boolean
  * - Char
@@ -150,16 +150,33 @@ private fun Iterable<Any?>.recursivelyFlatten(): List<Any> {
     val result = mutableListOf<Any>()
     for (element in this) {
         when (element) {
-            null -> continue
-            is Iterable<*> -> result.addAll(element.recursivelyFlatten())
-            is Map<*, *> -> result.addAll(
-                element.entries
-                    .flatMap { listOf(it.key, it.value) }
-                    .recursivelyFlatten(),
-            )
-            is Pair<*, *> -> result.addAll(element.toList().recursivelyFlatten())
-            is Triple<*, *, *> -> result.addAll(element.toList().recursivelyFlatten())
-            else -> result.add(element)
+            null -> {
+                continue
+            }
+
+            is Iterable<*> -> {
+                result.addAll(element.recursivelyFlatten())
+            }
+
+            is Map<*, *> -> {
+                result.addAll(
+                    element.entries
+                        .flatMap { listOf(it.key, it.value) }
+                        .recursivelyFlatten(),
+                )
+            }
+
+            is Pair<*, *> -> {
+                result.addAll(element.toList().recursivelyFlatten())
+            }
+
+            is Triple<*, *, *> -> {
+                result.addAll(element.toList().recursivelyFlatten())
+            }
+
+            else -> {
+                result.add(element)
+            }
         }
     }
     return result

@@ -5,7 +5,7 @@ package com.lordcodes.turtle
  */
 interface ProcessCallbacks {
     /**
-     * The process started, can be used to access the Process object.
+     * The process started, can be used to access the [Process] object.
      *
      * @param [process] The process that was started.
      */

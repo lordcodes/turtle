@@ -40,7 +40,7 @@ class GitCommands internal constructor(
     fun addAll(): String = gitCommand(listOf("add", "--all"))
 
     /**
-     * Create a Git commit with the given commit message. Any modified or deleted files will also be staged and
+     * Create a Git commit with the given commit [message]. Any modified or deleted files will also be staged and
      * included in the commit.
      *
      * @param [message] The commit message to use.
@@ -53,7 +53,7 @@ class GitCommands internal constructor(
     fun commit(message: String): String = gitCommand(listOf("commit", "-a", "-m", message, "--quiet"))
 
     /**
-     * Create a Git commit with the given commit message. Any new, modified or deleted files will also be staged and
+     * Create a Git commit with the given commit [message]. Any new, modified or deleted files will also be staged and
      * included in the commit.
      *
      * @param [message] The commit message to use.
@@ -69,7 +69,7 @@ class GitCommands internal constructor(
     }
 
     /**
-     * Push changes to a Git repository.
+     * Push changes to a Git repository, optionally specifying the [remote] to push to and the [branch] to push.
      *
      * @param [remote] The remote to push to, optional.
      * @param [branch] The branch to push, optional.
@@ -88,7 +88,7 @@ class GitCommands internal constructor(
     }
 
     /**
-     * Push changes to the origin remote on a Git repository.
+     * Push changes at HEAD to the origin remote on a Git repository.
      *
      * @return [String] The output of running the command.
      *
@@ -98,7 +98,7 @@ class GitCommands internal constructor(
     fun pushToOrigin(): String = push(remote = "origin", branch = "HEAD")
 
     /**
-     * Pull changes for a Git repository.
+     * Pull changes for a Git repository, optionally specifying the [remote] to pull from and the [branch] to pull.
      *
      * @param [remote] The remote to pull from, optional.
      * @param [branch] The branch to pull, optional.
@@ -117,9 +117,11 @@ class GitCommands internal constructor(
     }
 
     /**
-     * Checkout a given Git branch.
+     * Check out a given Git [branch], optionally specifying whether to create it if it doesn't exist using
+     * [createIfNecessary].
      *
-     * @param [branch] The branch to checkout.
+     * @param [branch] The branch to check out.
+     * @param [createIfNecessary] Whether to create the branch if not found.
      *
      * @return [String] The output of running the command.
      *
@@ -137,7 +139,7 @@ class GitCommands internal constructor(
     }
 
     /**
-     * Clone a Git repository at a given URL.
+     * Clone a Git repository at a given [repositoryUrl], to [destination].
      *
      * @param [repositoryUrl] The URL of the Git repository to clone.
      * @param [destination] The path to create the clone at.
@@ -151,7 +153,7 @@ class GitCommands internal constructor(
         clone(repositoryUrl.toString(), destination?.toString())
 
     /**
-     * Clone a Git repository at a given URL.
+     * Clone a Git repository at a given [repositoryUrl] to [destination].
      *
      * @param [repositoryUrl] The URL of the Git repository to clone.
      * @param [destination] The path to create the clone at.
@@ -169,7 +171,7 @@ class GitCommands internal constructor(
     }
 
     /**
-     * Tag a Git commit.
+     * Tag a Git commit with [tagName] and [message].
      *
      * @param [tagName] The name of the tag to add.
      * @param [message] The message to use in the tag.
@@ -182,7 +184,7 @@ class GitCommands internal constructor(
     fun addTag(tagName: String, message: String): String = gitCommand(listOf("tag", "-a", tagName, "-m", message))
 
     /**
-     * Push the given Git tag.
+     * Push the given Git [tagName] to origin.
      *
      * @param [tagName] The name of the tag to push.
      *
@@ -234,7 +236,7 @@ class GitCommands internal constructor(
     fun currentCommitAuthorName(): String = gitCommand(listOf("--no-pager", "show", "-s", "--format=%an"))
 
     /**
-     * Run a Git command with the specified arguments.
+     * Run a Git command with the specified [arguments].
      *
      * @param [arguments] The arguments to pass to the Git command.
      *

@@ -3,7 +3,8 @@ package com.lordcodes.turtle
 import java.net.URL
 
 /**
- * Command executable, e.g. 'cd'.
+ * Command executable, e.g. 'cd', with its [name] and a [helpUrl] to provide the user help if the executable isn't
+ * found on the system.
  *
  * @property [name] The command executable name, e.g. 'cd'.
  * @property [helpUrl] A url that gives help for the executable if it isn't found on the system.
@@ -13,7 +14,7 @@ data class Executable(
     val helpUrl: URL? = null,
 ) {
     /**
-     * Creates a Command using this executable with the provided [arguments].
+     * Creates a [Command] using this executable with the provided [arguments].
      *
      * ```
      * ls + Arguments("-l", "-a")
@@ -26,7 +27,7 @@ data class Executable(
     operator fun plus(arguments: Arguments): Command = Command(this, arguments)
 
     /**
-     * Creates a Command using this executable with the provided arguments.
+     * Creates a [Command] using this executable with the provided [withArguments].
      *
      * ```
      * ls + withArgs
@@ -40,7 +41,7 @@ data class Executable(
         Command(this, Arguments(withArguments))
 
     /**
-     * Creates a Command using this executable with the provided argument.
+     * Creates a [Command] using this executable with the provided [withArgument].
      *
      * ```
      * ls + withArg

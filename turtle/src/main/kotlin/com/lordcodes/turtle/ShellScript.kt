@@ -1,5 +1,6 @@
 package com.lordcodes.turtle
 
+import com.lordcodes.turtle.internal.EmptyProcess
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -52,12 +53,8 @@ class ShellScript constructor(
     ): String = runCommand(command, arguments, callbacks) { it.retrieveOutput() }
 
     /**
-     * Run a shell command with the specified arguments, allowing standard output or error to be read as a stream.
-     *
-     * @param [command] A command to run.
-     * @param [arguments] The arguments to pass to the command.
-     *
-     * @return [ProcessOutput] The output of running the command.
+     * Run a shell [command] with the specified [arguments], allowing standard output or error to be read as a stream,
+     * within [ProcessOutput].
      *
      * @throws [ShellCommandNotFoundException] The command wasn't found.
      * @throws [ShellFailedException] There was an issue running the command.
