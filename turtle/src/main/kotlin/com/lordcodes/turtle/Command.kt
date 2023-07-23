@@ -1,7 +1,7 @@
 package com.lordcodes.turtle
 
 /**
- * Representation of a shell command with its [executable] and [arguments].
+ * A shell command, made up of its [executable] (e.g. 'cd') and [arguments].
  *
  * @property [executable] The command executable, e.g. 'cd'.
  * @property [arguments] The arguments to be passed to the executable.
@@ -11,7 +11,7 @@ data class Command(
     val arguments: Arguments = Arguments(emptyList()),
 ) {
     /**
-     * Returns a copy of this command with the provided arguments added.
+     * Returns a [Command] copy of this command with the provided [arguments] added.
      *
      * ```
      * command + Arguments("-l", "-a")
@@ -24,7 +24,7 @@ data class Command(
     operator fun plus(arguments: Arguments): Command = copy(arguments = this.arguments + arguments)
 
     /**
-     * Returns a copy of this command with the provided arguments added.
+     * Returns a [Command] copy of this command with the provided [withArguments] added.
      *
      * ```
      * command + withArguments
@@ -37,7 +37,7 @@ data class Command(
     operator fun plus(withArguments: Iterable<WithArgument>): Command = copy(arguments = arguments + withArguments)
 
     /**
-     * Returns a copy of this command with the provided argument added.
+     * Returns a [Command] copy of this command with the provided [withArgument] added.
      *
      * ```
      * command + withArgument
@@ -50,7 +50,7 @@ data class Command(
     operator fun plus(withArgument: WithArgument): Command = copy(arguments = arguments + withArgument)
 
     /**
-     * Returns a copy of this command with the provided arguments removed.
+     * Returns a [Command] copy of this command with the provided [arguments] removed.
      *
      * ```
      * command - Arguments("-l", "-a")
@@ -63,7 +63,7 @@ data class Command(
     operator fun minus(arguments: Arguments): Command = copy(arguments = this.arguments - arguments)
 
     /**
-     * Returns a copy of this command with the provided arguments removed.
+     * Returns a [Command] copy of this command with the provided [withArguments] removed.
      *
      * ```
      * command - withArguments
@@ -77,7 +77,7 @@ data class Command(
         copy(arguments = arguments - withArguments.toSet())
 
     /**
-     * Returns a copy of this command with the provided argument removed.
+     * Returns a [Command] copy of this command with the provided [withArgument] removed.
      *
      * ```
      * command - withArgument
@@ -90,7 +90,7 @@ data class Command(
     operator fun minus(withArgument: WithArgument): Command = copy(arguments = arguments - withArgument)
 
     /**
-     * Returns whether this command's arguments contain the provided arguments.
+     * Returns whether this command's arguments contain the provided [arguments].
      *
      * ```
      * Arguments("-l", "-a") in command
@@ -103,7 +103,7 @@ data class Command(
     operator fun contains(arguments: Arguments): Boolean = this.arguments.containsAll(arguments)
 
     /**
-     * Returns whether this command's arguments contain the provided arguments.
+     * Returns whether this command's [arguments] contain the provided [withArguments].
      *
      * ```
      * withArguments in command
@@ -116,7 +116,7 @@ data class Command(
     operator fun contains(withArguments: Iterable<WithArgument>) = Arguments(withArguments) in this
 
     /**
-     * Returns whether this command's arguments contain the provided argument.
+     * Returns whether this command's [arguments] contain the provided [argument].
      *
      * ```
      * "--verbose" in command
@@ -129,7 +129,7 @@ data class Command(
     operator fun contains(argument: String) = Arguments(listOf(argument)) in this
 
     /**
-     * Returns whether this command's arguments contain the provided argument.
+     * Returns whether this command's [arguments] contain the provided [withArgument].
      *
      * ```
      * withArgument in command
@@ -142,7 +142,7 @@ data class Command(
     operator fun contains(withArgument: WithArgument) = Arguments(withArgument) in this
 
     /**
-     * Command with its executable and arguments formatted similarly as a shell command-line.
+     * Command with its [executable] and [arguments] formatted similarly as a shell command-line, as a [String].
      *
      * @return [String] The command formatted as a string.
      */
@@ -165,7 +165,7 @@ data class Command(
     }
 
     /**
-     * Run the command, receiving the output as a String.
+     * Run the command [executable] with [arguments], receiving the output as a [String].
      *
      * @throws [ShellExecutableNotFoundException] The command executable wasn't found.
      * @throws [ShellFailedException] There was an issue running the command.
@@ -174,7 +174,7 @@ data class Command(
      * @returns [String] Command output.
      */
     fun executeOrThrow(
-        shellScript: ShellScript = ShellScript()
+        shellScript: ShellScript = ShellScript(),
     ): String = try {
         shellScript.command(executable.name, arguments)
     } catch (ex: ShellCommandNotFoundException) {
@@ -182,15 +182,17 @@ data class Command(
     }
 
     /**
-     * Run the command, receiving the output as a String.
+     * Run the command [executable] with [arguments], receiving the output as a [String] and handling errors via the
+     * [onError] lambda.
      *
+     * @param [shellScript] The [ShellScript] to use for execution.
      * @param [onError] Handle errors that occur when running the command.
      *
      * @returns [String] Command output or output of [onError].
      */
     fun executeOrElse(
         shellScript: ShellScript = ShellScript(),
-        onError: (Throwable) -> String
+        onError: (Throwable) -> String,
     ): String = try {
         shellScript.command(executable.name, arguments)
     } catch (ex: ShellCommandNotFoundException) {

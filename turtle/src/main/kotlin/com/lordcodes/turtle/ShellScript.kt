@@ -1,5 +1,6 @@
 package com.lordcodes.turtle
 
+import com.lordcodes.turtle.internal.EmptyProcess
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -10,7 +11,7 @@ import java.util.concurrent.TimeUnit
  */
 class ShellScript constructor(
     workingDirectory: File? = null,
-    private val dryRun: Boolean = false
+    private val dryRun: Boolean = false,
 ) {
     private val processBuilder = ProcessBuilder(listOf())
         .directory(workingDirectory)
@@ -48,16 +49,12 @@ class ShellScript constructor(
     fun command(
         command: String,
         arguments: List<String> = listOf(),
-        callbacks: ProcessCallbacks = EmptyProcessCallbacks
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks,
     ): String = runCommand(command, arguments, callbacks) { it.retrieveOutput() }
 
     /**
-     * Run a shell command with the specified arguments, allowing standard output or error to be read as a stream.
-     *
-     * @param [command] A command to run.
-     * @param [arguments] The arguments to pass to the command.
-     *
-     * @return [ProcessOutput] The output of running the command.
+     * Run a shell [command] with the specified [arguments], allowing standard output or error to be read as a stream,
+     * within [ProcessOutput].
      *
      * @throws [ShellCommandNotFoundException] The command wasn't found.
      * @throws [ShellFailedException] There was an issue running the command.
@@ -66,12 +63,12 @@ class ShellScript constructor(
     fun commandStreaming(
         command: String,
         arguments: List<String> = listOf(),
-        callbacks: ProcessCallbacks = EmptyProcessCallbacks
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks,
     ): ProcessOutput = runCommand(command, arguments, callbacks) { process ->
         ProcessOutput(
             exitCode = process.exitValue(),
             standardOutput = process.inputStream,
-            standardError = process.errorStream
+            standardError = process.errorStream,
         )
     }
 
@@ -79,7 +76,7 @@ class ShellScript constructor(
         command: String,
         arguments: List<String>,
         callbacks: ProcessCallbacks,
-        prepareOutput: (Process) -> OutputT
+        prepareOutput: (Process) -> OutputT,
     ): OutputT = if (dryRun) {
         dryRunCommand(command, arguments, prepareOutput)
     } else {
@@ -104,7 +101,7 @@ class ShellScript constructor(
     private fun <OutputT> dryRunCommand(
         command: String,
         arguments: List<String>,
-        prepareOutput: (Process) -> OutputT
+        prepareOutput: (Process) -> OutputT,
     ): OutputT {
         println("$command ${arguments.joinToString(" ")}")
         return prepareOutput(EmptyProcess())

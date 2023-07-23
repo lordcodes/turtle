@@ -58,7 +58,7 @@ internal class GitCommandsTest {
             """
             A  ${newFile.name}
             M  ${modifiedFile.name}
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 

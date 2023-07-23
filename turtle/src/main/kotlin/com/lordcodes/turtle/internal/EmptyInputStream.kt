@@ -1,4 +1,4 @@
-package com.lordcodes.turtle
+package com.lordcodes.turtle.internal
 
 import java.io.InputStream
 

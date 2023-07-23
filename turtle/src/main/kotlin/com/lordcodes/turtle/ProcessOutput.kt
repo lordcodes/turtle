@@ -12,5 +12,5 @@ import java.io.InputStream
 data class ProcessOutput(
     val exitCode: Int,
     val standardOutput: InputStream,
-    val standardError: InputStream
+    val standardError: InputStream,
 )

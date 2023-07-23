@@ -20,19 +20,13 @@ import java.io.File
 fun shellRun(
     workingDirectory: File? = null,
     dryRun: Boolean = false,
-    script: ShellScript.() -> String
+    script: ShellScript.() -> String,
 ): String = ShellScript(workingDirectory, dryRun = dryRun).script()
 
 /**
- * Run a shell command with the specified arguments.
- *
- * @param [command] A command to run.
- * @param [arguments] The arguments to pass to the command.
- * @param [dryRun] Use dry-run mode which prints executed commands instead of launching processes.
- * @param [workingDirectory] The location to run the command from. By default, the current working directory will
- * be used.
- *
- * @return [String] The output of running the command.
+ * Run a shell [command] with the specified [arguments]. Specify the [workingDirectory], or if unspecified the
+ * current working directory will be used. Use [dryRun] to print the executed commands instead of actually executing
+ * them and launching processes. The output will be provided as a [String].
  *
  * @throws [ShellFailedException] There was an issue running the command.
  * @throws [ShellRunException] Running the command produced error output.
@@ -41,5 +35,5 @@ fun shellRun(
     command: String,
     arguments: List<String> = listOf(),
     workingDirectory: File? = null,
-    dryRun: Boolean = false
+    dryRun: Boolean = false,
 ): String = shellRun(workingDirectory, dryRun = dryRun) { command(command, arguments) }

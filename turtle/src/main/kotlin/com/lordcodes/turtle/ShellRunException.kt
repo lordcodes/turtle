@@ -8,7 +8,7 @@ package com.lordcodes.turtle
  */
 data class ShellRunException(
     val exitCode: Int,
-    val errorText: String
+    val errorText: String,
 ) : RuntimeException(
-    "Running shell command failed with code $exitCode and message: $errorText"
+    "Running shell command failed with code $exitCode and message: $errorText",
 )

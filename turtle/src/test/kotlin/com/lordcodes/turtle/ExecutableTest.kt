@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 internal class ExecutableTest {
     private val ls = Executable(
         "ls",
-        URL("https://www.cyberciti.biz/faq/linux-unix-bash-shell-list-all-builtin-commands/")
+        URL("https://www.cyberciti.biz/faq/linux-unix-bash-shell-list-all-builtin-commands/"),
     )
 
     @Test
