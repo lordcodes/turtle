@@ -12,7 +12,7 @@ comments:
 complexity:
   ComplexInterface:
     active: true
-  ComplexMethod:
+  CyclomaticComplexMethod:
     ignoreSingleWhenExpression: true
   TooManyFunctions:
     thresholdInFiles: 20
@@ -71,10 +71,6 @@ potential-bugs:
     active: true
   IteratorNotThrowingNoSuchElementException:
     active: true
-  MissingWhenCase:
-    active: true
-  RedundantElseInWhen:
-    active: true
   UnconditionalJumpStatementInLoop:
     active: true
   UselessPostfixExpression:
@@ -83,18 +79,18 @@ potential-bugs:
     active: true
 
 style:
+  BracesOnIfStatements:
+    active: true
+    singleLine: 'always'
+    multiLine: 'always'
   EqualsOnSignatureLine:
     active: true
   ExpressionBodySyntax:
     active: true
   ForbiddenVoid:
     active: true
-  LibraryCodeMustSpecifyReturnType:
-    active: true
   MagicNumber:
     ignoreAnnotation: true
-  MandatoryBracesIfStatements:
-    active: true
   MayBeConst:
     active: true
   NoTabs:
