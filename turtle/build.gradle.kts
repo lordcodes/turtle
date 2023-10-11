@@ -4,7 +4,7 @@ import java.net.URL
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.8.20"
+    id("org.jetbrains.dokka") version "1.9.0"
     id("com.vanniktech.maven.publish") version "0.25.3"
 }
 
@@ -14,7 +14,7 @@ apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.10")
     testImplementation("io.mockk:mockk:1.13.8")
 }
 
