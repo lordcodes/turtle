@@ -12,7 +12,7 @@ apply(plugin = "org.jlleitschuh.gradle.ktlint")
 apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.0")
     testImplementation("io.mockk:mockk:1.13.8")
