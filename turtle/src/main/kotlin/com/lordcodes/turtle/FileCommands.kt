@@ -19,11 +19,11 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("unused", "MemberVisibilityCanBePrivate")
-    fun open(url: String): String = shell.multiplatform { operatingSystem ->
-        when (operatingSystem) {
-            OperatingSystem.LINUX -> Executable("xdg-open") + Arguments(url)
-            OperatingSystem.MAC -> Executable("open") + Arguments(url)
-            OperatingSystem.WINDOWS -> Executable("cmd.exe") + Arguments("/c", "start", url)
+    fun open(url: String): String = shell.multiplatform { platform ->
+        when (platform) {
+            Platform.LINUX -> Executable("xdg-open") + Arguments(url)
+            Platform.MAC -> Executable("open") + Arguments(url)
+            Platform.WINDOWS -> Executable("cmd.exe") + Arguments("/c", "start", url)
         }
     }
 
@@ -65,11 +65,11 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("unused")
-    fun openApplication(name: String): String = shell.multiplatform { operatingSystem ->
-        when (operatingSystem) {
-            OperatingSystem.LINUX -> null
-            OperatingSystem.MAC -> Executable("open") + Arguments("-a", name)
-            OperatingSystem.WINDOWS -> null
+    fun openApplication(name: String): String = shell.multiplatform { platform ->
+        when (platform) {
+            Platform.LINUX -> null
+            Platform.MAC -> Executable("open") + Arguments("-a", name)
+            Platform.WINDOWS -> null
         }
     }
 
@@ -102,11 +102,11 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun createSymlink(targetPath: String, linkPath: String): String = shell.multiplatform { operatingSystem ->
-        when (operatingSystem) {
-            OperatingSystem.LINUX -> Executable("ln") + Arguments("-s", targetPath, linkPath)
-            OperatingSystem.MAC -> Executable("ln") + Arguments("-s", targetPath, linkPath)
-            OperatingSystem.WINDOWS -> null
+    fun createSymlink(targetPath: String, linkPath: String): String = shell.multiplatform { platform ->
+        when (platform) {
+            Platform.LINUX -> Executable("ln") + Arguments("-s", targetPath, linkPath)
+            Platform.MAC -> Executable("ln") + Arguments("-s", targetPath, linkPath)
+            Platform.WINDOWS -> null
         }
     }
 
@@ -134,11 +134,11 @@ class FileCommands internal constructor(
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun readSymlink(linkPath: String): String = shell.multiplatform { operatingSystem ->
-        when (operatingSystem) {
-            OperatingSystem.LINUX -> Executable("readlink") + Arguments(linkPath)
-            OperatingSystem.MAC -> Executable("readlink") + Arguments(linkPath)
-            OperatingSystem.WINDOWS -> null
+    fun readSymlink(linkPath: String): String = shell.multiplatform { platform ->
+        when (platform) {
+            Platform.LINUX -> Executable("readlink") + Arguments(linkPath)
+            Platform.MAC -> Executable("readlink") + Arguments(linkPath)
+            Platform.WINDOWS -> null
         }
     }
 
@@ -161,11 +161,11 @@ class FileCommands internal constructor(
      */
     @Suppress("SwallowedException")
     fun which(command: String): String? = try {
-        shell.multiplatform { operatingSystem ->
-            when (operatingSystem) {
-                OperatingSystem.LINUX -> Executable("which") + Arguments(command)
-                OperatingSystem.MAC -> Executable("which") + Arguments(command)
-                OperatingSystem.WINDOWS -> null
+        shell.multiplatform { platform ->
+            when (platform) {
+                Platform.LINUX -> Executable("which") + Arguments(command)
+                Platform.MAC -> Executable("which") + Arguments(command)
+                Platform.WINDOWS -> null
             }
         }
     } catch (ex: ShellRunException) {

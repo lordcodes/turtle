@@ -1,9 +1,9 @@
 package com.lordcodes.turtle
 
 /**
- * An Operating System.
+ * The platform commands are being executed on.
  */
-enum class OperatingSystem {
+enum class Platform {
     LINUX,
     MAC,
     WINDOWS,
@@ -16,7 +16,7 @@ enum class OperatingSystem {
     }
 
     companion object {
-        internal fun fromSystem(): OperatingSystem {
+        internal fun fromSystem(): Platform {
             val osName = System.getProperty("os.name")
             return when {
                 osName.contains("Mac") -> MAC
