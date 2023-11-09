@@ -120,7 +120,7 @@ class ShellScript constructor(
     internal fun multiplatform(
         mac: ShellScript.() -> String = { "Not implemented!" },
         linux: ShellScript.() -> String = { "Not implemented!" },
-        windows: ShellScript.() -> String = { "Not implemented!" }
+        windows: ShellScript.() -> String = { "Not implemented!" },
     ): String {
         val osName = System.getProperty("os.name")
         return when {

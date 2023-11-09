@@ -22,7 +22,7 @@ class FileCommands internal constructor(
     fun open(url: String): String = shell.multiplatform(
         mac = { command("open", listOf(url)) },
         linux = { command("xdg-open", listOf(url)) },
-        windows = { command("cmd.exe", listOf("/c", "start", url)) }
+        windows = { command("cmd.exe", listOf("/c", "start", url)) },
     )
 
     /**
