@@ -118,16 +118,12 @@ class ShellScript constructor(
     }
 
     internal fun multiplatform(
-        mac: ShellScript.() -> String = { "Not implemented!" },
-        linux: ShellScript.() -> String = { "Not implemented!" },
-        windows: ShellScript.() -> String = { "Not implemented!" },
+        createCommand: (OperatingSystem) -> Command?,
     ): String {
-        val osName = System.getProperty("os.name")
-        return when {
-            osName.contains("Mac") -> this.mac()
-            osName.contains("Windows") -> this.windows()
-            else -> this.linux()
-        }
+        val operatingSystem = OperatingSystem.fromSystem()
+        val command = createCommand(operatingSystem)
+            ?: throw ShellCommandNotFoundException("Command not available for $operatingSystem", null)
+        return command.executeOrThrow(this)
     }
 
     /**
