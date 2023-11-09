@@ -23,6 +23,8 @@ Run shell commands from Kotlin scripts, apps or Gradle tasks with ease.
 
 Turtle simplifies the process of running external commands and processes from your Kotlin (or Java) code. It comes bundled with a selection of built-in functions, such as opening MacOS applications and dealing with Git. Running shell commands easily is particularly useful from within Kotlin scripts, command line applications and Gradle tasks.
 
+Turtle is mainly aimed at MacOS, some of the shell commands may not exist or work as expected on Linux or Windows. It is planned in the future to alter the API surface to make this clearer when calling commands.
+
 &nbsp;
 
 <p align="center">
@@ -73,7 +75,7 @@ dependencies {
 
 ## Usage
 
-Note: Turtle is developed with MacOS in mind and so some commands or features may not exist or work as expected on Linux or Windows. There is an open issue to consider multiplatform support more carefully.
+Note: As mentioned above Turtle is mainly aimed at MacOS and so some shell commands may not exist or work as expected on Linux or Windows.
 
 ---
 
