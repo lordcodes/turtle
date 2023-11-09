@@ -54,17 +54,24 @@ class FileCommands internal constructor(
     fun openFile(path: String): String = open(path)
 
     /**
-     * Open an application by [name], returning any output as a [String].
+     * Open an application by [name], returning any output as a [String]. Command only available on Mac.
      *
      * @param [name] The name of the application to open.
      *
      * @return [String] The output of running the command.
      *
+     * @throws [ShellCommandNotFoundException] When called on Linux or Windows.
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("unused")
-    fun openApplication(name: String): String = shell.command("open", listOf("-a", name))
+    fun openApplication(name: String): String = shell.multiplatform { operatingSystem ->
+        when (operatingSystem) {
+            OperatingSystem.LINUX -> null
+            OperatingSystem.MAC -> Executable("open") + Arguments("-a", name)
+            OperatingSystem.WINDOWS -> null
+        }
+    }
 
     /**
      * Create a symbolic link at a given [linkPath], that links back to [targetPath] at a different location. Any
