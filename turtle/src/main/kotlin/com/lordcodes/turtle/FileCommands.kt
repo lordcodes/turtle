@@ -19,11 +19,13 @@ class FileCommands internal constructor(
      * @throws [ShellRunException] Running the command produced error output.
      */
     @Suppress("unused", "MemberVisibilityCanBePrivate")
-    fun open(url: String): String = shell.multiplatform(
-        mac = { command("open", listOf(url)) },
-        linux = { command("xdg-open", listOf(url)) },
-        windows = { command("cmd.exe", listOf("/c", "start", url)) },
-    )
+    fun open(url: String): String = shell.multiplatform { operatingSystem ->
+        when (operatingSystem) {
+            OperatingSystem.LINUX -> Executable("xdg-open") + Arguments(url)
+            OperatingSystem.MAC -> Executable("open") + Arguments(url)
+            OperatingSystem.WINDOWS -> Executable("cmd.exe") + Arguments("/c", "start", url)
+        }
+    }
 
     /**
      * Open a file at [path] using its default application, returning any output as a [String].
