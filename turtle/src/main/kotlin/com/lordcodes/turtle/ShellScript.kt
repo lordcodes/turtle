@@ -117,6 +117,19 @@ class ShellScript constructor(
         return outputText.trim()
     }
 
+    internal fun multiplatform(
+        mac: ShellScript.() -> String = { "Not implemented!" },
+        linux: ShellScript.() -> String = { "Not implemented!" },
+        windows: ShellScript.() -> String = { "Not implemented!" },
+    ): String {
+        val osName = System.getProperty("os.name")
+        return when {
+            osName.contains("Mac") -> this.mac()
+            osName.contains("Windows") -> this.windows()
+            else -> this.linux()
+        }
+    }
+
     /**
      * Change the working directory for subsequent shell commands.
      *
