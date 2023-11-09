@@ -75,13 +75,14 @@ class FileCommands internal constructor(
 
     /**
      * Create a symbolic link at a given [linkPath], that links back to [targetPath] at a different location. Any
-     * output will be returned as a [String].
+     * output will be returned as a [String]. Only available on Mac or Linux.
      *
      * @param [targetPath] The target to link to.
      * @param [linkPath] The location for the symlink.
      *
      * @return [String] The output of running the command.
      *
+     * @throws [ShellCommandNotFoundException] When called on Windows.
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
@@ -90,18 +91,24 @@ class FileCommands internal constructor(
 
     /**
      * Create a symbolic link at a given [linkPath], that links back to [targetPath] at a different location. Any
-     * otuput will be returned as a [String].
+     * output will be returned as a [String]. Only available on Mac or Linux.
      *
      * @param [targetPath] The full file path of the target to link to.
      * @param [linkPath] The full file path for the symlink.
      *
      * @return [String] The output of running the command.
      *
+     * @throws [ShellCommandNotFoundException] When called on Windows.
      * @throws [ShellFailedException] There was an issue running the command.
      * @throws [ShellRunException] Running the command produced error output.
      */
-    fun createSymlink(targetPath: String, linkPath: String): String =
-        shell.command("ln", listOf("-s", targetPath, linkPath))
+    fun createSymlink(targetPath: String, linkPath: String): String = shell.multiplatform { operatingSystem ->
+        when (operatingSystem) {
+            OperatingSystem.LINUX -> Executable("ln") + Arguments("-s", targetPath, linkPath)
+            OperatingSystem.MAC -> Executable("ln") + Arguments("-s", targetPath, linkPath)
+            OperatingSystem.WINDOWS -> null
+        }
+    }
 
     /**
      * Read the target path as a [String] of a symbolic link located at [linkPath].
