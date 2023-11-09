@@ -1,9 +1,13 @@
 package com.lordcodes.turtle
 
+/**
+ * An Operating System.
+ */
 enum class OperatingSystem {
     LINUX,
     MAC,
-    WINDOWS;
+    WINDOWS,
+    ;
 
     override fun toString(): String = when (this) {
         LINUX -> "Linux"
@@ -12,7 +16,7 @@ enum class OperatingSystem {
     }
 
     companion object {
-        fun fromSystem(): OperatingSystem {
+        internal fun fromSystem(): OperatingSystem {
             val osName = System.getProperty("os.name")
             return when {
                 osName.contains("Mac") -> MAC

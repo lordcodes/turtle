@@ -118,7 +118,7 @@ class ShellScript constructor(
     }
 
     internal fun multiplatform(
-        createCommand: (OperatingSystem) -> Command?
+        createCommand: (OperatingSystem) -> Command?,
     ): String {
         val operatingSystem = OperatingSystem.fromSystem()
         val command = createCommand(operatingSystem)
