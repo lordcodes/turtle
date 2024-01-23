@@ -11,7 +11,7 @@ plugins {
     base
     kotlin("jvm") version "1.9.22" apply false
     id("io.gitlab.arturbosch.detekt") version "1.23.4"
-    id("com.github.ben-manes.versions") version "0.50.0"
+    id("com.github.ben-manes.versions") version "0.51.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.6.1"
     id("org.jlleitschuh.gradle.ktlint-idea") version "11.6.1"
 }
