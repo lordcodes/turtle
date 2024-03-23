@@ -4,18 +4,18 @@ import java.net.URL
 
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.dokka") version "1.9.10"
-    id("com.vanniktech.maven.publish") version "0.27.0"
+    id("org.jetbrains.dokka") version "1.9.20"
+    id("com.vanniktech.maven.publish") version "0.28.0"
 }
 
 apply(plugin = "org.jlleitschuh.gradle.ktlint")
 apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.23")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.22")
-    testImplementation("io.mockk:mockk:1.13.9")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.23")
+    testImplementation("io.mockk:mockk:1.13.10")
 }
 
 tasks.test {
