@@ -27,8 +27,6 @@ kotlinter {
 }
 
 tasks.dokkaHtml.configure {
-    outputDirectory.set(buildDir.resolve("docs/dokka"))
-
     dokkaSourceSets {
         configureEach {
             jdkVersion.set(8)
