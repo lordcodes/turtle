@@ -40,22 +40,6 @@ allprojects {
     }
 }
 
-subprojects {
-    // ktlint {
-    //     version.set("0.49.1")
-    //     reporters {
-    //         reporter(ReporterType.CHECKSTYLE)
-    //         reporter(ReporterType.HTML)
-    //     }
-    //     filter {
-    //         include("**/src/**/kotlin/**")
-    //     }
-    //     kotlinScriptAdditionalPaths {
-    //         include(fileTree("scripts/"))
-    //     }
-    // }
-}
-
 detekt {
     source.from(
         "$projectDir/turtle/src/main/kotlin",
