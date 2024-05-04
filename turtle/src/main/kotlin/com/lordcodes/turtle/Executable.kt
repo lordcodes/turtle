@@ -37,8 +37,7 @@ data class Executable(
      *
      * @param [withArguments] The arguments to pass to this executable.
      */
-    operator fun plus(withArguments: Iterable<WithArgument>): Command =
-        Command(this, Arguments(withArguments))
+    operator fun plus(withArguments: Iterable<WithArgument>): Command = Command(this, Arguments(withArguments))
 
     /**
      * Creates a [Command] using this executable with the provided [withArgument].

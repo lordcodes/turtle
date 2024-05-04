@@ -17,11 +17,8 @@ import java.io.File
  * @throws [ShellFailedException] There was an issue running one of the commands.
  * @throws [ShellRunException] Running one of the commands produced error output.
  */
-fun shellRun(
-    workingDirectory: File? = null,
-    dryRun: Boolean = false,
-    script: ShellScript.() -> String,
-): String = ShellScript(workingDirectory, dryRun = dryRun).script()
+fun shellRun(workingDirectory: File? = null, dryRun: Boolean = false, script: ShellScript.() -> String): String =
+    ShellScript(workingDirectory, dryRun = dryRun).script()
 
 /**
  * Run a shell [command] with the specified [arguments]. Specify the [workingDirectory], or if unspecified the

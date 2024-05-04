@@ -1,12 +1,12 @@
 package com.lordcodes.turtle
 
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.io.File
 import java.net.URI
 import java.net.URL
 import kotlin.random.Random
 import kotlin.test.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class ArgumentsTest {
     @Test

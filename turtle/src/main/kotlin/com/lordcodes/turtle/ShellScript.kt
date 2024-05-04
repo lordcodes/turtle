@@ -117,9 +117,7 @@ class ShellScript constructor(
         return outputText.trim()
     }
 
-    internal fun multiplatform(
-        createCommand: (Platform) -> Command?,
-    ): String {
+    internal fun multiplatform(createCommand: (Platform) -> Command?): String {
         val operatingSystem = Platform.fromSystem()
         val command = createCommand(operatingSystem)
             ?: throw ShellCommandNotFoundException("Command not available for $operatingSystem", null)

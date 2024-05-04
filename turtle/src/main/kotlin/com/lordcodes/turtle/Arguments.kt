@@ -50,8 +50,7 @@ data class Arguments(
      *
      * @param [withArgument] The argument to add to these arguments.
      */
-    operator fun plus(withArgument: WithArgument): Arguments =
-        Arguments(arguments + withArgument.argument)
+    operator fun plus(withArgument: WithArgument): Arguments = Arguments(arguments + withArgument.argument)
 
     /**
      * Returns an [Arguments] copy of these arguments with the provided [arguments] removed.
@@ -64,8 +63,7 @@ data class Arguments(
      *
      * @param [arguments] The arguments to remove from these arguments.
      */
-    operator fun minus(arguments: Arguments): Arguments =
-        Arguments(this.arguments - arguments.toSet())
+    operator fun minus(arguments: Arguments): Arguments = Arguments(this.arguments - arguments.toSet())
 
     /**
      * Returns an [Arguments] copy of these arguments with the provided [withArguments] removed.
@@ -92,8 +90,7 @@ data class Arguments(
      *
      * @param [withArgument] The argument to remove from these arguments.
      */
-    operator fun minus(withArgument: WithArgument): Arguments =
-        Arguments(arguments - withArgument.argument)
+    operator fun minus(withArgument: WithArgument): Arguments = Arguments(arguments - withArgument.argument)
 }
 
 /**
