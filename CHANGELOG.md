@@ -3,6 +3,8 @@
 ## Un-released changes (master)
 
 * Now using [kotlinter](https://github.com/jeremymailen/kotlinter-gradle) for formatting and linting Kotlin.
+* Gradle 8.7.
+* JDK 17 and Kotlin JVM Target 17.
 * Dependency updates.
 
 ## v0.9.0
