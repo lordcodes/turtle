@@ -21,6 +21,8 @@ If you want to make changes, please make sure to discuss anything big before put
 
 * Clone the repository.
 * Make your changes.
+* Format code with: `./gradlew lcchecks`.
+* Make sure all checks pass with: `./gradlew lcchecks`.
 * Make sure all checks pass with: `./gradlew check`.
 * Submit a pull request.
 

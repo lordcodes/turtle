@@ -1,9 +1,9 @@
 package com.lordcodes.turtle
 
 import com.lordcodes.turtle.ArgumentsTest.LsFlag
-import org.junit.jupiter.api.Test
 import java.net.URL
 import kotlin.test.assertEquals
+import org.junit.jupiter.api.Test
 
 internal class ExecutableTest {
     private val ls = Executable(

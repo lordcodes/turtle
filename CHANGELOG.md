@@ -2,6 +2,9 @@
 
 ## Un-released changes (master)
 
+* Now using [kotlinter](https://github.com/jeremymailen/kotlinter-gradle) for formatting and linting Kotlin.
+* Dependency updates.
+
 ## v0.9.0
 
 * Multi-platform open command. [PR #115](https://github.com/lordcodes/turtle/pull/119)

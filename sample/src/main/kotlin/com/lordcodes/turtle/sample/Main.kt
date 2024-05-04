@@ -33,13 +33,15 @@ object Git {
     val executable = Executable("git", URL("https://git-scm.com/docs"))
 
     enum class Action {
-        Init, Clone, Add;
+        Init,
+        Clone,
+        Add,
+        ;
 
         fun command(): Command = Command(executable, Arguments(name.lowercase()))
     }
 
-    fun clone(url: URL, destination: File? = null): Command =
-        Action.Clone.command() + Arguments(url, destination)
+    fun clone(url: URL, destination: File? = null): Command = Action.Clone.command() + Arguments(url, destination)
 
     fun init(): Command = Action.Init.command()
 

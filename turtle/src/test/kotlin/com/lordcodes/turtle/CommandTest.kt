@@ -3,10 +3,10 @@
 package com.lordcodes.turtle
 
 import com.lordcodes.turtle.ArgumentsTest.LsFlag
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.net.URL
 import kotlin.test.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class CommandTest {
     private val builtinUnixCommands = URL(
