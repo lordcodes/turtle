@@ -6,10 +6,8 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.9.20"
     id("com.vanniktech.maven.publish") version "0.28.0"
+    id("org.jmailen.kotlinter")
 }
-
-apply(plugin = "org.jlleitschuh.gradle.ktlint")
-apply(plugin = "org.jlleitschuh.gradle.ktlint-idea")
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.23")
@@ -21,6 +19,11 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     environment("LANG", "en_US.UTF8")
+}
+
+kotlinter {
+    failBuildWhenCannotAutoFormat = true
+    reporters = arrayOf("checkstyle", "html")
 }
 
 tasks.dokkaHtml.configure {
