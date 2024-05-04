@@ -28,5 +28,5 @@ jobs:
       run: chmod +x gradlew
 
     - name: Gradle checks
-      run: ./gradlew lcChecks
+      run: ./gradlew lcchecks
 
