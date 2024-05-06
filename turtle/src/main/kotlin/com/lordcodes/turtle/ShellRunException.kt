@@ -14,5 +14,5 @@ data class ShellRunException(
         "Running shell command failed with code $exitCode"
     } else {
         "Running shell command failed with code $exitCode and message: $errorText"
-    }
+    },
 )

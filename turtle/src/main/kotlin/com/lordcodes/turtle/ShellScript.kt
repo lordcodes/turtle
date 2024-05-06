@@ -101,7 +101,7 @@ class ShellScript constructor(
             "Please use 'commandSequence' instead.",
         replaceWith = ReplaceWith(
             "commandSequence(command, arguments, callbacks)",
-        )
+        ),
     )
     fun commandStreaming(
         command: String,
