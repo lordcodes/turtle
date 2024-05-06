@@ -2,6 +2,9 @@
 
 ## Un-released changes (master)
 
+## v0.10.0
+
+* Stream output as a Sequence [PR #239](https://github.com/lordcodes/turtle/pull/239).
 * Now using [kotlinter](https://github.com/jeremymailen/kotlinter-gradle) for formatting and linting Kotlin.
 * Gradle 8.7.
 * JDK 17 and Kotlin JVM Target 17.
@@ -9,8 +12,8 @@
 
 ## v0.9.0
 
-* Multi-platform open command. [PR #115](https://github.com/lordcodes/turtle/pull/119)
-* Handle different platforms for File Commands. [PR #213](https://github.com/lordcodes/turtle/pull/213)
+* Multi-platform open command. [PR #115](https://github.com/lordcodes/turtle/pull/119).
+* Handle different platforms for File Commands. [PR #213](https://github.com/lordcodes/turtle/pull/213).
 * Kotlin 1.9.20, latest Gradle, targeting Kotlin language version 11 and many dependency updates.
 
 ## v0.8.0
