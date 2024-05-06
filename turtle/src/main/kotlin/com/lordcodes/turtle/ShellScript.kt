@@ -1,6 +1,6 @@
 package com.lordcodes.turtle
 
-import com.lordcodes.turtle.internal.EmptyProcess
+import com.lordcodes.turtle.internal.EmptyInputStream
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -50,44 +50,19 @@ class ShellScript constructor(
         command: String,
         arguments: List<String> = listOf(),
         callbacks: ProcessCallbacks = EmptyProcessCallbacks,
-    ): String = runCommand(command, arguments, callbacks) { it.retrieveOutput() }
-
-    /**
-     * Run a shell [command] with the specified [arguments], allowing standard output or error to be read as a stream,
-     * within [ProcessOutput].
-     *
-     * @throws [ShellCommandNotFoundException] The command wasn't found.
-     * @throws [ShellFailedException] There was an issue running the command.
-     * @throws [ShellRunException] Running the command produced error output.
-     */
-    fun commandStreaming(
-        command: String,
-        arguments: List<String> = listOf(),
-        callbacks: ProcessCallbacks = EmptyProcessCallbacks,
-    ): ProcessOutput = runCommand(command, arguments, callbacks) { process ->
-        ProcessOutput(
-            exitCode = process.exitValue(),
-            standardOutput = process.inputStream,
-            standardError = process.errorStream,
-        )
-    }
-
-    private fun <OutputT> runCommand(
-        command: String,
-        arguments: List<String>,
-        callbacks: ProcessCallbacks,
-        prepareOutput: (Process) -> OutputT,
-    ): OutputT = if (dryRun) {
-        dryRunCommand(command, arguments, prepareOutput)
-    } else {
-        try {
+    ): String {
+        if (dryRun) {
+            println(dryRunCommand(command, arguments))
+            return ""
+        }
+        return try {
             val splitCommand = listOf(command) + arguments
             val process = processBuilder
                 .command(splitCommand)
                 .start()
             onProcessStart(process, callbacks)
             process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
-            prepareOutput(process)
+            process.retrieveOutput()
         } catch (exception: IOException) {
             if (exception.message?.contains("Cannot run program") == true) {
                 throw ShellCommandNotFoundException(command, exception)
@@ -98,13 +73,9 @@ class ShellScript constructor(
         }
     }
 
-    private fun <OutputT> dryRunCommand(
-        command: String,
-        arguments: List<String>,
-        prepareOutput: (Process) -> OutputT,
-    ): OutputT {
-        println("$command ${arguments.joinToString(" ")}")
-        return prepareOutput(EmptyProcess())
+    private fun dryRunCommand(command: String, arguments: List<String>): String {
+        val formattedArguments = arguments.joinToString(" ")
+        return "$command $formattedArguments"
     }
 
     private fun Process.retrieveOutput(): String {
@@ -115,6 +86,99 @@ class ShellScript constructor(
             throw ShellRunException(exitCode, errorText.trim())
         }
         return outputText.trim()
+    }
+
+    /**
+     * Run a shell [command] with the specified [arguments], allowing standard output or error to be read as a stream,
+     * within [ProcessOutput].
+     *
+     * @throws [ShellCommandNotFoundException] The command wasn't found.
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    @Deprecated(
+        message = "Will be removed in the next major release as it hangs when streaming large amount of output. " +
+            "Please use 'commandSequence' instead.",
+        replaceWith = ReplaceWith(
+            "commandSequence(command, arguments, callbacks)",
+        )
+    )
+    fun commandStreaming(
+        command: String,
+        arguments: List<String> = listOf(),
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks,
+    ): ProcessOutput {
+        if (dryRun) {
+            println(dryRunCommand(command, arguments))
+            return ProcessOutput(
+                exitCode = 0,
+                standardOutput = EmptyInputStream(),
+                standardError = EmptyInputStream(),
+            )
+        }
+        return try {
+            val splitCommand = listOf(command) + arguments
+            val process = processBuilder
+                .command(splitCommand)
+                .start()
+            onProcessStart(process, callbacks)
+            process.waitFor(COMMAND_TIMEOUT, TimeUnit.MINUTES)
+            ProcessOutput(
+                exitCode = process.exitValue(),
+                standardOutput = process.inputStream,
+                standardError = process.errorStream,
+            )
+        } catch (exception: IOException) {
+            if (exception.message?.contains("Cannot run program") == true) {
+                throw ShellCommandNotFoundException(command, exception)
+            }
+            throw ShellFailedException(exception)
+        } catch (exception: InterruptedException) {
+            throw ShellFailedException(exception)
+        }
+    }
+
+    /**
+     * Run a shell [command] with the specified [arguments], returning standard output and standard error
+     * line-by-line as a [Sequence].
+     *
+     * @throws [ShellCommandNotFoundException] The command wasn't found.
+     * @throws [ShellFailedException] There was an issue running the command.
+     * @throws [ShellRunException] Running the command produced error output.
+     */
+    fun commandSequence(
+        command: String,
+        arguments: List<String> = listOf(),
+        callbacks: ProcessCallbacks = EmptyProcessCallbacks,
+    ): Sequence<String> {
+        if (dryRun) {
+            println(dryRunCommand(command, arguments))
+            return sequenceOf("")
+        }
+        return try {
+            val splitCommand = listOf(command) + arguments
+            val process = processBuilder
+                .redirectErrorStream(true)
+                .command(splitCommand)
+                .start()
+            onProcessStart(process, callbacks)
+
+            sequence {
+                yieldAll(process.inputStream.bufferedReader().lineSequence())
+
+                val exitCode = process.waitFor()
+                if (exitCode != 0) {
+                    throw ShellRunException(exitCode)
+                }
+            }
+        } catch (exception: IOException) {
+            if (exception.message?.contains("Cannot run program") == true) {
+                throw ShellCommandNotFoundException(command, exception)
+            }
+            throw ShellFailedException(exception)
+        } catch (exception: InterruptedException) {
+            throw ShellFailedException(exception)
+        }
     }
 
     internal fun multiplatform(createCommand: (Platform) -> Command?): String {
