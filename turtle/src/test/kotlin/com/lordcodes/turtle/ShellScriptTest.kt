@@ -59,10 +59,17 @@ internal class ShellScriptTest {
     }
 
     @Test
-    fun commandStreaming() {
-        val output = ShellScript().commandStreaming("echo", listOf("Hello world!"))
+    fun commandSequence(@TempDir temporaryFolder: File) {
+        val testFile = File(temporaryFolder, "testFile")
+        testFile.createNewFile()
+        testFile.appendText("Line 1\n")
+        testFile.appendText("Line 2\n")
+        testFile.appendText("Line 3\n")
+        val shell = ShellScript(temporaryFolder)
 
-        assertEquals(output.standardOutput.bufferedReader().readText().trim(), "Hello world!")
+        val sequence = shell.commandSequence("cat", listOf(testFile.name))
+
+        assertEquals(sequence.toList(), listOf("Line 1", "Line 2", "Line 3"))
     }
 
     @Test

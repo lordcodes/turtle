@@ -153,6 +153,16 @@ shellRun {
 
 Extra commands can easily be added by either calling `command` or by extending `ShellScript`. If you have created a command that you think should be built in, please feel free to [open a PR](https://github.com/lordcodes/turtle/pull/new/master).
 
+### Streaming output
+
+Instead of returning output as a String via `command`, you can instead receive it as a `Sequence` using `commandSequence`. The sequence provides standard output and standard error line-by-line.
+
+```kotlin
+commandSequence("cat", listOf("/path/to/largeFile.txt")).forEach { line ->
+    println(line)
+}
+```
+
 ## Contributing or Help
 
 If you notice any bugs or have a new feature to suggest, please check out the [contributing guide](https://github.com/lordcodes/turtle/blob/master/CONTRIBUTING.md). If you want to make changes, please make sure to discuss anything big before putting in the effort of creating the PR.
