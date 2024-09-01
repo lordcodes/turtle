@@ -10,7 +10,7 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.24")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.24")
     testImplementation("io.mockk:mockk:1.13.12")
