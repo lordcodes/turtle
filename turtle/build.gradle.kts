@@ -12,7 +12,7 @@ plugins {
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.20")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.0.20")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.0.21")
     testImplementation("io.mockk:mockk:1.13.12")
 }
 
