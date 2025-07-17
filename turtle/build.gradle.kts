@@ -13,7 +13,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:2.2.0")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.0")
-    testImplementation("io.mockk:mockk:1.14.4")
+    testImplementation("io.mockk:mockk:1.14.5")
 }
 
 tasks.test {
